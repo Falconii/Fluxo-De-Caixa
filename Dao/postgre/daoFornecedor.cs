@@ -219,7 +219,8 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             string OrderBy = "";
 
-            string strSelect = "SELECT  " +
+            string strSelect = "SELECT  " + 
+                                "   ID_EMPRESA "+
                                 " , CODIGO " +
                                 " , RAZAO " +
                                 " , FANTASI " +

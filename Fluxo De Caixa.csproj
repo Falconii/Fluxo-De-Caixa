@@ -105,6 +105,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuracoes.cs" />
+    <Compile Include="Dao\postgre\daoBaixa.cs" />
+    <Compile Include="Dao\postgre\daoDocumento.cs" />
     <Compile Include="Dao\postgre\daoConta.cs" />
     <Compile Include="Dao\postgre\daoFornecedor.cs" />
     <Compile Include="Dao\postgre\daoCliente.cs" />
@@ -112,11 +114,29 @@
     <Compile Include="Extensoes\IntExtension.cs" />
     <Compile Include="Extensoes\LongExtension.cs" />
     <Compile Include="Extensoes\StringExtension.cs" />
+    <Compile Include="formBaixas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formBaixas.designer.cs">
+      <DependentUpon>formBaixas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="formDocs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formDocs.designer.cs">
+      <DependentUpon>formDocs.cs</DependentUpon>
+    </Compile>
     <Compile Include="formContas.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="formContas.designer.cs">
       <DependentUpon>formContas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormFluxo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormFluxo.Designer.cs">
+      <DependentUpon>FormFluxo.cs</DependentUpon>
     </Compile>
     <Compile Include="formFornecedores.cs">
       <SubType>Form</SubType>
@@ -149,6 +169,7 @@
       <DependentUpon>formUsuarios.cs</DependentUpon>
     </Compile>
     <Compile Include="MDISingleton.cs" />
+    <Compile Include="Models\Baixa.cs" />
     <Compile Include="Models\Fornecedor.cs" />
     <Compile Include="Models\Documento.cs" />
     <Compile Include="Models\Conta.cs" />
@@ -165,8 +186,17 @@
     <Compile Include="Util\Coluna_Copy.cs" />
     <Compile Include="Util\ControleColunas.cs" />
     <Compile Include="Util\UsuarioSistema.cs" />
+    <EmbeddedResource Include="formBaixas.resx">
+      <DependentUpon>formBaixas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="formDocs.resx">
+      <DependentUpon>formDocs.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="formContas.resx">
       <DependentUpon>formContas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormFluxo.resx">
+      <DependentUpon>FormFluxo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="formFornecedores.resx">
       <DependentUpon>formFornecedores.cs</DependentUpon>

@@ -54,6 +54,8 @@ namespace Fluxo_De_Caixa
         private formClientes clientes;
         private formFornecedores fornecedores;
         private formContas contas;
+        private formDocs docs;
+        private FormFluxo fluxo;
 
         public FormPrincipal(Usuario user)
         {
@@ -136,6 +138,32 @@ namespace Fluxo_De_Caixa
             contas.menu = (ToolStripMenuItem)sender;
 
             contas.Show();
+        }
+
+        private void documentosToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            docs = new formDocs();
+
+            ((System.Windows.Forms.ToolStripMenuItem)sender).Enabled = false;
+
+            docs.MdiParent = this;
+
+            docs.menu = (ToolStripMenuItem)sender;
+
+            docs.Show();
+        }
+
+        private void consultaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fluxo = new FormFluxo();
+
+            ((System.Windows.Forms.ToolStripMenuItem)sender).Enabled = false;
+
+            fluxo.MdiParent = this;
+
+            fluxo.menu = (ToolStripMenuItem)sender;
+
+            fluxo.Show();
         }
     }
 }

@@ -14,8 +14,8 @@ namespace Fluxo_De_Caixa.Models
         public string Conta { get; set; }
         public int UserInsert { get; set; }
         public int UserUpdate { get; set; }
-
-        public Fornecedor(int idEmpresa, int codigo, string razao, string fantasi, string tel1, string email, string conta, int userInsert, int userUpdate)
+        public string _ContaDesc { get; set; }
+        public Fornecedor(int idEmpresa, int codigo, string razao, string fantasi, string tel1, string email, string conta, int userInsert, int userUpdate, string contaDesc)
         {
             IdEmpresa = idEmpresa;
             Codigo = codigo;
@@ -26,13 +26,13 @@ namespace Fluxo_De_Caixa.Models
             Conta = conta;
             UserInsert = userInsert;
             UserUpdate = userUpdate;
+            _ContaDesc = contaDesc;
         }
 
         public Fornecedor()
         {
             Zerar();
         }
-
 
         public void Zerar()
         {
@@ -45,6 +45,7 @@ namespace Fluxo_De_Caixa.Models
             Conta = ""; 
             UserInsert = 0;
             UserUpdate = 0;
+            _ContaDesc = "";
         }
     }
 }

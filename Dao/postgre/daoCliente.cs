@@ -103,7 +103,9 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             string strStringConexao = DataBase.RunCommand.connectionString;
 
-            string strSelect = $"SELECT * FROM CLIENTES WHERE ID_EMPRESA = {id_empresa} and CODIGO = {codigo}";
+            string strSelect = "SELECT CLIENTES.*, CON.DESCRICAO AS CONTA_DESC FROM CLIENTES " +
+                               "INNER JOIN CONTAS CON ON CON.ID_EMPRESA = CLIENTES.ID_EMPRESA AND CON.CODIGO = CLIENTES.CONTA " +
+                              $"WHERE CLIENTES.ID_EMPRESA = {id_empresa} and CLIENTES.CODIGO = '{codigo}'";
 
             using (var objConexao = new NpgsqlConnection(strStringConexao))
             {
@@ -141,7 +143,6 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             return obj;
         }
-
     
         private Cliente PopulaCliente(NpgsqlDataReader objDataReader)
         {
@@ -154,10 +155,10 @@ namespace Fluxo_De_Caixa.Dao.postgre
             obj.Tel1 = objDataReader["TEL1"].ToString();
             obj.Email = objDataReader["EMAIL"].ToString();
             obj.Conta = objDataReader["CONTA"].ToString();
+            obj._ContaDesc = objDataReader["CONTA_DESC"].ToString();
 
             return obj;
         }
-    
 
         public List<Cliente> getAll(int Ordenacao, string Filtro)
         {
@@ -211,8 +212,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             return lista;
         }
-            
-
+  
         public string SqlGrid(int Ordenacao, string Filtro)
         {
             string Where = "";
@@ -220,14 +220,16 @@ namespace Fluxo_De_Caixa.Dao.postgre
             string OrderBy = "";
 
             string strSelect = " SELECT  " +
-                                "   ID_EMPRESA" +
-                                " , CODIGO " +
-                                " , RAZAO " +
-                                " , FANTASI " +
-                                " , TEL1 " +
-                                " , EMAIL " +
-                                " , CONTA " +
-                                " FROM CLIENTES ";
+                                " CLIENTES.ID_EMPRESA" +
+                                " , CLIENTES.CODIGO " +
+                                " , CLIENTES.RAZAO " +
+                                " , CLIENTES.FANTASI " +
+                                " , CLIENTES.TEL1 " +
+                                " , CLIENTES.EMAIL " +
+                                " , CLIENTES.CONTA " +
+                                " , CON.DESCRICAO CONTA_DESC " +
+                                " FROM CLIENTES " +
+                                " INNER JOIN CONTAS CON ON CON.ID_EMPRESA = CLIENTES.ID_EMPRESA AND CON.CODIGO = CLIENTES.CONTA ";
 
             //Adiciona WHERE 
             if (Filtro.Trim() != "")
@@ -237,13 +239,13 @@ namespace Fluxo_De_Caixa.Dao.postgre
                 switch (Ordenacao)
                 {
                     case 0:
-                        Where = $"WHERE CODIGO = {Filtro}";
+                        Where = $"WHERE CLIENTES.CODIGO = {Filtro}";
                         break;
                     case 1:
-                        Where = $"WHERE RAZAO LIKE '%{Filtro.Trim()}%'";
+                        Where = $"WHERE CLIENTES.RAZAO LIKE '%{Filtro.Trim()}%'";
                         break;
                     case 2:
-                        Where = $"WHERE FANTASI LIKE '%{Filtro.Trim()}%'";
+                        Where = $"WHERE CLIENTES.FANTASI LIKE '%{Filtro.Trim()}%'";
                         break;
                 }
 
@@ -256,13 +258,13 @@ namespace Fluxo_De_Caixa.Dao.postgre
             switch (Ordenacao)
             {
                 case 0:
-                    OrderBy = $"ORDER BY CODIGO";
+                    OrderBy = $"ORDER BY CLIENTES.CODIGO";
                     break;
                 case 1:
-                    OrderBy = $"ORDER BY RAZAO";
+                    OrderBy = $"ORDER BY CLIENTES.RAZAO";
                     break;
                 case 2:
-                    OrderBy = $"ORDER BY FANTASI";
+                    OrderBy = $"ORDER BY CLIENTES.FANTASI";
                     break;
 
             }
