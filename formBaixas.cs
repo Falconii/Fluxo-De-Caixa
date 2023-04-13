@@ -31,14 +31,15 @@ namespace Fluxo_De_Caixa
 
         Baixa baixa = new Baixa();
 
+        List<Baixa> lsBaixas = new List<Baixa>();
+        
+        int IdxRow = -1;
+
         public ToolStripMenuItem menu { get; internal set; }
 
         public formBaixas(int _id_empresa, int _id_doc)
         {
             InitializeComponent();
-            tbDelete.ToolTipText =  $"Click Aqui Para Excluir o {proprietario}";
-            tbEditar.ToolTipText =  $"Click Aqui Para Alterar O {proprietario}";
-            tbIncluir.ToolTipText = $"Click Aqui Para Incluir Um {proprietario} Novo";
             id_empresa = _id_empresa;
             id_doc = _id_doc;
             loadDoc(id_empresa, id_doc);
@@ -80,11 +81,11 @@ namespace Fluxo_De_Caixa
 
         private void loadBaixas()
         {
-           preencheDataGridView();
+            preencheDataGridView();
 
         }
 
-  
+
         private void loadDoc(int id_empresa, int id)
         {
             daoDocumento dao = new daoDocumento();
@@ -108,7 +109,7 @@ namespace Fluxo_De_Caixa
 
                     daoDocumento dao = new daoDocumento();
 
-                    documento = dao.Seek(1,Id);
+                    documento = dao.Seek(1, Id);
 
                     if (documento == null)
                     {
@@ -159,35 +160,6 @@ namespace Fluxo_De_Caixa
         private void TbDelete_Click(object sender, EventArgs e)
         {
 
-            DialogResult resultado = MessageBox.Show("Confirma A Exclusão ?", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-            switch (resultado)
-
-            {
-
-                case DialogResult.No:
-
-                    break;
-
-                case DialogResult.Yes:
-
-                    daoBaixa dao = new daoBaixa();
-
-                    dao.Delete(baixa);
-
-                    loadBaixas();
-
-                    break;
-
-                default:
-
-                    break;
-
-            }
-
-            visao = Visoes.Browser;
-
-            SetarVisoes();
         }
         private void TbOk_Click(object sender, EventArgs e)
         {
@@ -277,17 +249,15 @@ namespace Fluxo_De_Caixa
         }
         private void TbCancelar_Click(object sender, EventArgs e)
         {
-            visao = Visoes.Browser;
-
-            SetarVisoes();
+            Close();
         }
         private void CbPesquisar_SelectedIndexChanged(object sender, EventArgs e)
         {
-          
+
         }
         private void BtBuscar_Click(object sender, EventArgs e)
         {
-            
+
         }
 
 
@@ -313,7 +283,7 @@ namespace Fluxo_De_Caixa
         private void DbGridView_DoubleClick(object sender, EventArgs e)
         {
 
-           
+
 
         }
 
@@ -349,7 +319,7 @@ namespace Fluxo_De_Caixa
         public void preencheDataGridView()
         {
             //faz a conexão
-            var  conn = new NpgsqlConnection(Fluxo_De_Caixa.DataBase.RunCommand.connectionString);
+            var conn = new NpgsqlConnection(Fluxo_De_Caixa.DataBase.RunCommand.connectionString);
 
             try //inicio do tratamento de exceções 
             {
@@ -393,8 +363,8 @@ namespace Fluxo_De_Caixa
         {
             string Result = "";
 
-            
-            if (!Validacoes.IsTamanho(documento.Doc,1,9))
+
+            if (!Validacoes.IsTamanho(documento.Doc, 1, 9))
             {
                 Result += "Tamanho do Campo Documento Deve Ficar Entre 1 e 9 !\n";
             }
@@ -426,7 +396,7 @@ namespace Fluxo_De_Caixa
             {
                 Result += "Tamanho do Campo Observação Deve Ter No Máximo 30 !\n";
             }
-           
+
             return Result;
 
         }
@@ -434,7 +404,7 @@ namespace Fluxo_De_Caixa
         private void Atualiza()
         {
 
-            int id   = cbTipo.FindString(documento.Tipo);
+            int id = cbTipo.FindString(documento.Tipo);
             txtId.Text = documento.Id.ToString();
             cbTipo.SelectedIndex = id;
             txtDocumento.Text = documento.Doc;
@@ -472,7 +442,7 @@ namespace Fluxo_De_Caixa
             documento.Saldo      = txtSaldo.Text.DoubleParse(); 
             */
         }
-          
+
         private void SetarVisoes()
         {
 
@@ -511,60 +481,35 @@ namespace Fluxo_De_Caixa
 
         private void SetarBotoes()
         {
-           
+
             switch (visao)
             {
-                case Visoes.Browser:
-                    tbIncluir.Visible = false;
-                    tbEditar.Visible = false;
-                    tbDelete.Visible = false;
-                    tbOk.Visible = false;
-                    tbCancelar.Visible = false;
-                    break;
                 case Visoes.Consulta:
-                    tbIncluir.Visible = true;
-                    tbEditar.Visible = true;
-                    tbDelete.Visible = true;
-                    tbOk.Visible = false;
-                    tbCancelar.Visible = false;
+                    tbVoltar.Visible = true;
                     SetarProperties(false);
                     break;
-
                 case Visoes.Edicao:
-                    tbIncluir.Visible = false;
-                    tbEditar.Visible = false;
-                    tbDelete.Visible = false;
-                    tbOk.Visible = true;
-                    tbCancelar.Visible = true;
+                    tbVoltar.Visible = true;
                     SetarProperties(true);
                     break;
-                case Visoes.Nova:
-                    tbIncluir.Visible = false;
-                    tbEditar.Visible = false;
-                    tbDelete.Visible = false;
-                    tbOk.Visible = true;
-                    tbCancelar.Visible = true;
-                    SetarProperties(true);
-                    break;
-
             }
         }
 
         private void CbPesquisar_SelectedIndexChanged_1(object sender, EventArgs e)
         {
-           
+
         }
 
-   
+
 
         private void FormUsuarios_FormClosed(object sender, FormClosedEventArgs e)
         {
-          
+
         }
-        
+
         private void FormUsuarios_Activated(object sender, EventArgs e)
         {
-           
+
         }
 
         private void txtEmail_TextChanged(object sender, EventArgs e)
@@ -587,7 +532,7 @@ namespace Fluxo_De_Caixa
 
             DateTime Emissao = DateTime.Now;
 
-            DateTime Venc    = DateTime.Now;
+            DateTime Venc = DateTime.Now;
 
             dataValida = DateTime.TryParseExact(txtEmissao.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture,
                                                      DateTimeStyles.None, out data);
@@ -595,7 +540,8 @@ namespace Fluxo_De_Caixa
             if (!dataValida)
             {
                 cRetorno += "Data Emissão Inválida !! \n";
-            } else
+            }
+            else
             {
                 Emissao = data;
             }
@@ -607,7 +553,8 @@ namespace Fluxo_De_Caixa
             if (!dataValida)
             {
                 cRetorno += "Data Vencimento Inválida !! \n";
-            } else
+            }
+            else
             {
                 Venc = data;
             }
@@ -647,20 +594,144 @@ namespace Fluxo_De_Caixa
 
         private void cbTipo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
-          
+
+
         }
 
         private void cbCliFor_SelectedIndexChanged(object sender, EventArgs e)
         {
-           
+
         }
 
         private void tbBaixar_Click(object sender, EventArgs e)
         {
-           
 
-            
+
+
         }
+
+        private void tbOK_Click_1(object sender, EventArgs e)
+        {
+            /*
+            if (dbGridView.Rows[IdxRow].IsNewRow)
+            {
+                MessageBox.Show("Termine A Edição Antes De Gravar", "Atenção!");
+
+                return;
+            }
+            */
+
+            lsBaixas.Clear();
+
+            try
+            {
+                Nullable<DateTime> emissao_baixa = null;
+                Double valor_baixa = 0;
+                string obs_baixa = "";
+                Baixa bx = new Baixa();
+
+                for (int idx = 0; idx < dbGridView.Rows.Count - 1; idx++)
+                {
+                    try
+                    {
+                        emissao_baixa = Convert.ToDateTime(dbGridView.Rows[idx].Cells[2].Value);
+                    }
+                    catch (Exception ex)
+                    {
+                        emissao_baixa = null;
+                    }
+
+                    if (emissao_baixa == null) continue;
+
+                    valor_baixa = Convert.ToDouble(dbGridView.Rows[idx].Cells[3].Value);
+
+
+                    obs_baixa = dbGridView.Rows[idx].Cells[4].Value.ToString();
+
+
+                    bx = new Baixa();
+
+                    bx.IdEmpresa = documento.IdEmpresa;
+                    bx.Id = 0;
+                    bx.Id_Doc = documento.Id;
+                    bx.Emissao = emissao_baixa;
+                    bx.Valor = valor_baixa;
+                    bx.Obs = obs_baixa;
+                    bx.UserInsert = UsuarioSistema.Usuario.Codigo;
+
+                    lsBaixas.Add(bx);
+
+                }
+
+                daoBaixa dao = new daoBaixa();
+
+                dao.DeleteByDoc(documento.IdEmpresa,documento.Id);
+
+                lsBaixas.ForEach(obj => {
+
+                    dao.Insert(obj);
+                
+                });
+
+                MessageBox.Show("Baixas Atualizadas Com Sucesso!", "Atenção!");
+
+                loadDoc(id_empresa, id_doc);
+
+                loadBaixas();
+
+                
+                    
+                
+            }
+            catch (Exception _)
+            {
+                MessageBox.Show("Deu Erro!!", "Atenção");
+            }
+        }
+
+        private void dbGridView_RowEnter_1(object sender, DataGridViewCellEventArgs e)
+        {
+            IdxRow = e.RowIndex;
+        }
+
+        private void tbDelete_Click_1(object sender, EventArgs e)
+        {
+
+            if (dbGridView.Rows[IdxRow].IsNewRow) return;
+
+            DialogResult resultado = MessageBox.Show($"Confirma A Exclusão ? {IdxRow}", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            switch (resultado)
+
+            {
+
+
+                case DialogResult.No:
+
+                    break;
+
+                case DialogResult.Yes:
+
+                    if (!dbGridView.Rows[IdxRow].IsNewRow)
+                    {
+                        dbGridView.Rows.RemoveAt(IdxRow);
+                    }
+
+                    break;
+
+                default:
+
+                    break;
+
+            }
+
+        }
+
+        private void txtValor_Leave(object sender, EventArgs e)
+        {
+           
+        }
+
+       
     }
 }

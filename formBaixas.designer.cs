@@ -30,15 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formBaixas));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tbIncluir = new System.Windows.Forms.ToolStripButton();
-            this.tbEditar = new System.Windows.Forms.ToolStripButton();
-            this.tbDelete = new System.Windows.Forms.ToolStripButton();
-            this.tbOk = new System.Windows.Forms.ToolStripButton();
-            this.tbCancelar = new System.Windows.Forms.ToolStripButton();
-            this.dbGridView = new System.Windows.Forms.DataGridView();
+            this.tbVoltar = new System.Windows.Forms.ToolStripButton();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPrincipal = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.gbSenha = new System.Windows.Forms.GroupBox();
             this.lblVlrPago = new System.Windows.Forms.Label();
             this.txtVlrPago = new System.Windows.Forms.TextBox();
@@ -67,97 +61,44 @@
             this.lblTipo = new System.Windows.Forms.Label();
             this.txtId = new System.Windows.Forms.TextBox();
             this.lblId = new System.Windows.Forms.Label();
+            this.tabBaixas = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.tbOK = new System.Windows.Forms.ToolStripButton();
+            this.tbCancelar = new System.Windows.Forms.ToolStripButton();
+            this.tbDelete = new System.Windows.Forms.ToolStripButton();
+            this.dbGridView = new System.Windows.Forms.DataGridView();
             this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dbGridView)).BeginInit();
             this.tabControl.SuspendLayout();
             this.tabPrincipal.SuspendLayout();
             this.gbSenha.SuspendLayout();
             this.gbIdentificacao.SuspendLayout();
+            this.tabBaixas.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dbGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tbIncluir,
-            this.tbEditar,
-            this.tbDelete,
-            this.tbOk,
-            this.tbCancelar});
+            this.tbVoltar});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1022, 39);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "TooBar";
             // 
-            // tbIncluir
+            // tbVoltar
             // 
-            this.tbIncluir.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbIncluir.Image = ((System.Drawing.Image)(resources.GetObject("tbIncluir.Image")));
-            this.tbIncluir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tbIncluir.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbIncluir.Name = "tbIncluir";
-            this.tbIncluir.Size = new System.Drawing.Size(34, 36);
-            this.tbIncluir.ToolTipText = "Clicl Aqui Para Incluir Um Usuario  Novo";
-            this.tbIncluir.Click += new System.EventHandler(this.TbIncluir_Click);
-            // 
-            // tbEditar
-            // 
-            this.tbEditar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbEditar.Image = ((System.Drawing.Image)(resources.GetObject("tbEditar.Image")));
-            this.tbEditar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tbEditar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbEditar.Name = "tbEditar";
-            this.tbEditar.Size = new System.Drawing.Size(34, 36);
-            this.tbEditar.ToolTipText = "Click Aqui Para Editar O Usuário";
-            this.tbEditar.Click += new System.EventHandler(this.TbEditar_Click);
-            // 
-            // tbDelete
-            // 
-            this.tbDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbDelete.Image = ((System.Drawing.Image)(resources.GetObject("tbDelete.Image")));
-            this.tbDelete.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tbDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbDelete.Name = "tbDelete";
-            this.tbDelete.Size = new System.Drawing.Size(34, 36);
-            this.tbDelete.ToolTipText = "Click Aqui Para Excluir O Usuário";
-            this.tbDelete.Click += new System.EventHandler(this.TbDelete_Click);
-            // 
-            // tbOk
-            // 
-            this.tbOk.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbOk.Image = ((System.Drawing.Image)(resources.GetObject("tbOk.Image")));
-            this.tbOk.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tbOk.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbOk.Name = "tbOk";
-            this.tbOk.Size = new System.Drawing.Size(34, 36);
-            this.tbOk.ToolTipText = "Click Aqui Para Confirmar";
-            this.tbOk.Click += new System.EventHandler(this.TbOk_Click);
-            // 
-            // tbCancelar
-            // 
-            this.tbCancelar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbCancelar.Image = ((System.Drawing.Image)(resources.GetObject("tbCancelar.Image")));
-            this.tbCancelar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tbCancelar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbCancelar.Name = "tbCancelar";
-            this.tbCancelar.Size = new System.Drawing.Size(36, 36);
-            this.tbCancelar.ToolTipText = "Click Aqui Para Cancelar";
-            this.tbCancelar.Click += new System.EventHandler(this.TbCancelar_Click);
-            // 
-            // dbGridView
-            // 
-            this.dbGridView.AllowUserToOrderColumns = true;
-            this.dbGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dbGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dbGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.dbGridView.Location = new System.Drawing.Point(0, 444);
-            this.dbGridView.MultiSelect = false;
-            this.dbGridView.Name = "dbGridView";
-            this.dbGridView.Size = new System.Drawing.Size(1022, 115);
-            this.dbGridView.TabIndex = 3;
-            this.dbGridView.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.DbGridView_RowEnter);
-            this.dbGridView.DoubleClick += new System.EventHandler(this.DbGridView_DoubleClick);
+            this.tbVoltar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbVoltar.Image = ((System.Drawing.Image)(resources.GetObject("tbVoltar.Image")));
+            this.tbVoltar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tbVoltar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbVoltar.Name = "tbVoltar";
+            this.tbVoltar.Size = new System.Drawing.Size(36, 36);
+            this.tbVoltar.ToolTipText = "Click Aqui Para Voltar";
+            this.tbVoltar.Click += new System.EventHandler(this.TbCancelar_Click);
             // 
             // tabControl
             // 
@@ -168,30 +109,20 @@
             this.tabControl.Location = new System.Drawing.Point(0, 42);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(1022, 396);
+            this.tabControl.Size = new System.Drawing.Size(1022, 317);
             this.tabControl.TabIndex = 4;
             // 
             // tabPrincipal
             // 
-            this.tabPrincipal.Controls.Add(this.groupBox1);
             this.tabPrincipal.Controls.Add(this.gbSenha);
             this.tabPrincipal.Controls.Add(this.gbIdentificacao);
             this.tabPrincipal.Location = new System.Drawing.Point(4, 22);
             this.tabPrincipal.Name = "tabPrincipal";
             this.tabPrincipal.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrincipal.Size = new System.Drawing.Size(1014, 370);
+            this.tabPrincipal.Size = new System.Drawing.Size(1014, 291);
             this.tabPrincipal.TabIndex = 1;
-            this.tabPrincipal.Text = "Principal";
+            this.tabPrincipal.Text = "Título";
             this.tabPrincipal.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Location = new System.Drawing.Point(12, 271);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(965, 93);
-            this.groupBox1.TabIndex = 6;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "gbLancamento";
             // 
             // gbSenha
             // 
@@ -295,6 +226,7 @@
             this.txtValor.Size = new System.Drawing.Size(130, 20);
             this.txtValor.TabIndex = 11;
             this.txtValor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IsDoubleEntry);
+            this.txtValor.Leave += new System.EventHandler(this.txtValor_Leave);
             // 
             // lblValor
             // 
@@ -472,30 +404,116 @@
             this.lblId.TabIndex = 8;
             this.lblId.Text = "ID";
             // 
+            // tabBaixas
+            // 
+            this.tabBaixas.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabBaixas.Controls.Add(this.tabPage1);
+            this.tabBaixas.Location = new System.Drawing.Point(4, 383);
+            this.tabBaixas.Name = "tabBaixas";
+            this.tabBaixas.SelectedIndex = 0;
+            this.tabBaixas.Size = new System.Drawing.Size(1014, 180);
+            this.tabBaixas.TabIndex = 5;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.toolStrip2);
+            this.tabPage1.Controls.Add(this.dbGridView);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1006, 154);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Baixas";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // toolStrip2
+            // 
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tbOK,
+            this.tbCancelar,
+            this.tbDelete});
+            this.toolStrip2.Location = new System.Drawing.Point(3, 3);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size(1000, 39);
+            this.toolStrip2.TabIndex = 7;
+            this.toolStrip2.Text = "TooBar";
+            // 
+            // tbOK
+            // 
+            this.tbOK.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbOK.Image = ((System.Drawing.Image)(resources.GetObject("tbOK.Image")));
+            this.tbOK.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tbOK.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbOK.Name = "tbOK";
+            this.tbOK.Size = new System.Drawing.Size(34, 36);
+            this.tbOK.ToolTipText = "Click Aqui Para Confirmar";
+            this.tbOK.Click += new System.EventHandler(this.tbOK_Click_1);
+            // 
+            // tbCancelar
+            // 
+            this.tbCancelar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbCancelar.Image = ((System.Drawing.Image)(resources.GetObject("tbCancelar.Image")));
+            this.tbCancelar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tbCancelar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbCancelar.Name = "tbCancelar";
+            this.tbCancelar.Size = new System.Drawing.Size(36, 36);
+            this.tbCancelar.ToolTipText = "Click Aqui Para Cancelar";
+            // 
+            // tbDelete
+            // 
+            this.tbDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbDelete.Image = ((System.Drawing.Image)(resources.GetObject("tbDelete.Image")));
+            this.tbDelete.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tbDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbDelete.Name = "tbDelete";
+            this.tbDelete.Size = new System.Drawing.Size(34, 36);
+            this.tbDelete.ToolTipText = "Click Aqui Para Excluir O Usuário";
+            this.tbDelete.Click += new System.EventHandler(this.tbDelete_Click_1);
+            // 
+            // dbGridView
+            // 
+            this.dbGridView.AllowUserToOrderColumns = true;
+            this.dbGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dbGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dbGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.dbGridView.Location = new System.Drawing.Point(6, 44);
+            this.dbGridView.MultiSelect = false;
+            this.dbGridView.Name = "dbGridView";
+            this.dbGridView.Size = new System.Drawing.Size(994, 107);
+            this.dbGridView.TabIndex = 6;
+            this.dbGridView.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dbGridView_RowEnter_1);
+            // 
             // formBaixas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1022, 561);
+            this.Controls.Add(this.tabBaixas);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tabControl);
-            this.Controls.Add(this.dbGridView);
             this.Name = "formBaixas";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Cadastro De Documentos";
-            this.TopMost = true;
             this.Activated += new System.EventHandler(this.FormUsuarios_Activated);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormUsuarios_FormClosed);
             this.Load += new System.EventHandler(this.FormUsuarios_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dbGridView)).EndInit();
             this.tabControl.ResumeLayout(false);
             this.tabPrincipal.ResumeLayout(false);
             this.gbSenha.ResumeLayout(false);
             this.gbSenha.PerformLayout();
             this.gbIdentificacao.ResumeLayout(false);
             this.gbIdentificacao.PerformLayout();
+            this.tabBaixas.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dbGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -504,12 +522,7 @@
         #endregion
 
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton tbIncluir;
-        private System.Windows.Forms.ToolStripButton tbEditar;
-        private System.Windows.Forms.ToolStripButton tbDelete;
-        private System.Windows.Forms.ToolStripButton tbOk;
-        private System.Windows.Forms.ToolStripButton tbCancelar;
-        private System.Windows.Forms.DataGridView dbGridView;
+        private System.Windows.Forms.ToolStripButton tbVoltar;
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabPrincipal;
         private System.Windows.Forms.GroupBox gbSenha;
@@ -534,12 +547,18 @@
         private System.Windows.Forms.TextBox txtSerie;
         private System.Windows.Forms.Label lblVlrPago;
         private System.Windows.Forms.TextBox txtVlrPago;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.MaskedTextBox txtVencimento;
         private System.Windows.Forms.MaskedTextBox txtEmissao;
         private System.Windows.Forms.Label lblVencimento;
         private System.Windows.Forms.Label lblEmissao;
         private System.Windows.Forms.Label lblCodigo;
         private System.Windows.Forms.TextBox txtCliFor;
+        private System.Windows.Forms.TabControl tabBaixas;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.DataGridView dbGridView;
+        private System.Windows.Forms.ToolStrip toolStrip2;
+        private System.Windows.Forms.ToolStripButton tbOK;
+        private System.Windows.Forms.ToolStripButton tbCancelar;
+        private System.Windows.Forms.ToolStripButton tbDelete;
     }
 }

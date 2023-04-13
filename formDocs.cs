@@ -234,6 +234,8 @@ namespace Fluxo_De_Caixa
 
                     case Visoes.Nova:
 
+                        documento.Saldo = (documento.Valor - documento.Abatimento + documento.Juros) - documento.VlrPago;
+
                         documento.UserInsert = UsuarioSistema.Usuario.Codigo;
 
                         Documento retorno = dao.Insert(documento);
@@ -261,6 +263,8 @@ namespace Fluxo_De_Caixa
                         break;
 
                     case Visoes.Edicao:
+
+                        documento.Saldo = (documento.Valor - documento.Abatimento + documento.Juros) - documento.VlrPago;
 
                         documento.UserUpdate= UsuarioSistema.Usuario.Codigo;
 
@@ -462,17 +466,17 @@ namespace Fluxo_De_Caixa
 
             if (!Validacoes.NoZero(documento.Valor))
             {
-                Result += "Tamanho do Campo Valor É Obrigatório !\n";
+                Result += "Campo Valor É Obrigatório !\n";
             }
 
             if (documento.Abatimento < 0)
             {
-                Result += "Tamanho do Campo Abatimento Não Poderá Ser Menor Que Zero !\n";
+                Result += "Campo Abatimento Não Poderá Ser Menor Que Zero !\n";
             }
 
             if (documento.Juros < 0)
             {
-                Result += "Tamanho do Campo Juros Não Poderá Ser Menor Que Zero !\n";
+                Result += "Campo Juros Não Poderá Ser Menor Que Zero !\n";
             }
 
 
@@ -481,6 +485,32 @@ namespace Fluxo_De_Caixa
                 Result += "Tamanho do Campo Observação Deve Ter No Máximo 30 !\n";
             }
            
+            return Result;
+
+        }
+
+        private string ValoresOK()
+        {
+            string Result = "";
+
+            
+            if (!Validacoes.NoZero(documento.Valor))
+            {
+                Result += "Campo Valor É Obrigatório !\n";
+            }
+
+            if (documento.Abatimento < 0)
+            {
+                Result += "Campo Abatimento Não Poderá Ser Menor Que Zero !\n";
+            }
+
+            if (documento.Juros < 0)
+            {
+                Result += "Campo Juros Não Poderá Ser Menor Que Zero !\n";
+            }
+
+
+
             return Result;
 
         }
@@ -786,20 +816,47 @@ namespace Fluxo_De_Caixa
         {
             var form = new formBaixas(documento.IdEmpresa,documento.Id);
 
+            form.Show();
+            /*
             try
             {
-                form.ShowDialog();
+                form.Show
 
             }
             finally
             {
                 form.Dispose();
-            }
+            } */
         }
 
         private void toolStripComboBox1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void txtValor_Leave(object sender, EventArgs e)
+        {
+            CalcularSaldo();
+        }
+
+        private void CalcularSaldo()
+        {
+            PopularDoc();
+
+            string Erros = ValoresOK();
+
+            if (Erros != "")
+            {
+
+                MessageBox.Show(Erros);
+
+                return;
+
+            }
+
+            documento.Saldo = ( documento.Valor - documento.Abatimento + documento.Juros )  - documento.VlrPago;
+
+            Atualiza();
         }
     }
 }

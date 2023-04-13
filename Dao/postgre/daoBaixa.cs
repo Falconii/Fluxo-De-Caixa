@@ -16,7 +16,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             String StringInsert = $" INSERT INTO BAIXAS " +
                                 "(ID_EMPRESA, ID_DOC, EMISSAO, VALOR, OBS, USER_INSERT, USER_UPDATE) " +
-                                $" VALUES({obj.IdEmpresa}, {obj.Id_Doc}, '{obj.Emissao?.ToString("yyyy-MM-dd")}','{obj.Obs}',{obj.UserInsert},{obj.UserUpdate})  RETURNING ID ";
+                                $" VALUES({obj.IdEmpresa}, {obj.Id_Doc}, '{obj.Emissao?.ToString("yyyy-MM-dd")}',{obj.Valor.DoubleParseDb()},'{obj.Obs}',{obj.UserInsert},{obj.UserUpdate})  RETURNING ID ";
 
             using (var objConexao = new NpgsqlConnection(DataBase.RunCommand.connectionString))
             {
@@ -86,6 +86,14 @@ namespace Fluxo_De_Caixa.Dao.postgre
         {
 
             String StringDelete = $" DELETE FROM  BAIXAS  WHERE ID_EMPRESA = {obj.IdEmpresa} AND ID = {obj.Id} ";
+
+            DataBase.RunCommand.CreateCommand(StringDelete);
+
+        }
+
+        public void DeleteByDoc(int id_empresa, int id_doc) {
+
+            String StringDelete = $" DELETE FROM  BAIXAS  WHERE ID_EMPRESA = {id_empresa} AND ID_doc = {id_doc} ";
 
             DataBase.RunCommand.CreateCommand(StringDelete);
 

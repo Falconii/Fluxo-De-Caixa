@@ -112,7 +112,7 @@
             this.tbBaixar});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1022, 39);
+            this.toolStrip1.Size = new System.Drawing.Size(1340, 39);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "TooBar";
             // 
@@ -195,7 +195,7 @@
             this.tbEditar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tbEditar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbEditar.Name = "tbEditar";
-            this.tbEditar.Size = new System.Drawing.Size(34, 34);
+            this.tbEditar.Size = new System.Drawing.Size(34, 36);
             this.tbEditar.ToolTipText = "Click Aqui Para Editar O Usuário";
             this.tbEditar.Click += new System.EventHandler(this.TbEditar_Click);
             // 
@@ -206,7 +206,7 @@
             this.tbDelete.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tbDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbDelete.Name = "tbDelete";
-            this.tbDelete.Size = new System.Drawing.Size(34, 34);
+            this.tbDelete.Size = new System.Drawing.Size(34, 36);
             this.tbDelete.ToolTipText = "Click Aqui Para Excluir O Usuário";
             this.tbDelete.Click += new System.EventHandler(this.TbDelete_Click);
             // 
@@ -217,7 +217,7 @@
             this.tbOk.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tbOk.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbOk.Name = "tbOk";
-            this.tbOk.Size = new System.Drawing.Size(34, 34);
+            this.tbOk.Size = new System.Drawing.Size(34, 36);
             this.tbOk.ToolTipText = "Click Aqui Para Confirmar";
             this.tbOk.Click += new System.EventHandler(this.TbOk_Click);
             // 
@@ -239,7 +239,7 @@
             this.tbBaixar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tbBaixar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbBaixar.Name = "tbBaixar";
-            this.tbBaixar.Size = new System.Drawing.Size(34, 34);
+            this.tbBaixar.Size = new System.Drawing.Size(34, 36);
             this.tbBaixar.ToolTipText = "Click Aqui Para Confirmar";
             this.tbBaixar.Click += new System.EventHandler(this.tbBaixar_Click);
             // 
@@ -255,7 +255,7 @@
             this.dbGridView.Location = new System.Drawing.Point(0, 42);
             this.dbGridView.Name = "dbGridView";
             this.dbGridView.ReadOnly = true;
-            this.dbGridView.Size = new System.Drawing.Size(1022, 685);
+            this.dbGridView.Size = new System.Drawing.Size(1340, 685);
             this.dbGridView.TabIndex = 3;
             this.dbGridView.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.DbGridView_RowEnter);
             this.dbGridView.DoubleClick += new System.EventHandler(this.DbGridView_DoubleClick);
@@ -269,7 +269,7 @@
             this.tabControl.Location = new System.Drawing.Point(0, 42);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(1022, 689);
+            this.tabControl.Size = new System.Drawing.Size(1340, 689);
             this.tabControl.TabIndex = 4;
             // 
             // tabPrincipal
@@ -282,7 +282,7 @@
             this.tabPrincipal.Location = new System.Drawing.Point(4, 22);
             this.tabPrincipal.Name = "tabPrincipal";
             this.tabPrincipal.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrincipal.Size = new System.Drawing.Size(1014, 663);
+            this.tabPrincipal.Size = new System.Drawing.Size(1332, 663);
             this.tabPrincipal.TabIndex = 1;
             this.tabPrincipal.Text = "Principal";
             this.tabPrincipal.UseVisualStyleBackColor = true;
@@ -489,6 +489,7 @@
             this.txtJuros.Size = new System.Drawing.Size(130, 20);
             this.txtJuros.TabIndex = 13;
             this.txtJuros.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IsDoubleEntry);
+            this.txtJuros.Leave += new System.EventHandler(this.txtValor_Leave);
             // 
             // lblAbatimento
             // 
@@ -507,6 +508,7 @@
             this.txtAbatimento.Size = new System.Drawing.Size(130, 20);
             this.txtAbatimento.TabIndex = 12;
             this.txtAbatimento.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IsDoubleEntry);
+            this.txtAbatimento.Leave += new System.EventHandler(this.txtValor_Leave);
             // 
             // txtValor
             // 
@@ -516,6 +518,7 @@
             this.txtValor.Size = new System.Drawing.Size(130, 20);
             this.txtValor.TabIndex = 11;
             this.txtValor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IsDoubleEntry);
+            this.txtValor.Leave += new System.EventHandler(this.txtValor_Leave);
             // 
             // lblValor
             // 
@@ -638,7 +641,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1022, 731);
+            this.ClientSize = new System.Drawing.Size(1340, 731);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.dbGridView);
