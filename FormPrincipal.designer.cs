@@ -38,9 +38,10 @@
             this.fimToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.documentosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.documentosToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.janelaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fluxoDeCaixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.janelaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pagarReceberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -122,20 +123,15 @@
             // documentosToolStripMenuItem1
             // 
             this.documentosToolStripMenuItem1.Name = "documentosToolStripMenuItem1";
-            this.documentosToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.documentosToolStripMenuItem1.Size = new System.Drawing.Size(142, 22);
             this.documentosToolStripMenuItem1.Text = "Documentos";
             this.documentosToolStripMenuItem1.Click += new System.EventHandler(this.documentosToolStripMenuItem1_Click);
-            // 
-            // janelaToolStripMenuItem
-            // 
-            this.janelaToolStripMenuItem.Name = "janelaToolStripMenuItem";
-            this.janelaToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
-            this.janelaToolStripMenuItem.Text = "Janela";
             // 
             // fluxoDeCaixaToolStripMenuItem
             // 
             this.fluxoDeCaixaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.consultaToolStripMenuItem});
+            this.consultaToolStripMenuItem,
+            this.pagarReceberToolStripMenuItem});
             this.fluxoDeCaixaToolStripMenuItem.Name = "fluxoDeCaixaToolStripMenuItem";
             this.fluxoDeCaixaToolStripMenuItem.Size = new System.Drawing.Size(97, 20);
             this.fluxoDeCaixaToolStripMenuItem.Text = "Fluxo De Caixa";
@@ -144,8 +140,21 @@
             // 
             this.consultaToolStripMenuItem.Name = "consultaToolStripMenuItem";
             this.consultaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.consultaToolStripMenuItem.Text = "Consulta";
+            this.consultaToolStripMenuItem.Text = "Fluxo De Caixa";
             this.consultaToolStripMenuItem.Click += new System.EventHandler(this.consultaToolStripMenuItem_Click);
+            // 
+            // janelaToolStripMenuItem
+            // 
+            this.janelaToolStripMenuItem.Name = "janelaToolStripMenuItem";
+            this.janelaToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
+            this.janelaToolStripMenuItem.Text = "Janela";
+            // 
+            // pagarReceberToolStripMenuItem
+            // 
+            this.pagarReceberToolStripMenuItem.Name = "pagarReceberToolStripMenuItem";
+            this.pagarReceberToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pagarReceberToolStripMenuItem.Text = "Pagar/Receber";
+            this.pagarReceberToolStripMenuItem.Click += new System.EventHandler(this.pagarReceberToolStripMenuItem_Click);
             // 
             // FormPrincipal
             // 
@@ -180,6 +189,7 @@
         private System.Windows.Forms.ToolStripMenuItem documentosToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem fluxoDeCaixaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consultaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pagarReceberToolStripMenuItem;
     }
 }
 

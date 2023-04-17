@@ -123,6 +123,7 @@
             // 
             // edPesquisar
             // 
+            this.edPesquisar.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.edPesquisar.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.edPesquisar.Name = "edPesquisar";
             this.edPesquisar.Size = new System.Drawing.Size(250, 39);

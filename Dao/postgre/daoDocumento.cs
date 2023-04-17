@@ -10,7 +10,6 @@ namespace Fluxo_De_Caixa.Dao.postgre
 {
     class daoDocumento
     {
-
         public Documento Insert(Documento obj)
         {
 
@@ -186,7 +185,6 @@ namespace Fluxo_De_Caixa.Dao.postgre
             return obj;
         }
 
-
         private Documento PopulaDocumento(NpgsqlDataReader objDataReader)
         {
 
@@ -224,12 +222,11 @@ namespace Fluxo_De_Caixa.Dao.postgre
             obj.UserInsert = Convert.ToInt32(objDataReader["USER_INSERT"]);
             obj.UserUpdate = Convert.ToInt32(objDataReader["USER_UPDATE"]);
             obj._Cod_Conta = objDataReader["_Cod_Conta"].ToString();
-            obj._Conta      = objDataReader["_Conta"].ToString();
+            obj._Conta = objDataReader["_Conta"].ToString();
 
 
             return obj;
         }
-
 
         public List<Documento> getAll(int Ordenacao, string Filtro)
         {
@@ -283,7 +280,6 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             return lista;
         }
-
 
         public string SqlGrid(int Ordenacao, string Filtro)
         {
@@ -375,6 +371,9 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
         public string SqlGridBrowse(int Ordenacao, string Filtro, string Filtro_Clifor)
         {
+
+            DateTime Hoje = DateTime.Now;
+
             string CliFor = "";
 
             string FiltroCliFor = "";
@@ -387,7 +386,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             }
 
-            
+
             string Where = "";
 
             string OrderBy = "";
@@ -402,7 +401,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
                                  "   ,  case             " +
                                  "         when doc.tipo = 'R' and doc.clifor != 999999 then cli.razao " +
                                  "         when doc.tipo = 'P' and doc.clifor != 999999 then forne.razao " +
-                                 "         else                                              '' "+ 
+                                 "         else                                              '' " +
                                  "      end  as  razao   " +
                                  "   ,  case " +
                                  "         when doc.tipo = 'R' then ct_cli.codigo " +
@@ -423,8 +422,8 @@ namespace Fluxo_De_Caixa.Dao.postgre
                                  "   ,  doc.saldo        " +
                                  "   ,  doc.obs          " +
                                  " 	FROM documentos doc " +
-                                 "LEFT  JOIN clientes     cli on cli.id_empresa = doc.id_empresa    and cli.codigo = doc.clifor "+
-                                 "LEFT  JOIN fornecedores forne  on forne.id_empresa = doc.id_empresa    and forne.codigo = doc.clifor "+
+                                 "LEFT  JOIN clientes     cli on cli.id_empresa = doc.id_empresa    and cli.codigo = doc.clifor " +
+                                 "LEFT  JOIN fornecedores forne  on forne.id_empresa = doc.id_empresa    and forne.codigo = doc.clifor " +
                                  "LEFT  JOIN contas ct_cli on ct_cli.id_empresa = doc.id_empresa    and ct_cli.codigo = cli.conta  " +
                                  "LEFT  JOIN contas ct_for on ct_for.id_empresa = doc.id_empresa    and ct_for.codigo = forne.conta ";
 
@@ -446,16 +445,21 @@ namespace Fluxo_De_Caixa.Dao.postgre
                     case 2:
                         Where = $" DOC.VENCIMENTO = '{Filtro.Trim().DateToDb()}'";
                         break;
+                    case 3:
+                        Where = $" ( TO_CHAR(DOC.VENCIMENTO, 'mm-YYYY') = '{Hoje.ToString("MM-yyyy")}' ) ";
+                        break;
+                    case 4:
+                        Where = $" (  TO_CHAR(DOC.EMISSAO, 'mm-YYYY') = '{Hoje.ToString("MM-yyyy")}' ) ";
+                        break;
                 }
-                             
+
 
             }
 
             if (FiltroCliFor != "" || Where != "")
             {
-                string And = Where != "" ? "AND" : "";
 
-                Where = $" WHERE {FiltroCliFor} {And} {Where}";
+                Where = $" WHERE {FiltroCliFor} { (((Where != "") && (FiltroCliFor != "")) ? "AND" : "")} {Where}";
             }
 
             //Adiciona ORDER BY
@@ -463,13 +467,19 @@ namespace Fluxo_De_Caixa.Dao.postgre
             switch (Ordenacao)
             {
                 case 0:
-                    OrderBy = $" ORDER BY DOC.DOC";
+                    OrderBy = $" ORDER BY DOC.DOC,DOC.SERIE,DOC.PARCELA ";
                     break;
                 case 1:
-                    OrderBy = $" ORDER BY DOC.EMISSAO";
+                    OrderBy = $" ORDER BY DOC.EMISSAO,DOC.DOC,DOC.SERIE,DOC.PARCELA ";
                     break;
                 case 2:
-                    OrderBy = $" ORDER BY DOC.VENCIMENTO";
+                    OrderBy = $" ORDER BY DOC.VENCIMENTO,DOC.DOC,DOC.SERIE,DOC.PARCELA ";
+                    break;
+                case 3:
+                    OrderBy = $" ORDER BY DOC.VENCIMENTO,DOC.DOC,DOC.SERIE,DOC.PARCELA ";
+                    break;
+                case 4:
+                    OrderBy = $" ORDER BY DOC.EMISSAO,DOC.DOC,DOC.SERIE,DOC.PARCELA ";
                     break;
             }
 
@@ -477,6 +487,364 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             return strSelect;
 
+        }
+
+        public List<string> MesesAtivos()
+        {
+            List<string> retorno = new List<string>();
+
+            string strStringConexao = DataBase.RunCommand.connectionString;
+
+            string strSelect = " SELECT TO_CHAR(VENCIMENTO, 'mm/YYYY') AS MESES  FROM DOCUMENTOS  " +
+                               " WHERE ID_EMPRESA = 1 GROUP BY ID_EMPRESA , TO_CHAR(VENCIMENTO, 'mm/YYYY') " +
+                               " ORDER BY ID_EMPRESA, TO_CHAR(VENCIMENTO, 'mm/YYYY') ";
+
+            Console.WriteLine(strSelect);
+
+            using (var objConexao = new NpgsqlConnection(strStringConexao))
+            {
+                using (var objCommand = new NpgsqlCommand(strSelect, objConexao))
+                {
+                    try
+                    {
+                        objConexao.Open();
+
+                        var objDataReader = objCommand.ExecuteReader();
+
+                        if (objDataReader.HasRows)
+                        {
+
+                            while (objDataReader.Read())
+                            {
+
+                                retorno.Add(objDataReader["MESES"].ToString());
+
+                            }
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+                    finally
+                    {
+                        objConexao.Close();
+                    }
+                }
+            }
+
+
+            return retorno;
+        }
+
+        public List<Fluxo> GetFluxo(string mes)
+        {
+            List<Fluxo> retorno = new List<Fluxo>();
+
+            double Saldo = 0;
+
+            string strStringConexao = DataBase.RunCommand.connectionString;
+
+            string strSelect = " SELECT                               " +
+            "        DOC.VENCIMENTO AS DOC_VENCIMENT                  " +
+            "      , DOC.DOC AS DOC_DOC                               " +
+            "      , DOC.SERIE AS DOC_SERIE                           " +
+            "      , DOC.PARCELA AS DOC_PARCELA                       " +
+            "      , DOC.EMISSAO AS DOC_EMISSAO                       " +
+            "      , DOC.CLIFOR AS DOC_CLIFOR                         " +
+            "      , CASE                                             " +
+            "         WHEN DOC.TIPO = 'R'  THEN CLI.RAZAO             " +
+            "         WHEN DOC.TIPO = 'P'  THEN FORNE.RAZAO           " +
+            "        END  AS DOC_RAZAO                                " +
+            "      , CASE                                             " +
+            "         WHEN DOC.TIPO = 'R' THEN CT_CLI.DESCRICAO       " +
+            "         WHEN DOC.TIPO = 'P' THEN CT_FOR.DESCRICAO       " +
+            "         ELSE ''                                         " +
+            "        END AS _CONTA                                    " +
+            "      , DOC.OBS AS DOC_OBS                               " +
+            "      , CASE                                             " +
+            "         WHEN DOC.TIPO = 'R'  THEN  0                    " +
+            "         WHEN DOC.TIPO = 'P'  THEN (DOC.VALOR-DOC.ABATIMENTO)+DOC.JUROS   " +
+            "       END  AS DEBITO                                    " +
+            "     , CASE                                              " +
+            "         WHEN DOC.TIPO = 'R'  THEN (DOC.VALOR-DOC.ABATIMENTO)+DOC.JUROS  " +
+            "        WHEN DOC.TIPO = 'P'   THEN  0                     " +
+            "        END AS  CREDITO                                  " +
+            "       , 0 AS SALDO                                      " +
+            "  FROM DOCUMENTOS DOC                                    " +
+            "  LEFT JOIN CLIENTES     CLI ON CLI.ID_EMPRESA = DOC.ID_EMPRESA AND CLI.CODIGO = DOC.CLIFOR  " +
+            "  LEFT JOIN FORNECEDORES FORNE ON FORNE.ID_EMPRESA = DOC.ID_EMPRESA AND FORNE.CODIGO = DOC.CLIFOR  " +
+            "  LEFT JOIN CONTAS CT_CLI ON CT_CLI.ID_EMPRESA = DOC.ID_EMPRESA    AND CT_CLI.CODIGO = CLI.CONTA   " +
+            "  LEFT JOIN CONTAS CT_FOR ON CT_FOR.ID_EMPRESA = DOC.ID_EMPRESA    AND CT_FOR.CODIGO = FORNE.CONTA " +
+           $"  WHERE TO_CHAR(DOC.VENCIMENTO,'mm/YYYY') = '{mes}' "+
+            "  ORDER BY DOC.VENCIMENTO,DOC.DOC,DOC.SERIE,DOC.PARCELA ";
+
+            Console.WriteLine(strSelect);
+
+            using (var objConexao = new NpgsqlConnection(strStringConexao))
+            {
+                using (var objCommand = new NpgsqlCommand(strSelect, objConexao))
+                {
+                    try
+                    {
+                        objConexao.Open();
+
+                        var objDataReader = objCommand.ExecuteReader();
+
+                        if (objDataReader.HasRows)
+                        {
+                            var sld = new Fluxo();
+
+                            sld.doc_razao = "SALDO INICIAL:";
+
+                            sld.saldo = 0;
+
+                            retorno.Add(sld);
+
+                            Saldo = 0;
+
+                            while (objDataReader.Read())
+                            {
+                                var obj = new Fluxo();
+
+                                obj = PopulaFluxo(objDataReader);
+
+                                Saldo = Saldo + (obj.credito - obj.debito);
+
+                                obj.saldo = Saldo;
+
+                                retorno.Add(obj);
+                            }
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+                    finally
+                    {
+                        objConexao.Close();
+                    }
+                }
+            }
+
+
+            return retorno;
+        }
+
+        private Fluxo PopulaFluxo(NpgsqlDataReader objDataReader)
+        {
+            Fluxo obj = new Fluxo();
+
+            try
+            {
+                obj.doc_venciment = Convert.ToDateTime(objDataReader["DOC_VENCIMENT"]);
+            }
+            catch (Exception ex)
+            {
+                obj.doc_venciment = null;
+            }
+
+            obj.doc_doc = objDataReader["DOC_DOC"].ToString();
+            obj.doc_serie = objDataReader["DOC_SERIE"].ToString();
+            obj.doc_parcela = objDataReader["DOC_PARCELA"].ToString();
+            try
+            {
+                obj.doc_emissao = Convert.ToDateTime(objDataReader["DOC_VENCIMENT"]);
+            }
+            catch (Exception ex)
+            {
+                obj.doc_emissao = null;
+            }
+
+            obj.doc_clifor = Convert.ToInt32(objDataReader["DOC_CLIFOR"]);
+            obj.doc_razao = objDataReader["doc_razao"].ToString();
+            obj._conta = objDataReader["_CONTA"].ToString();
+            obj.debito = Convert.ToDouble(objDataReader["DEBITO"]);
+            obj.credito = Convert.ToDouble(objDataReader["CREDITO"]);
+            obj.saldo = 0;
+
+
+            return obj;
+        }
+
+        public List<RegPag> GetRegPag(Parametro_01 par)
+        {
+            List<RegPag> retorno = new List<RegPag>();
+
+            DateTime Hoje = DateTime.Now;
+
+            string Where = "";
+
+            if (par.Tipo == "R")
+            {
+                if (Where != "") Where += " AND ";
+                Where += " DOC.TIPO = 'R'";
+
+            }
+            else
+            {
+                if (Where != "") Where += " AND ";
+                Where += " DOC.TIPO = 'P'";
+            }
+
+            Where += $" AND ( DOC.VENCIMENTO >= '{par.Inicial.ToString("yyyy-MM-dd")}' AND DOC.VENCIMENTO <= '{par.Final.ToString("yyyy-MM-dd")}' ) ";
+
+            if (par.ClirFor != 0)
+            {
+                if (Where != "") Where += " AND ";
+                Where += $" DOC.CLIFOR = {par.ClirFor} ";
+
+            }
+
+            if (par.Situacao > 0)
+            {
+                //Em aberto
+                if (par.Situacao == 1)
+                {
+                    Where += " AND ( DOC.SALDO > 0 )";
+                }
+                //Em atraso
+                if (par.Situacao == 2)
+                {
+                    Where += $" AND ( DOC.SALDO > 0 ) AND ( DOC.VENCIMENTO > '{Hoje.ToString("yyyy-MM-dd")}')";
+                }
+                //Encerrado
+                if (par.Situacao == 3)
+                {
+                    Where += " AND ( DOC.SALDO = 0 )";
+                }
+            }
+
+
+            Where = $"WHERE {Where}";
+
+            double Total = 0;
+
+            string strStringConexao = DataBase.RunCommand.connectionString;
+
+            string strSelect = " SELECT                               " +
+            "        DOC.VENCIMENTO AS DOC_VENCIMENT                  " +
+            "      , DOC.DOC AS DOC_DOC                               " +
+            "      , DOC.SERIE AS DOC_SERIE                           " +
+            "      , DOC.PARCELA AS DOC_PARCELA                       " +
+            "      , DOC.EMISSAO AS DOC_EMISSAO                       " +
+            "      , DOC.CLIFOR AS DOC_CLIFOR                         " +
+            "      , CASE                                             " +
+            "         WHEN DOC.TIPO = 'R'  THEN CLI.RAZAO             " +
+            "         WHEN DOC.TIPO = 'P'  THEN FORNE.RAZAO           " +
+            "        END  AS DOC_RAZAO                                " +
+            "      , CASE                                             " +
+            "         WHEN DOC.TIPO = 'R' THEN CT_CLI.DESCRICAO       " +
+            "         WHEN DOC.TIPO = 'P' THEN CT_FOR.DESCRICAO       " +
+            "         ELSE ''                                         " +
+            "        END AS _CONTA                                    " +
+            "      , DOC.OBS AS DOC_OBS                               " +
+            "      , DOC.VALOR       AS DOC_VALOR                     " +
+            "      , DOC.ABATIMENTO  AS DOC_ABATIMENTO                " +
+            "      , DOC.JUROS       AS DOC_JUROS                     " +
+            "      , DOC.SALDO       AS DOC_SALDO                     " +
+            "      , 0               AS TOTAL                         " +
+            "  FROM DOCUMENTOS DOC                                    " +
+            "  LEFT JOIN CLIENTES     CLI ON CLI.ID_EMPRESA = DOC.ID_EMPRESA AND CLI.CODIGO = DOC.CLIFOR  " +
+            "  LEFT JOIN FORNECEDORES FORNE ON FORNE.ID_EMPRESA = DOC.ID_EMPRESA AND FORNE.CODIGO = DOC.CLIFOR  " +
+            "  LEFT JOIN CONTAS CT_CLI ON CT_CLI.ID_EMPRESA = DOC.ID_EMPRESA    AND CT_CLI.CODIGO = CLI.CONTA   " +
+            "  LEFT JOIN CONTAS CT_FOR ON CT_FOR.ID_EMPRESA = DOC.ID_EMPRESA    AND CT_FOR.CODIGO = FORNE.CONTA " +
+            $" {Where} " +
+            "  ORDER BY DOC.VENCIMENTO,DOC.DOC,DOC.SERIE,DOC.PARCELA ";
+
+            Console.WriteLine(strSelect);
+
+            using (var objConexao = new NpgsqlConnection(strStringConexao))
+            {
+                using (var objCommand = new NpgsqlCommand(strSelect, objConexao))
+                {
+                    try
+                    {
+                        objConexao.Open();
+
+                        var objDataReader = objCommand.ExecuteReader();
+
+                        if (objDataReader.HasRows)
+                        {
+                            var sld = new RegPag();
+
+                            sld.doc_razao = "SALDO INICIAL:";
+
+                            sld.total = 0;
+
+                            retorno.Add(sld);
+
+                            Total = 0;
+
+                            while (objDataReader.Read())
+                            {
+                                var obj = new RegPag();
+
+                                obj = PopulaRegPag(objDataReader);
+
+                                Total = Total + obj.doc_saldo;
+
+                                obj.total = Total;
+
+                                retorno.Add(obj);
+                            }
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+                    finally
+                    {
+                        objConexao.Close();
+                    }
+                }
+            }
+
+
+            return retorno;
+        }
+
+        private RegPag PopulaRegPag(NpgsqlDataReader objDataReader)
+        {
+            RegPag obj = new RegPag();
+
+            try
+            {
+                obj.doc_venciment = Convert.ToDateTime(objDataReader["DOC_VENCIMENT"]);
+            }
+            catch (Exception ex)
+            {
+                obj.doc_venciment = null;
+            }
+
+            obj.doc_doc = objDataReader["DOC_DOC"].ToString();
+            obj.doc_serie = objDataReader["DOC_SERIE"].ToString();
+            obj.doc_parcela = objDataReader["DOC_PARCELA"].ToString();
+            try
+            {
+                obj.doc_emissao = Convert.ToDateTime(objDataReader["DOC_VENCIMENT"]);
+            }
+            catch (Exception ex)
+            {
+                obj.doc_emissao = null;
+            }
+
+            obj.doc_clifor = Convert.ToInt32(objDataReader["DOC_CLIFOR"]);
+            obj.doc_razao = objDataReader["doc_razao"].ToString();
+            obj._conta = objDataReader["_CONTA"].ToString();
+            obj.doc_obs = objDataReader["DOC_OBS"].ToString();
+            obj.doc_valor = Convert.ToDouble(objDataReader["DOC_VALOR"]);
+            obj.doc_abatimento = Convert.ToDouble(objDataReader["DOC_ABATIMENTO"]);
+            obj.doc_saldo = Convert.ToDouble(objDataReader["DOC_SALDO"]);
+            obj.total = 0;
+
+
+            return obj;
         }
 
     }

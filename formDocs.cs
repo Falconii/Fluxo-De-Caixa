@@ -25,7 +25,7 @@ namespace Fluxo_De_Caixa
 
         string proprietario = "Documento";
 
-        List<Cliente> lsClientes        = new List<Cliente>();
+        List<Cliente> lsClientes = new List<Cliente>();
         List<Fornecedor> lsFornecedores = new List<Fornecedor>();
 
         public ToolStripMenuItem menu { get; internal set; }
@@ -33,8 +33,8 @@ namespace Fluxo_De_Caixa
         public formDocs()
         {
             InitializeComponent();
-            tbDelete.ToolTipText =  $"Click Aqui Para Excluir o {proprietario}";
-            tbEditar.ToolTipText =  $"Click Aqui Para Alterar O {proprietario}";
+            tbDelete.ToolTipText = $"Click Aqui Para Excluir o {proprietario}";
+            tbEditar.ToolTipText = $"Click Aqui Para Alterar O {proprietario}";
             tbIncluir.ToolTipText = $"Click Aqui Para Incluir Um {proprietario} Novo";
             cbPesquisar.SelectedIndex = Ordenacao;
         }
@@ -48,13 +48,16 @@ namespace Fluxo_De_Caixa
             SetarVisoes();
         }
 
-        private void SetartParametros() {
+        private void SetartParametros()
+        {
             tpCbCliFor.Items.Clear();
-            lsClientes.ForEach(cliente => {
-                tpCbCliFor.Items.Add($"(C){cliente.IdEmpresa.ToString("000000")}-{cliente.Razao}");
+            lsClientes.ForEach(cliente =>
+            {
+                tpCbCliFor.Items.Add($"(C){cliente.Codigo.ToString("000000")}-{cliente.Razao}");
             });
-            lsFornecedores.ForEach(fornecedor => {
-                tpCbCliFor.Items.Add($"(F){fornecedor.IdEmpresa.ToString("000000")}-{fornecedor.Razao}");
+            lsFornecedores.ForEach(fornecedor =>
+            {
+                tpCbCliFor.Items.Add($"(F){fornecedor.Codigo.ToString("000000")}-{fornecedor.Razao}");
             });
         }
         private void SetarProperties(bool value)
@@ -91,11 +94,10 @@ namespace Fluxo_De_Caixa
 
         private void loadDocumentos()
         {
-           preencheDataGridView();
+            preencheDataGridView();
 
         }
 
-    
         private void loadClientes()
         {
             daoCliente dao = new daoCliente();
@@ -125,7 +127,7 @@ namespace Fluxo_De_Caixa
 
                     daoDocumento dao = new daoDocumento();
 
-                    documento = dao.Seek(1,Id);
+                    documento = dao.Seek(1, Id);
 
                     if (documento == null)
                     {
@@ -243,7 +245,7 @@ namespace Fluxo_De_Caixa
                         if (retorno != null)
                         {
 
-                            MessageBox.Show($"Documento Incluído No Código {retorno.Id}","Atenção!",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                            MessageBox.Show($"Documento Incluído No Código {retorno.Id}", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         }
                         else
@@ -254,9 +256,11 @@ namespace Fluxo_De_Caixa
 
                         }
 
-                        visao = Visoes.Browser;
+                        visao = Visoes.Nova;
 
-                        loadDocumentos();
+                        documento = new Documento();
+
+                        Atualiza();
 
                         SetarVisoes();
 
@@ -266,12 +270,12 @@ namespace Fluxo_De_Caixa
 
                         documento.Saldo = (documento.Valor - documento.Abatimento + documento.Juros) - documento.VlrPago;
 
-                        documento.UserUpdate= UsuarioSistema.Usuario.Codigo;
+                        documento.UserUpdate = UsuarioSistema.Usuario.Codigo;
 
                         dao.Update(documento);
 
                         MessageBox.Show($"Documento Alterado Com Sucesso!", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        
+
                         visao = Visoes.Browser;
 
                         loadDocumentos();
@@ -312,6 +316,26 @@ namespace Fluxo_De_Caixa
         }
         private void BtBuscar_Click(object sender, EventArgs e)
         {
+            string Erros = "";
+
+            if ( ( cbPesquisar.SelectedIndex == 1 ) || (cbPesquisar.SelectedIndex == 2))
+            {
+                Erros = ValidaParData();
+
+                if (Erros.Length > 0)
+                {
+                    MessageBox.Show("Verifique A Data OK");
+
+                    return;
+                }
+            }
+
+            if ((cbPesquisar.SelectedIndex == 3) || (cbPesquisar.SelectedIndex == 4))
+            {
+                edPesquisar.Text = ".";
+            }
+
+
             loadDocumentos();
         }
 
@@ -404,17 +428,19 @@ namespace Fluxo_De_Caixa
 
         }
 
+   
+
         public void preencheDataGridView()
         {
             //faz a conexão
-            var  conn = new NpgsqlConnection(Fluxo_De_Caixa.DataBase.RunCommand.connectionString);
+            var conn = new NpgsqlConnection(Fluxo_De_Caixa.DataBase.RunCommand.connectionString);
 
             try //inicio do tratamento de exceções 
             {
 
                 daoDocumento dao = new daoDocumento();
 
-                string strSelect = dao.SqlGridBrowse(Ordenacao, edPesquisar.Text.Trim(), tpCbCliFor.SelectedIndex >= 0 ?   tpCbCliFor.SelectedItem.ToString() :  "");
+                string strSelect = dao.SqlGridBrowse(Ordenacao, edPesquisar.Text.Trim(), tpCbCliFor.SelectedIndex >= 0 ? tpCbCliFor.SelectedItem.ToString() : "");
 
                 conn.Open(); //abre conexão 
                 var sql = new NpgsqlCommand(strSelect, conn); //comando SQL 
@@ -451,8 +477,8 @@ namespace Fluxo_De_Caixa
         {
             string Result = "";
 
-            
-            if (!Validacoes.IsTamanho(documento.Doc,1,9))
+
+            if (!Validacoes.IsTamanho(documento.Doc, 1, 9))
             {
                 Result += "Tamanho do Campo Documento Deve Ficar Entre 1 e 9 !\n";
             }
@@ -484,7 +510,7 @@ namespace Fluxo_De_Caixa
             {
                 Result += "Tamanho do Campo Observação Deve Ter No Máximo 30 !\n";
             }
-           
+
             return Result;
 
         }
@@ -493,7 +519,7 @@ namespace Fluxo_De_Caixa
         {
             string Result = "";
 
-            
+
             if (!Validacoes.NoZero(documento.Valor))
             {
                 Result += "Campo Valor É Obrigatório !\n";
@@ -518,16 +544,16 @@ namespace Fluxo_De_Caixa
         private void Atualiza()
         {
 
-            int id   = cbTipo.FindString(documento.Tipo);
+            int id = cbTipo.FindString(documento.Tipo);
             int idx = -1;
             if (documento.Tipo == "R")
             {
                 idx = lsClientes.FindIndex(cl => cl.Codigo == documento.Clifor);
-            } else
+            }
+            else
             {
                 idx = lsFornecedores.FindIndex(fr => fr.Codigo == documento.Clifor);
             }
-
             txtId.Text = documento.Id.ToString();
             cbTipo.SelectedIndex = id;
             txtDocumento.Text = documento.Doc;
@@ -535,13 +561,13 @@ namespace Fluxo_De_Caixa
             txtParcela.Text = documento.Parcela;
             cbCliFor.SelectedIndex = idx;
             txtConta.Text = $"{documento._Cod_Conta}-{documento._Conta}";
-            txtEmissao.Text = documento.Emissao?.ToString("dd/MM/yyyy");
-            txtVencimento.Text = documento.Vencimento?.ToString("dd/MM/yyyy");
-            txtValor.Text = documento.Valor.DoubleParseDb();
-            txtAbatimento.Text = documento.Abatimento.DoubleParseDb();
-            txtJuros.Text = documento.Juros.DoubleParseDb();
-            txtVlrPago.Text = documento.VlrPago.DoubleParseDb();
-            txtSaldo.Text = documento.Saldo.DoubleParseDb();
+            txtEmissao.Text = documento.Emissao?.ToString("dd/MM/yy");
+            txtVencimento.Text = documento.Vencimento?.ToString("dd/MM/yy");
+            txtValor.Text = string.Format("{0:0.00}", documento.Valor);
+            txtAbatimento.Text = string.Format("{0:0.00}", documento.Abatimento);
+            txtJuros.Text = string.Format("{0:0.00}", documento.Juros); 
+            txtVlrPago.Text = string.Format("{0:0.00}", documento.VlrPago); 
+            txtSaldo.Text = string.Format("{0:0.00}", documento.Saldo); 
             txtObs.Text = documento.Obs.Trim();
         }
 
@@ -550,23 +576,27 @@ namespace Fluxo_De_Caixa
 
         private void PopularDoc()
         {
+            documento.Tipo = cbTipo.SelectedItem.ToString().Substring(0, 1);
+            if (cbCliFor.SelectedIndex < 0 )
+            {
+                cbCliFor.SelectedIndex = 0;
+            }
             int cod = cbCliFor.SelectedItem.ToString().Substring(0, 6).IntParse();
-            documento.Id         = txtId.Text.IntParse();
-            documento.Tipo       = cbTipo.SelectedItem.ToString().Substring(0, 1);
-            documento.Doc        = txtDocumento.Text;
-            documento.Serie      = txtSerie.Text;
-            documento.Parcela    = txtParcela.Text;
-            documento.Clifor     = cod;
-            documento.Emissao    = Convert.ToDateTime(txtEmissao.Text).Date; 
-            documento.Vencimento = Convert.ToDateTime(txtEmissao.Text).Date; 
-            documento.Valor      = txtValor.Text.DoubleParse(); ;
+            documento.Id = txtId.Text.IntParse();
+            documento.Doc = txtDocumento.Text;
+            documento.Serie = txtSerie.Text;
+            documento.Parcela = txtParcela.Text;
+            documento.Clifor = cod;
+            documento.Emissao = Convert.ToDateTime(txtEmissao.Text).Date;
+            documento.Vencimento = Convert.ToDateTime(txtVencimento.Text).Date;
+            documento.Valor = txtValor.Text.DoubleParse(); ;
             documento.Abatimento = txtAbatimento.Text.DoubleParse();
-            documento.Juros      = txtJuros.Text.DoubleParse();
-            documento.VlrPago    = txtVlrPago.Text.DoubleParse(); 
-            documento.Saldo      = txtSaldo.Text.DoubleParse(); 
-            documento.Obs        = txtObs.Text;
+            documento.Juros = txtJuros.Text.DoubleParse();
+            documento.VlrPago = txtVlrPago.Text.DoubleParse();
+            documento.Saldo = txtSaldo.Text.DoubleParse();
+            documento.Obs = txtObs.Text;
         }
-          
+
         private void SetarVisoes()
         {
 
@@ -605,7 +635,7 @@ namespace Fluxo_De_Caixa
 
         private void SetarBotoes()
         {
-           
+
             switch (visao)
             {
                 case Visoes.Browser:
@@ -652,6 +682,7 @@ namespace Fluxo_De_Caixa
                     edPesquisar.Visible = false;
                     btBuscar.Visible = false;
                     SetarProperties(true);
+                    txtDocumento.Focus();
                     break;
                 case Visoes.Nova:
                     tpCbCliFor.Visible = false;
@@ -667,6 +698,7 @@ namespace Fluxo_De_Caixa
                     edPesquisar.Visible = false;
                     btBuscar.Visible = false;
                     SetarProperties(true);
+                    txtDocumento.Focus();
                     break;
 
             }
@@ -679,13 +711,13 @@ namespace Fluxo_De_Caixa
             loadDocumentos();
         }
 
-   
+
 
         private void FormUsuarios_FormClosed(object sender, FormClosedEventArgs e)
         {
             menu.Enabled = true;
         }
-        
+
         private void FormUsuarios_Activated(object sender, EventArgs e)
         {
             WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -711,27 +743,29 @@ namespace Fluxo_De_Caixa
 
             DateTime Emissao = DateTime.Now;
 
-            DateTime Venc    = DateTime.Now;
+            DateTime Venc = DateTime.Now;
 
-            dataValida = DateTime.TryParseExact(txtEmissao.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture,
+            dataValida = DateTime.TryParseExact(txtEmissao.Text, "dd/MM/yy", CultureInfo.InvariantCulture,
                                                      DateTimeStyles.None, out data);
 
             if (!dataValida)
             {
                 cRetorno += "Data Emissão Inválida !! \n";
-            } else
+            }
+            else
             {
                 Emissao = data;
             }
 
-            dataValida = DateTime.TryParseExact(txtVencimento.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture,
+            dataValida = DateTime.TryParseExact(txtVencimento.Text, "dd/MM/yy", CultureInfo.InvariantCulture,
                                                      DateTimeStyles.None, out data);
 
 
             if (!dataValida)
             {
                 cRetorno += "Data Vencimento Inválida !! \n";
-            } else
+            }
+            else
             {
                 Venc = data;
             }
@@ -742,6 +776,25 @@ namespace Fluxo_De_Caixa
                 {
                     cRetorno += "Data Venc. Deverá Ser Igual Ou Posterior A Data Emissão! \n";
                 }
+            }
+
+            return cRetorno;
+        }
+
+        private String ValidaParData()
+        {
+            String cRetorno = "";
+
+            bool dataValida;
+
+            DateTime data;
+
+            dataValida = DateTime.TryParseExact(edPesquisar.Text, "dd/MM/yy", CultureInfo.InvariantCulture,
+                                                     DateTimeStyles.None, out data);
+
+            if (!dataValida)
+            {
+                cRetorno += "Data Pesquisa Inválida !! \n";
             }
 
             return cRetorno;
@@ -771,16 +824,17 @@ namespace Fluxo_De_Caixa
 
         private void cbTipo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
             cbCliFor.Items.Clear();
 
-            if (cbTipo.SelectedItem.ToString().Substring(0,1) == "R")
+            if (cbTipo.SelectedItem.ToString().Substring(0, 1) == "R")
             {
                 lsClientes.ForEach(cliente =>
                 {
                     cbCliFor.Items.Add($"{cliente.Codigo.ToString("000000")}-{cliente.Razao}");
                 });
-            } else
+            }
+            else
             {
                 lsFornecedores.ForEach(fornece =>
                 {
@@ -814,7 +868,7 @@ namespace Fluxo_De_Caixa
 
         private void tbBaixar_Click(object sender, EventArgs e)
         {
-            var form = new formBaixas(documento.IdEmpresa,documento.Id);
+            var form = new formBaixas(documento.IdEmpresa, documento.Id);
 
             form.Show();
             /*
@@ -854,7 +908,7 @@ namespace Fluxo_De_Caixa
 
             }
 
-            documento.Saldo = ( documento.Valor - documento.Abatimento + documento.Juros )  - documento.VlrPago;
+            documento.Saldo = (documento.Valor - documento.Abatimento + documento.Juros) - documento.VlrPago;
 
             Atualiza();
         }

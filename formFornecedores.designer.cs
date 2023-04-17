@@ -46,6 +46,7 @@
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPrincipal = new System.Windows.Forms.TabPage();
             this.gbSenha = new System.Windows.Forms.GroupBox();
+            this.cbConta = new System.Windows.Forms.ComboBox();
             this.lbConta = new System.Windows.Forms.Label();
             this.txtTel1 = new System.Windows.Forms.MaskedTextBox();
             this.txtEmail = new System.Windows.Forms.TextBox();
@@ -58,7 +59,6 @@
             this.lblRazao = new System.Windows.Forms.Label();
             this.txtCodigo = new System.Windows.Forms.TextBox();
             this.lblCodigo = new System.Windows.Forms.Label();
-            this.cbConta = new System.Windows.Forms.ComboBox();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dbGridView)).BeginInit();
             this.tabControl.SuspendLayout();
@@ -123,6 +123,7 @@
             // 
             // edPesquisar
             // 
+            this.edPesquisar.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.edPesquisar.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.edPesquisar.Name = "edPesquisar";
             this.edPesquisar.Size = new System.Drawing.Size(250, 39);
@@ -254,6 +255,14 @@
             this.gbSenha.TabStop = false;
             this.gbSenha.Text = "E-Mail";
             // 
+            // cbConta
+            // 
+            this.cbConta.FormattingEnabled = true;
+            this.cbConta.Location = new System.Drawing.Point(595, 48);
+            this.cbConta.Name = "cbConta";
+            this.cbConta.Size = new System.Drawing.Size(364, 21);
+            this.cbConta.TabIndex = 6;
+            // 
             // lbConta
             // 
             this.lbConta.AutoSize = true;
@@ -364,14 +373,6 @@
             this.lblCodigo.Size = new System.Drawing.Size(40, 13);
             this.lblCodigo.TabIndex = 8;
             this.lblCodigo.Text = "Codigo";
-            // 
-            // cbConta
-            // 
-            this.cbConta.FormattingEnabled = true;
-            this.cbConta.Location = new System.Drawing.Point(595, 48);
-            this.cbConta.Name = "cbConta";
-            this.cbConta.Size = new System.Drawing.Size(364, 21);
-            this.cbConta.TabIndex = 6;
             // 
             // formFornecedores
             // 

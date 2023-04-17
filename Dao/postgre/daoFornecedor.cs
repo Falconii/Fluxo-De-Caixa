@@ -154,6 +154,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
             obj.Tel1 = objDataReader["TEL1"].ToString();
             obj.Email = objDataReader["EMAIL"].ToString();
             obj.Conta = objDataReader["CONTA"].ToString();
+            obj._ContaDesc = objDataReader["CONTA_DESC"].ToString();
 
             return obj;
         }
@@ -219,15 +220,17 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             string OrderBy = "";
 
-            string strSelect = "SELECT  " + 
-                                "   ID_EMPRESA "+
-                                " , CODIGO " +
-                                " , RAZAO " +
-                                " , FANTASI " +
-                                " , TEL1 " +
-                                " , EMAIL " +
-                                " , CONTA " +
-                                " FROM FORNECEDORES ";
+            string strSelect = "SELECT  " +
+                                "   FORNECEDORES.ID_EMPRESA " +
+                                " , FORNECEDORES.CODIGO " +
+                                " , FORNECEDORES.RAZAO " +
+                                " , FORNECEDORES.FANTASI " +
+                                " , FORNECEDORES.TEL1 " +
+                                " , FORNECEDORES.EMAIL " +
+                                " , FORNECEDORES.CONTA " +
+                                " , CON.DESCRICAO CONTA_DESC " +
+                                " FROM FORNECEDORES "+
+                                " INNER JOIN CONTAS CON ON CON.ID_EMPRESA = FORNECEDORES.ID_EMPRESA AND CON.CODIGO = FORNECEDORES.CONTA ";
 
 
             //Adiciona WHERE 
@@ -238,13 +241,13 @@ namespace Fluxo_De_Caixa.Dao.postgre
                 switch (Ordenacao)
                 {
                     case 0:
-                        Where = $"WHERE CODIGO = {Filtro}";
+                        Where = $"WHERE FORNECEDORES.CODIGO = {Filtro}";
                         break;
                     case 1:
-                        Where = $"WHERE RAZAO LIKE '%{Filtro.Trim()}%'";
+                        Where = $"WHERE FORNECEDORES.RAZAO LIKE '%{Filtro.Trim()}%'";
                         break;
                     case 2:
-                        Where = $"WHERE FANTASI LIKE '%{Filtro.Trim()}%'";
+                        Where = $"WHERE FORNECEDORES.FANTASI LIKE '%{Filtro.Trim()}%'";
                         break;
                 }
 
@@ -257,13 +260,13 @@ namespace Fluxo_De_Caixa.Dao.postgre
             switch (Ordenacao)
             {
                 case 0:
-                    OrderBy = $"ORDER BY CODIGO";
+                    OrderBy = $"ORDER BY FORNECEDORES.CODIGO";
                     break;
                 case 1:
-                    OrderBy = $"ORDER BY RAZAO";
+                    OrderBy = $"ORDER BY FORNECEDORES.RAZAO";
                     break;
                 case 2:
-                    OrderBy = $"ORDER BY FANTASI";
+                    OrderBy = $"ORDER BY FORNECEDORES.FANTASI";
                     break;
 
 

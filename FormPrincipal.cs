@@ -56,6 +56,7 @@ namespace Fluxo_De_Caixa
         private formContas contas;
         private formDocs docs;
         private FormFluxo fluxo;
+        private FormRecPag recPag;
 
         public FormPrincipal(Usuario user)
         {
@@ -164,6 +165,19 @@ namespace Fluxo_De_Caixa
             fluxo.menu = (ToolStripMenuItem)sender;
 
             fluxo.Show();
+        }
+
+        private void pagarReceberToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            recPag = new FormRecPag();
+
+            ((System.Windows.Forms.ToolStripMenuItem)sender).Enabled = false;
+
+            recPag.MdiParent = this;
+
+            recPag.menu = (ToolStripMenuItem)sender;
+
+            recPag.Show();
         }
     }
 }

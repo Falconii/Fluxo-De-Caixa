@@ -144,7 +144,9 @@
             this.cbPesquisar.Items.AddRange(new object[] {
             "DOCUMENTO",
             "EMISSÃO",
-            "VENCIMENTO"});
+            "VENCIMENTO",
+            "MÊS ATUAL (V)",
+            "MES ATUAL (E)"});
             this.cbPesquisar.Name = "cbPesquisar";
             this.cbPesquisar.Size = new System.Drawing.Size(121, 39);
             this.cbPesquisar.SelectedIndexChanged += new System.EventHandler(this.CbPesquisar_SelectedIndexChanged);
@@ -240,7 +242,7 @@
             this.tbBaixar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbBaixar.Name = "tbBaixar";
             this.tbBaixar.Size = new System.Drawing.Size(34, 36);
-            this.tbBaixar.ToolTipText = "Click Aqui Para Confirmar";
+            this.tbBaixar.ToolTipText = "Manutenção Das Baixas";
             this.tbBaixar.Click += new System.EventHandler(this.tbBaixar_Click);
             // 
             // dbGridView
@@ -452,6 +454,7 @@
             this.txtVlrPago.Size = new System.Drawing.Size(130, 20);
             this.txtVlrPago.TabIndex = 14;
             this.txtVlrPago.TabStop = false;
+            this.txtVlrPago.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblSaldo
             // 
@@ -471,6 +474,7 @@
             this.txtSaldo.Size = new System.Drawing.Size(130, 20);
             this.txtSaldo.TabIndex = 15;
             this.txtSaldo.TabStop = false;
+            this.txtSaldo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblJuros
             // 
@@ -488,6 +492,7 @@
             this.txtJuros.Name = "txtJuros";
             this.txtJuros.Size = new System.Drawing.Size(130, 20);
             this.txtJuros.TabIndex = 13;
+            this.txtJuros.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtJuros.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IsDoubleEntry);
             this.txtJuros.Leave += new System.EventHandler(this.txtValor_Leave);
             // 
@@ -507,6 +512,7 @@
             this.txtAbatimento.Name = "txtAbatimento";
             this.txtAbatimento.Size = new System.Drawing.Size(130, 20);
             this.txtAbatimento.TabIndex = 12;
+            this.txtAbatimento.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtAbatimento.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IsDoubleEntry);
             this.txtAbatimento.Leave += new System.EventHandler(this.txtValor_Leave);
             // 
@@ -517,6 +523,7 @@
             this.txtValor.Name = "txtValor";
             this.txtValor.Size = new System.Drawing.Size(130, 20);
             this.txtValor.TabIndex = 11;
+            this.txtValor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtValor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IsDoubleEntry);
             this.txtValor.Leave += new System.EventHandler(this.txtValor_Leave);
             // 

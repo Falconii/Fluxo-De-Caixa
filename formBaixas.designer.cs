@@ -64,8 +64,7 @@
             this.tabBaixas = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.tbOK = new System.Windows.Forms.ToolStripButton();
-            this.tbCancelar = new System.Windows.Forms.ToolStripButton();
+            this.tbIncluir = new System.Windows.Forms.ToolStripButton();
             this.tbDelete = new System.Windows.Forms.ToolStripButton();
             this.dbGridView = new System.Windows.Forms.DataGridView();
             this.toolStrip1.SuspendLayout();
@@ -162,6 +161,7 @@
             this.txtVlrPago.Size = new System.Drawing.Size(130, 20);
             this.txtVlrPago.TabIndex = 14;
             this.txtVlrPago.TabStop = false;
+            this.txtVlrPago.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblSaldo
             // 
@@ -181,6 +181,7 @@
             this.txtSaldo.Size = new System.Drawing.Size(130, 20);
             this.txtSaldo.TabIndex = 15;
             this.txtSaldo.TabStop = false;
+            this.txtSaldo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblJuros
             // 
@@ -198,6 +199,7 @@
             this.txtJuros.Name = "txtJuros";
             this.txtJuros.Size = new System.Drawing.Size(130, 20);
             this.txtJuros.TabIndex = 13;
+            this.txtJuros.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtJuros.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IsDoubleEntry);
             // 
             // lblAbatimento
@@ -216,6 +218,7 @@
             this.txtAbatimento.Name = "txtAbatimento";
             this.txtAbatimento.Size = new System.Drawing.Size(130, 20);
             this.txtAbatimento.TabIndex = 12;
+            this.txtAbatimento.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtAbatimento.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IsDoubleEntry);
             // 
             // txtValor
@@ -225,6 +228,7 @@
             this.txtValor.Name = "txtValor";
             this.txtValor.Size = new System.Drawing.Size(130, 20);
             this.txtValor.TabIndex = 11;
+            this.txtValor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtValor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IsDoubleEntry);
             this.txtValor.Leave += new System.EventHandler(this.txtValor_Leave);
             // 
@@ -359,7 +363,6 @@
             this.cbTipo.Name = "cbTipo";
             this.cbTipo.Size = new System.Drawing.Size(121, 21);
             this.cbTipo.TabIndex = 2;
-            this.cbTipo.SelectedIndexChanged += new System.EventHandler(this.cbTipo_SelectedIndexChanged);
             // 
             // lblDocumento
             // 
@@ -431,35 +434,24 @@
             // toolStrip2
             // 
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tbOK,
-            this.tbCancelar,
+            this.tbIncluir,
             this.tbDelete});
             this.toolStrip2.Location = new System.Drawing.Point(3, 3);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(1000, 39);
+            this.toolStrip2.Size = new System.Drawing.Size(1000, 37);
             this.toolStrip2.TabIndex = 7;
             this.toolStrip2.Text = "TooBar";
             // 
-            // tbOK
+            // tbIncluir
             // 
-            this.tbOK.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbOK.Image = ((System.Drawing.Image)(resources.GetObject("tbOK.Image")));
-            this.tbOK.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tbOK.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbOK.Name = "tbOK";
-            this.tbOK.Size = new System.Drawing.Size(34, 36);
-            this.tbOK.ToolTipText = "Click Aqui Para Confirmar";
-            this.tbOK.Click += new System.EventHandler(this.tbOK_Click_1);
-            // 
-            // tbCancelar
-            // 
-            this.tbCancelar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbCancelar.Image = ((System.Drawing.Image)(resources.GetObject("tbCancelar.Image")));
-            this.tbCancelar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tbCancelar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbCancelar.Name = "tbCancelar";
-            this.tbCancelar.Size = new System.Drawing.Size(36, 36);
-            this.tbCancelar.ToolTipText = "Click Aqui Para Cancelar";
+            this.tbIncluir.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbIncluir.Image = ((System.Drawing.Image)(resources.GetObject("tbIncluir.Image")));
+            this.tbIncluir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tbIncluir.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbIncluir.Name = "tbIncluir";
+            this.tbIncluir.Size = new System.Drawing.Size(34, 34);
+            this.tbIncluir.ToolTipText = "Clicl Aqui Para Incluir Uma Nova Baixa";
+            this.tbIncluir.Click += new System.EventHandler(this.tbIncluir_Click_1);
             // 
             // tbDelete
             // 
@@ -468,12 +460,13 @@
             this.tbDelete.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tbDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbDelete.Name = "tbDelete";
-            this.tbDelete.Size = new System.Drawing.Size(34, 36);
-            this.tbDelete.ToolTipText = "Click Aqui Para Excluir O Usuário";
+            this.tbDelete.Size = new System.Drawing.Size(34, 34);
+            this.tbDelete.ToolTipText = "Click Aqui Para Excluir A Baixa";
             this.tbDelete.Click += new System.EventHandler(this.tbDelete_Click_1);
             // 
             // dbGridView
             // 
+            this.dbGridView.AllowUserToAddRows = false;
             this.dbGridView.AllowUserToOrderColumns = true;
             this.dbGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -495,7 +488,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tabControl);
             this.Name = "formBaixas";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cadastro De Documentos";
             this.Activated += new System.EventHandler(this.FormUsuarios_Activated);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormUsuarios_FormClosed);
@@ -557,8 +550,7 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.DataGridView dbGridView;
         private System.Windows.Forms.ToolStrip toolStrip2;
-        private System.Windows.Forms.ToolStripButton tbOK;
-        private System.Windows.Forms.ToolStripButton tbCancelar;
         private System.Windows.Forms.ToolStripButton tbDelete;
+        private System.Windows.Forms.ToolStripButton tbIncluir;
     }
 }

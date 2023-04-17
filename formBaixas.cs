@@ -32,7 +32,7 @@ namespace Fluxo_De_Caixa
         Baixa baixa = new Baixa();
 
         List<Baixa> lsBaixas = new List<Baixa>();
-        
+
         int IdxRow = -1;
 
         public ToolStripMenuItem menu { get; internal set; }
@@ -42,12 +42,11 @@ namespace Fluxo_De_Caixa
             InitializeComponent();
             id_empresa = _id_empresa;
             id_doc = _id_doc;
-            loadDoc(id_empresa, id_doc);
-            loadBaixas();
         }
 
         private void FormUsuarios_Load(object sender, EventArgs e)
         {
+            loadDoc(id_empresa, id_doc);
             loadBaixas();
             SetarVisoes();
         }
@@ -326,6 +325,10 @@ namespace Fluxo_De_Caixa
 
                 daoBaixa dao = new daoBaixa();
 
+                lsBaixas = dao.getAll(Ordenacao, documento.Id.ToString());
+
+                dbGridView.DataSource = lsBaixas;
+
                 string strSelect = dao.SqlGridBrowse(Ordenacao, documento.Id.ToString());
 
                 conn.Open(); //abre conexão 
@@ -345,6 +348,8 @@ namespace Fluxo_De_Caixa
                 dbGridView.DataSource = ds;
 
                 dbGridView.DataMember = ds.Tables[0].TableName;
+
+
             }
             catch (Exception ex) //fim do tratamento de exceções 
             {
@@ -413,11 +418,11 @@ namespace Fluxo_De_Caixa
             txtCliFor.Text = documento.Razao;
             txtEmissao.Text = documento.Emissao?.ToString("dd/MM/yyyy");
             txtVencimento.Text = documento.Vencimento?.ToString("dd/MM/yyyy");
-            txtValor.Text = documento.Valor.DoubleParseDb();
-            txtAbatimento.Text = documento.Abatimento.DoubleParseDb();
-            txtJuros.Text = documento.Juros.DoubleParseDb();
-            txtVlrPago.Text = documento.VlrPago.DoubleParseDb();
-            txtSaldo.Text = documento.Saldo.DoubleParseDb();
+            txtValor.Text = string.Format("{0:0.00}", documento.Valor);
+            txtAbatimento.Text = string.Format("{0:0.00}", documento.Abatimento);
+            txtJuros.Text = string.Format("{0:0.00}", documento.Juros);
+            txtVlrPago.Text = string.Format("{0:0.00}", documento.VlrPago);
+            txtSaldo.Text = string.Format("{0:0.00}", documento.Saldo);
         }
 
 
@@ -499,8 +504,6 @@ namespace Fluxo_De_Caixa
         {
 
         }
-
-
 
         private void FormUsuarios_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -591,104 +594,7 @@ namespace Fluxo_De_Caixa
 
 
         }
-
-        private void cbTipo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-
-        }
-
-        private void cbCliFor_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tbBaixar_Click(object sender, EventArgs e)
-        {
-
-
-
-        }
-
-        private void tbOK_Click_1(object sender, EventArgs e)
-        {
-            /*
-            if (dbGridView.Rows[IdxRow].IsNewRow)
-            {
-                MessageBox.Show("Termine A Edição Antes De Gravar", "Atenção!");
-
-                return;
-            }
-            */
-
-            lsBaixas.Clear();
-
-            try
-            {
-                Nullable<DateTime> emissao_baixa = null;
-                Double valor_baixa = 0;
-                string obs_baixa = "";
-                Baixa bx = new Baixa();
-
-                for (int idx = 0; idx < dbGridView.Rows.Count - 1; idx++)
-                {
-                    try
-                    {
-                        emissao_baixa = Convert.ToDateTime(dbGridView.Rows[idx].Cells[2].Value);
-                    }
-                    catch (Exception ex)
-                    {
-                        emissao_baixa = null;
-                    }
-
-                    if (emissao_baixa == null) continue;
-
-                    valor_baixa = Convert.ToDouble(dbGridView.Rows[idx].Cells[3].Value);
-
-
-                    obs_baixa = dbGridView.Rows[idx].Cells[4].Value.ToString();
-
-
-                    bx = new Baixa();
-
-                    bx.IdEmpresa = documento.IdEmpresa;
-                    bx.Id = 0;
-                    bx.Id_Doc = documento.Id;
-                    bx.Emissao = emissao_baixa;
-                    bx.Valor = valor_baixa;
-                    bx.Obs = obs_baixa;
-                    bx.UserInsert = UsuarioSistema.Usuario.Codigo;
-
-                    lsBaixas.Add(bx);
-
-                }
-
-                daoBaixa dao = new daoBaixa();
-
-                dao.DeleteByDoc(documento.IdEmpresa,documento.Id);
-
-                lsBaixas.ForEach(obj => {
-
-                    dao.Insert(obj);
-                
-                });
-
-                MessageBox.Show("Baixas Atualizadas Com Sucesso!", "Atenção!");
-
-                loadDoc(id_empresa, id_doc);
-
-                loadBaixas();
-
-                
-                    
-                
-            }
-            catch (Exception _)
-            {
-                MessageBox.Show("Deu Erro!!", "Atenção");
-            }
-        }
-
+     
         private void dbGridView_RowEnter_1(object sender, DataGridViewCellEventArgs e)
         {
             IdxRow = e.RowIndex;
@@ -697,25 +603,48 @@ namespace Fluxo_De_Caixa
         private void tbDelete_Click_1(object sender, EventArgs e)
         {
 
-            if (dbGridView.Rows[IdxRow].IsNewRow) return;
+            if (dbGridView.Rows.Count == 0)
+            {
+                MessageBox.Show($"Nenhum Baixa Para Excluir", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-            DialogResult resultado = MessageBox.Show($"Confirma A Exclusão ? {IdxRow}", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DialogResult resultado = MessageBox.Show($"Confirma A Exclusão Da Baixa ?", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             switch (resultado)
 
             {
 
-
                 case DialogResult.No:
+
 
                     break;
 
                 case DialogResult.Yes:
 
-                    if (!dbGridView.Rows[IdxRow].IsNewRow)
-                    {
-                        dbGridView.Rows.RemoveAt(IdxRow);
-                    }
+                    
+                    int idbaixa = 0;
+
+                   
+                    idbaixa  = dbGridView.Rows[IdxRow].Cells[0].Value.ToString().IntParse();
+
+
+                    Baixa bx = new Baixa();
+
+                    bx.IdEmpresa = this.id_empresa;
+
+                    bx.Id = idbaixa;
+
+                    daoBaixa dao = new daoBaixa();
+
+                    dao.Delete(bx);
+
+                    loadDoc(this.id_empresa, this.id_doc);
+
+                    Atualiza();
+
+                    loadBaixas();
 
                     break;
 
@@ -725,13 +654,68 @@ namespace Fluxo_De_Caixa
 
             }
 
+
+
         }
 
         private void txtValor_Leave(object sender, EventArgs e)
         {
-           
+
         }
 
-       
+        private void tbIncluir_Click_1(object sender, EventArgs e)
+        {
+            if (documento.Saldo == 0)
+            {
+                MessageBox.Show($"Documento Totalmente Baixado!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+
+            FormBaixaNova form = new FormBaixaNova(documento);
+
+            try
+            {
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+
+                    Baixa bx = new Baixa();
+                    bx.IdEmpresa = documento.IdEmpresa;
+                    bx.Id = 0;
+                    bx.Id_Doc = documento.Id;
+                    bx.Emissao = form.Hoje;
+                    bx.Valor = form.Valor;
+                    bx.Obs = form.Obs;
+                    bx.UserInsert = UsuarioSistema.Usuario.Codigo;
+
+                    daoBaixa dao = new daoBaixa();
+
+                    bx = dao.Insert(bx);
+
+                    loadDoc(id_empresa, id_doc);
+
+                    loadBaixas();
+
+                    if (bx == null)
+                    {
+                        MessageBox.Show("Falha Na Inclusão Da Baixa!", "Atenção!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Baixa Gravada Com Sucesso!", "Atenção!");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro: {ex.Message}", "Atenção!");
+            }
+            finally
+            {
+                form.Dispose();
+            }
+
+
+        }
     }
 }

@@ -358,6 +358,7 @@ namespace Fluxo_De_Caixa
 
         }
 
+     
         public void preencheDataGridView()
         {
             //faz a conexão

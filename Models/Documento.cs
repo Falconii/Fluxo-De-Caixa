@@ -60,7 +60,7 @@ namespace Fluxo_De_Caixa.Models
         {
             IdEmpresa = 1;
             Id = 0;
-            Tipo = "";
+            Tipo = "R";
             Doc = "";
             Serie = "";
             Parcela = "";
