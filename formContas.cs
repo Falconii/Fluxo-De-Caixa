@@ -30,9 +30,9 @@ namespace Fluxo_De_Caixa
         public formContas()
         {
             InitializeComponent();
-            tbDelete.ToolTipText = $"Click Aqui Para Excluir o {proprietario}";
-            tbEditar.ToolTipText = $"Click Aqui Para Alterar O {proprietario}";
-            tbIncluir.ToolTipText = $"Click Aqui Para Incluir Um {proprietario} Novo";
+            tbDelete.ToolTipText = $"Click Aqui Para Excluir  A {proprietario}";
+            tbEditar.ToolTipText = $"Click Aqui Para Alterar  A {proprietario}";
+            tbIncluir.ToolTipText = $"Click Aqui Para Incluir Uma {proprietario} Nova";
             cbPesquisar.SelectedIndex = Ordenacao;
         }
 

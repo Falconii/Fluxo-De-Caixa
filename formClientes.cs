@@ -37,6 +37,21 @@ namespace Fluxo_De_Caixa
             tbEditar.ToolTipText =  $"Click Aqui Para Alterar O {proprietario}";
             tbIncluir.ToolTipText = $"Click Aqui Para Incluir Um {proprietario} Novo";
             cbPesquisar.SelectedIndex = Ordenacao;
+            cbUFF.Items.Clear();
+
+            Object[] ItemObject = new Object[FormPrincipal.estados.Count];
+
+            for (int i = 0; i < FormPrincipal.estados.Count; i++)
+            {
+                ItemObject[i] = FormPrincipal.estados[i].Uf;
+            }
+
+            cbUFF.Items.AddRange(ItemObject);
+
+            int id = cbUFF.FindString("SP");
+
+            cbUFF.SelectedIndex = id;
+                
         }
 
         private void FormUsuarios_Load(object sender, EventArgs e)
@@ -50,6 +65,12 @@ namespace Fluxo_De_Caixa
             txtCodigo.Enabled = false;
             txtRazao.Enabled = value;
             txtFantasi.Enabled = value;
+            txtEndereco.Enabled = value;
+            txtNro.Enabled = value;
+            txtCep.Enabled = value;
+            txtCidade.Enabled = value;
+            cbUFF.Enabled = value;
+            txtBairro.Enabled = value;
             txtTel1.Enabled    = value;
             txtEmail.Enabled   = value;
             cbConta.Enabled   = value;
@@ -59,6 +80,17 @@ namespace Fluxo_De_Caixa
             txtRazao.MaxLength   = 40;
             txtFantasi.MaxLength = 40;
             txtEmail.MaxLength   = 100;
+
+            txtEndereco.CharacterCasing = CharacterCasing.Upper;
+            txtCidade.CharacterCasing = CharacterCasing.Upper;
+            txtBairro.CharacterCasing = CharacterCasing.Upper;
+
+            txtEndereco.MaxLength = 80;
+            txtCidade.MaxLength = 40;
+            txtBairro.MaxLength = 40;
+
+
+
         }
 
         private void loadCliente()
@@ -153,7 +185,6 @@ namespace Fluxo_De_Caixa
 
             {
 
-
                 case DialogResult.No:
 
                     break;
@@ -162,9 +193,16 @@ namespace Fluxo_De_Caixa
 
                     daoCliente dao = new daoCliente();
 
-                    dao.Delete(cliente);
+                    try
+                    {
+                        dao.Delete(cliente);
 
-                    loadCliente();
+                        loadCliente();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Atenção", MessageBoxButtons.OK);
+                    }
 
                     break;
 
@@ -417,6 +455,31 @@ namespace Fluxo_De_Caixa
                 Result += "Tamanho do Campo Razão Deve Ficar Entre 0 e 40 !\n";
             }
 
+
+            if (!Validacoes.IsTamanho(cliente.Enderecof, 0, 80))
+            {
+                Result += "Tamanho do Campo Endereço Deve Ficar Entre 0 e 80 !\n";
+            }
+            if (!Validacoes.IsTamanho(cliente.Bairrof, 0, 40))
+            {
+                Result += "Tamanho do Campo Bairro Deve Ficar Entre 0 e 40 !\n";
+            }
+            if (!Validacoes.IsTamanho(cliente.Cidadef, 0, 40))
+            {
+                Result += "Tamanho do Campo Cidade Deve Ficar Entre 0 e 40 !\n";
+            }
+
+            if (!Validacoes.IsTamanho(cliente.Uff.Substring(0, 2), 2, 2))
+            {
+                Result += "Tamanho do Campo Estado Deve Ter 2 Caracteres !\n";
+            }
+
+            if (!Validacoes.IsTamanho(cliente.Cepf, 0, 8))
+            {
+                Result += "Tamanho do Campo CEP Deve Ter 8 Digitos !";
+            }
+
+
             if (!Validacoes.IsTamanho(cliente.Email, 0, 100))
             {
                 Result += "Tamanho do Campo Razão Deve Ficar Entre 0 e 100 !\n";
@@ -428,11 +491,40 @@ namespace Fluxo_De_Caixa
 
         private void Atualiza()
         {
+            int index = 0;
+
+            /*
+            foreach (var obj in cbUFF.Items)
+            {
+
+                if (cliente.Uff == obj.ToString().Substring(0, 2))
+                {
+
+                    break;
+
+                }
+
+                index++;
+
+            }
+            
+            */
+
+            index = cbUFF.FindString(cbUFF.Text);
+
+            if (index > cbUFF.Items.Count - 1) index = 0;
+
 
             int id = cbConta.FindString(cbConta.Text);
             txtCodigo.Text = cliente.Codigo.IntNovo();
             txtRazao.Text = cliente.Razao.Trim();
             txtFantasi.Text = cliente.Fantasi.Trim();
+            txtEndereco.Text = cliente.Enderecof.Trim();
+            txtNro.Text = cliente.Nrof;
+            txtCidade.Text = cliente.Cidadef.Trim();
+            txtBairro.Text = cliente.Bairrof.Trim();
+            txtCep.Text = cliente.Cepf.Trim();
+            cbUFF.SelectedIndex = index;
             txtTel1.Text = cliente.Tel1;
             txtEmail.Text = cliente.Email.Trim();
             cbConta.SelectedIndex = id;
@@ -446,6 +538,12 @@ namespace Fluxo_De_Caixa
             cliente.Codigo = txtCodigo.Text.IntParse();
             cliente.Razao = txtRazao.Text;
             cliente.Fantasi = txtFantasi.Text;
+            cliente.Enderecof = txtEndereco.Text;
+            cliente.Cidadef = txtCidade.Text;
+            cliente.Nrof = txtNro.Text;
+            cliente.Bairrof = txtBairro.Text;
+            cliente.Cepf = txtCep.Text;
+            cliente.Uff = cbUFF.Items[cbUFF.SelectedIndex].ToString().Substring(0, 2);//txtEstado.Text;
             cliente.Tel1 = txtTel1.Text;
             cliente.Email = txtEmail.Text;
             cliente.Conta = cbConta.SelectedItem.ToString().Substring(0,6);

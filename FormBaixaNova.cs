@@ -74,8 +74,10 @@ namespace Fluxo_De_Caixa
 
         private void Atualiza()
         {
-            txtId.Text = documento.Id.ToString();   
-            txtDocumento.Text = documento.Tipo;
+            int idx = documento.Tipo == "R" ? 0 : 1;
+            txtId.Text = documento.Id.ToString();
+            cbTipo.SelectedIndex = idx;
+            txtDocumento.Text = documento.Doc;
             txtSerie.Text = documento.Serie;
             txtParcela.Text = documento.Parcela;
             txtValor.Text = string.Format("{0:0.00}", documento.Valor);

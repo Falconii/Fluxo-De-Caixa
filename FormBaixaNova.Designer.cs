@@ -54,12 +54,12 @@ namespace Fluxo_De_Caixa
             this.txtValor = new System.Windows.Forms.TextBox();
             this.lblValor = new System.Windows.Forms.Label();
             this.gbLancamento = new System.Windows.Forms.GroupBox();
-            this.lblObsLanc = new System.Windows.Forms.Label();
             this.txtObsLanc = new System.Windows.Forms.TextBox();
             this.txtVlrLanc = new System.Windows.Forms.TextBox();
             this.lblVlrLanc = new System.Windows.Forms.Label();
             this.txtPagamento = new System.Windows.Forms.MaskedTextBox();
             this.lblPagamento = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.gbIdentificacao.SuspendLayout();
             this.gbSenha.SuspendLayout();
             this.gbLancamento.SuspendLayout();
@@ -318,7 +318,7 @@ namespace Fluxo_De_Caixa
             // 
             // gbLancamento
             // 
-            this.gbLancamento.Controls.Add(this.lblObsLanc);
+            this.gbLancamento.Controls.Add(this.label1);
             this.gbLancamento.Controls.Add(this.txtObsLanc);
             this.gbLancamento.Controls.Add(this.txtVlrLanc);
             this.gbLancamento.Controls.Add(this.lblVlrLanc);
@@ -330,16 +330,6 @@ namespace Fluxo_De_Caixa
             this.gbLancamento.TabIndex = 6;
             this.gbLancamento.TabStop = false;
             this.gbLancamento.Text = "Lançamento";
-            // 
-            // lblObsLanc
-            // 
-            this.lblObsLanc.AutoSize = true;
-            this.lblObsLanc.Location = new System.Drawing.Point(310, 40);
-            this.lblObsLanc.Name = "lblObsLanc";
-            this.lblObsLanc.Size = new System.Drawing.Size(90, 17);
-            this.lblObsLanc.TabIndex = 44;
-            this.lblObsLanc.Text = "Obs Lançamento";
-            this.lblObsLanc.UseCompatibleTextRendering = true;
             // 
             // txtObsLanc
             // 
@@ -384,6 +374,15 @@ namespace Fluxo_De_Caixa
             this.lblPagamento.Size = new System.Drawing.Size(87, 13);
             this.lblPagamento.TabIndex = 39;
             this.lblPagamento.Text = "Data Pagamento";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(310, 38);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(65, 13);
+            this.label1.TabIndex = 44;
+            this.label1.Text = "Observação";
             // 
             // FormBaixaNova
             // 
@@ -435,11 +434,11 @@ namespace Fluxo_De_Caixa
         private System.Windows.Forms.TextBox txtValor;
         private System.Windows.Forms.Label lblValor;
         private System.Windows.Forms.GroupBox gbLancamento;
-        private System.Windows.Forms.Label lblObsLanc;
         private System.Windows.Forms.TextBox txtObsLanc;
         private System.Windows.Forms.TextBox txtVlrLanc;
         private System.Windows.Forms.Label lblVlrLanc;
         private System.Windows.Forms.MaskedTextBox txtPagamento;
         private System.Windows.Forms.Label lblPagamento;
+        private System.Windows.Forms.Label label1;
     }
 }

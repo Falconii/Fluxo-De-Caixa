@@ -39,36 +39,7 @@ namespace Fluxo_De_Caixa.DataBase
 
             Banco = config.app_text;
             connectionString = $"Server='{config.string_conection.Server}';Port={config.string_conection.Port}; User Id = '{config.string_conection.UserId}'; Password='{config.string_conection.Password}' ; Database='{config.string_conection.Database}' ; CommandTimeout = {config.string_conection.CommandTimeout}  ";
-            /*
-            if (Local.ToUpper() == "LOCAL")
-            {
-
-                if (ImportacaoAsync.Razao == "CERVEJARIA")
-                {
-
-                    Banco = "BANCO: DB_ASSESSORIA_HOMOLOGACAO - LOCAL";
-                    connectionString = String.Format("Server={0}; Port={1}; User Id={2}; Password={3}; Database={4}; CommandTimeout={5};",
-                                                                                  "localhost", 5432, "postgres", "123456", "db_assessoria_homologacao", 5000);
-                }
-
-                if (ImportacaoAsync.Razao == "EMPRESA PL")
-                {
-
-                    Banco = "BANCO: DB_PL - LOCAL";
-                    connectionString = String.Format("Server={0}; Port={1}; User Id={2}; Password={3}; Database={4}; CommandTimeout={5};",
-                                                                                  "localhost", 5432, "postgres", "123456", "db_pl", 5000);
-                }
-
-            }
-            else
-            {
-
-                Banco = "BANCO: DB_ASSESSORIA_PRODUCAO - 192.168.0.251";
-                connectionString = String.Format("Server={0}; Port={1}; User Id={2}; Password={3}; Database={4}; CommandTimeout={5};",
-                                                          "192.168.0.251", 49543, "postgres", "S1m10n4t0SQL", "db_assessoria_producao_a",1800);
-            }
-            */
-        }
+          }
 
         public static void CreateCommand(string queryString)
         {

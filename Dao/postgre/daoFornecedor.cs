@@ -87,12 +87,27 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
         }
 
+
         public void Delete(Fornecedor obj)
         {
 
-            String StringDelete = $" DELETE FROM  FORNECEDORES  WHERE ID_EMPRESA = {obj.IdEmpresa} AND CODIGO = {obj.Codigo} ";
+            daoDocumento dao = new daoDocumento();
 
-            DataBase.RunCommand.CreateCommand(StringDelete);
+            int nro = dao.ExisteByFornecedor(obj.IdEmpresa, obj.Codigo);
+
+            if (nro > 0)
+            {
+                throw new Exception("Existem Documentos Para Este Fornecedor!\nNão Nosso Deletá-lo.");
+
+            }
+            else
+            {
+
+                String StringDelete = $" DELETE FROM  FORNECEDORES  WHERE ID_EMPRESA = {obj.IdEmpresa} AND CODIGO = {obj.Codigo} ";
+
+                DataBase.RunCommand.CreateCommand(StringDelete);
+
+            }
 
         }
 
@@ -103,7 +118,9 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             string strStringConexao = DataBase.RunCommand.connectionString;
 
-            string strSelect = $"SELECT * FROM FORNECEDORES WHERE ID_EMPRESA = {id_empresa} and CODIGO = {codigo}";
+            string strSelect = $"SELECT FORNECEDORES.*,  CON.DESCRICAO AS CONTA_DESC  FROM FORNECEDORES " +
+                                "INNER JOIN CONTAS CON ON CON.ID_EMPRESA = FORNECEDORES.ID_EMPRESA AND CON.CODIGO = FORNECEDORES.CONTA " +
+                               $"WHERE FORNECEDORES.ID_EMPRESA = {id_empresa} and FORNECEDORES.CODIGO = {codigo}";
 
             using (var objConexao = new NpgsqlConnection(strStringConexao))
             {

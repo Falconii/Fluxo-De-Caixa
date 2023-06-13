@@ -33,7 +33,7 @@ namespace Fluxo_De_Caixa
             cbPesquisar.SelectedIndex = Ordenacao;
         }
 
-        private void FormUsuarios_Load(object sender, EventArgs e)
+        private void FormFornecedores_Load(object sender, EventArgs e)
         {
             loadContas();
             SetarVisoes();
@@ -154,10 +154,18 @@ namespace Fluxo_De_Caixa
 
                 case DialogResult.Yes:
 
-                    daoFornecedor dao = new daoFornecedor();
+                    try
+                    {
+                        daoFornecedor dao = new daoFornecedor();
 
-                    dao.Delete(fornecedor);
+                        dao.Delete(fornecedor);
 
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Atenção", MessageBoxButtons.OK);
+                    }
+                    
                     loadFornecedor();
 
                     break;
@@ -207,13 +215,13 @@ namespace Fluxo_De_Caixa
                         if (retorno != null)
                         {
 
-                            MessageBox.Show($"USUÁRIO Incluído No Código {retorno.Codigo}","Atenção!",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                            MessageBox.Show($"FORNECEDOR Incluído No Código {retorno.Codigo}","Atenção!",MessageBoxButtons.OK,MessageBoxIcon.Information);
 
                         }
                         else
                         {
 
-                            MessageBox.Show($"Falha Na Inclusão Do USUÁRIO!", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show($"Falha Na Inclusão Do FORNECEDOR!", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
 
                         }
@@ -232,7 +240,7 @@ namespace Fluxo_De_Caixa
 
                         dao.Update(fornecedor);
 
-                        MessageBox.Show($"USUÁRIO Alterado Com Sucesso!", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"FORNECEDOR Alterado Com Sucesso!", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         
                         visao = Visoes.Browser;
 
@@ -554,12 +562,12 @@ namespace Fluxo_De_Caixa
 
    
 
-        private void FormUsuarios_FormClosed(object sender, FormClosedEventArgs e)
+        private void FormFornecedores_FormClosed(object sender, FormClosedEventArgs e)
         {
             menu.Enabled = true;
         }
         
-        private void FormUsuarios_Activated(object sender, EventArgs e)
+        private void FormFornecedores_Activated(object sender, EventArgs e)
         {
             WindowState = System.Windows.Forms.FormWindowState.Maximized;
         }

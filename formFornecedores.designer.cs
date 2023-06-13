@@ -152,7 +152,7 @@
             this.tbIncluir.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbIncluir.Name = "tbIncluir";
             this.tbIncluir.Size = new System.Drawing.Size(34, 36);
-            this.tbIncluir.ToolTipText = "Clicl Aqui Para Incluir Um Usuario  Novo";
+            this.tbIncluir.ToolTipText = "Clicl Aqui Para Incluir Um Fornecdor  Novo";
             this.tbIncluir.Click += new System.EventHandler(this.TbIncluir_Click);
             // 
             // tbEditar
@@ -163,7 +163,7 @@
             this.tbEditar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbEditar.Name = "tbEditar";
             this.tbEditar.Size = new System.Drawing.Size(34, 36);
-            this.tbEditar.ToolTipText = "Click Aqui Para Editar O Usuário";
+            this.tbEditar.ToolTipText = "Click Aqui Para Editar O Fornecedor";
             this.tbEditar.Click += new System.EventHandler(this.TbEditar_Click);
             // 
             // tbDelete
@@ -174,7 +174,7 @@
             this.tbDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbDelete.Name = "tbDelete";
             this.tbDelete.Size = new System.Drawing.Size(34, 36);
-            this.tbDelete.ToolTipText = "Click Aqui Para Excluir O Usuário";
+            this.tbDelete.ToolTipText = "Click Aqui Para Excluir O Fornecedor";
             this.tbDelete.Click += new System.EventHandler(this.TbDelete_Click);
             // 
             // tbOk
@@ -384,9 +384,9 @@
             this.Controls.Add(this.tabControl);
             this.Name = "formFornecedores";
             this.Text = "Cadastro De Fornecedores";
-            this.Activated += new System.EventHandler(this.FormUsuarios_Activated);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormUsuarios_FormClosed);
-            this.Load += new System.EventHandler(this.FormUsuarios_Load);
+            this.Activated += new System.EventHandler(this.FormFornecedores_Activated);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormFornecedores_FormClosed);
+            this.Load += new System.EventHandler(this.FormFornecedores_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dbGridView)).EndInit();

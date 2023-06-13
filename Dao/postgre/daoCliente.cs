@@ -17,9 +17,11 @@ namespace Fluxo_De_Caixa.Dao.postgre
         {
 
             String StringInsert = $" INSERT INTO CLIENTES " +
-                                "(ID_EMPRESA,RAZAO, FANTASI, TEL1, EMAIL, CONTA, USER_INSERT, USER_UPDATE) " +
+                                "(ID_EMPRESA,RAZAO, CNPJ_CPF, FANTASI, ENDERECOF, NROF, BAIRROF, CIDADEF, UFF, CEPF, TEL1, EMAIL, CONTA, USER_INSERT, USER_UPDATE) " +
                                 " VALUES(" +
-                                $" {obj.IdEmpresa}, '{obj.Razao}','{obj.Fantasi}','{obj.Tel1}','{obj.Email}','{obj.Conta}',{obj.UserInsert},{obj.UserUpdate})  RETURNING CODIGO ";
+                                $" {obj.IdEmpresa}, '{obj.Razao}','{obj.Cnpj_Cpf}','{obj.Fantasi}'," +
+                                $" {obj.Enderecof}, '{obj.Nrof}','{obj.Bairrof}','{obj.Cidadef}','{obj.Bairrof}','{obj.Bairrof}'," +
+                                $"'{obj.Tel1}','{obj.Email}','{obj.Conta}',{obj.UserInsert},{obj.UserUpdate})  RETURNING CODIGO ";
 
             using (var objConexao = new NpgsqlConnection(DataBase.RunCommand.connectionString))
             {
@@ -65,7 +67,14 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             String StringUpdate = $" UPDATE  CLIENTES SET " +
                  $"RAZAO    = '{obj.Razao}', " +
+                 $"CNPJ_CPF = '{obj.Cnpj_Cpf}', " + 
                  $"FANTASI  = '{obj.Fantasi}', "+
+                 $" ENDERECOF = '{obj.Enderecof}', " +
+                 $"NROF = '{obj.Nrof}'," +
+                 $"BAIRROF = '{obj.Bairrof}'," +
+                 $"CIDADEF = '{obj.Cidadef}', " +
+                 $"UFF = '{obj.Uff}'," +
+                 $"CEPF = '{obj.Cepf}', " +
                  $"TEL1     = '{obj.Tel1}', " +
                  $"EMAIL    = '{obj.Email}', " +
                  $"CONTA       = '{obj.Conta}' ," +
@@ -89,10 +98,22 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
         public void Delete(Cliente obj)
         {
+            daoDocumento dao = new daoDocumento();
 
-            String StringDelete = $" DELETE FROM  CLIENTES  WHERE ID_EMPRESA = {obj.IdEmpresa} AND CODIGO = {obj.Codigo} ";
+            int nro = dao.ExisteByCliente(obj.IdEmpresa, obj.Codigo);
 
-            DataBase.RunCommand.CreateCommand(StringDelete);
+            if (nro > 0)
+            {
+                throw new Exception("Existem Documentos Para Este Cliente!\nNão Nosso Deletá-lo.");
+
+            } else
+            {
+
+                String StringDelete = $" DELETE FROM  CLIENTES  WHERE ID_EMPRESA = {obj.IdEmpresa} AND CODIGO = {obj.Codigo} ";
+
+                DataBase.RunCommand.CreateCommand(StringDelete);
+
+            }
 
         }
 
@@ -150,14 +171,22 @@ namespace Fluxo_De_Caixa.Dao.postgre
             var obj = new Cliente();
             obj.IdEmpresa = Convert.ToInt32(objDataReader["ID_EMPRESA"]);
             obj.Codigo = Convert.ToInt32(objDataReader["CODIGO"]);
-            obj.Razao = objDataReader["RAZAO"].ToString();
+            obj.Razao  = objDataReader["RAZAO"].ToString();
+            obj.Cnpj_Cpf = objDataReader["CNPJ_CPF"].ToString();
             obj.Fantasi = objDataReader["FANTASI"].ToString();
+            obj.Enderecof = objDataReader["ENDERECOF"].ToString();
+            obj.Nrof = objDataReader["NROF"].ToString();
+            obj.Bairrof = objDataReader["BAIRROF"].ToString();
+            obj.Cidadef = objDataReader["CIDADEF"].ToString();
+            obj.Uff = objDataReader["UFF"].ToString();
+            obj.Cepf = objDataReader["CEPF"].ToString();;
             obj.Tel1 = objDataReader["TEL1"].ToString();
             obj.Email = objDataReader["EMAIL"].ToString();
             obj.Conta = objDataReader["CONTA"].ToString();
             obj._ContaDesc = objDataReader["CONTA_DESC"].ToString();
 
             return obj;
+
         }
 
         public List<Cliente> getAll(int Ordenacao, string Filtro)

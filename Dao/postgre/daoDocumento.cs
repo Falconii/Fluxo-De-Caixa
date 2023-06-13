@@ -95,6 +95,14 @@ namespace Fluxo_De_Caixa.Dao.postgre
         public void Delete(Documento obj)
         {
 
+            if (obj.Saldo == 0)
+            {
+                daoBaixa dao = new daoBaixa();
+
+                dao.DeleteByDoc(obj.IdEmpresa, obj.Id);
+
+            }
+
             String StringDelete = $" DELETE FROM  DOCUMENTOS  WHERE ID_EMPRESA = {obj.IdEmpresa} AND ID = {obj.Id} ";
 
             DataBase.RunCommand.CreateCommand(StringDelete);
@@ -183,6 +191,104 @@ namespace Fluxo_De_Caixa.Dao.postgre
             }
 
             return obj;
+        }
+
+        public int ExisteByCliente(int id_empresa, int id)
+        {
+            int retorno = 0;
+
+            string strStringConexao = DataBase.RunCommand.connectionString;
+
+            string strSelect = " SELECT COALESCE(count(*), 0) AS TOTAL " +
+                               " FROM DOCUMENTOS " +
+                              $" WHERE ID_EMPRESA = {id_empresa} AND TIPO = 'R' AND CLIFOR = {id} ";
+
+
+            using (var objConexao = new NpgsqlConnection(strStringConexao))
+            {
+                using (var objCommand = new NpgsqlCommand(strSelect, objConexao))
+                {
+                    try
+                    {
+                        objConexao.Open();
+
+                        var objDataReader = objCommand.ExecuteReader();
+
+                        if (objDataReader.HasRows)
+                        {
+
+                            while (objDataReader.Read())
+                            {
+
+                                retorno  =  Convert.ToInt32(objDataReader["TOTAL"]);
+
+                            }
+                        }
+
+                    }
+                    catch (Exception _)
+                    {
+                        retorno = 0;
+                    }
+                    finally
+                    {
+                        objConexao.Close();
+                    }
+                }
+            }
+
+
+            return retorno;
+
+        }
+
+        public int ExisteByFornecedor(int id_empresa, int id)
+        {
+            int retorno = 0;
+
+            string strStringConexao = DataBase.RunCommand.connectionString;
+
+            string strSelect = " SELECT COALESCE(count(*), 0) AS TOTAL " +
+                               " FROM DOCUMENTOS " +
+                              $" WHERE ID_EMPRESA = {id_empresa} AND TIPO = 'P' AND CLIFOR = {id} ";
+
+
+            using (var objConexao = new NpgsqlConnection(strStringConexao))
+            {
+                using (var objCommand = new NpgsqlCommand(strSelect, objConexao))
+                {
+                    try
+                    {
+                        objConexao.Open();
+
+                        var objDataReader = objCommand.ExecuteReader();
+
+                        if (objDataReader.HasRows)
+                        {
+
+                            while (objDataReader.Read())
+                            {
+
+                                retorno = Convert.ToInt32(objDataReader["TOTAL"]);
+
+                            }
+                        }
+
+                    }
+                    catch (Exception _)
+                    {
+                        retorno = 0;
+                    }
+                    finally
+                    {
+                        objConexao.Close();
+                    }
+                }
+            }
+
+
+            return retorno;
+
         }
 
         private Documento PopulaDocumento(NpgsqlDataReader objDataReader)
@@ -437,7 +543,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
                 switch (Ordenacao)
                 {
                     case 0:
-                        Where = $" DOC.DOC        = '{Filtro.Trim()}'";
+                        Where = $" DOC.DOC        LIKE '%{Filtro.Trim()}%'";
                         break;
                     case 1:
                         Where = $" DOC.EMISSAO    = '{Filtro.Trim().DateToDb()}'";

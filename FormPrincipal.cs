@@ -143,15 +143,26 @@ namespace Fluxo_De_Caixa
 
         private void documentosToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            docs = new formDocs();
+            try
+            {
+                loadClientes();
 
-            ((System.Windows.Forms.ToolStripMenuItem)sender).Enabled = false;
+                loadFornecedores();
 
-            docs.MdiParent = this;
+                docs = new formDocs();
 
-            docs.menu = (ToolStripMenuItem)sender;
+                ((System.Windows.Forms.ToolStripMenuItem)sender).Enabled = false;
 
-            docs.Show();
+                docs.MdiParent = this;
+
+                docs.menu = (ToolStripMenuItem)sender;
+
+                docs.Show();
+
+            } catch(Exception ex)
+            {
+                MessageBox.Show($"Erro:{ex.Message}", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
         }
 
         private void consultaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -178,6 +189,41 @@ namespace Fluxo_De_Caixa
             recPag.menu = (ToolStripMenuItem)sender;
 
             recPag.Show();
+        }
+
+        private void loadClientes()
+        {
+            List<Cliente> lsClientes = new List<Cliente>();
+
+            daoCliente dao = new daoCliente();
+
+            lsClientes = dao.getAll(1, "");
+
+            if (lsClientes.Count == 0)
+            {
+                throw new Exception("Tabela De Clientes Vazia!");
+            }
+
+        }
+
+        private void loadFornecedores()
+        {
+            List<Fornecedor> lsFornecedores = new List<Fornecedor>();
+
+            daoFornecedor dao = new daoFornecedor();
+
+            lsFornecedores = dao.getAll(1, "");
+
+            if (lsFornecedores.Count == 0)
+            {
+                throw new Exception("Tabela De Fornecedores Vazia!");
+            }
+
+        }
+
+        private void maskedTextBox1_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+
         }
     }
 }

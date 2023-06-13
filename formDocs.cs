@@ -41,11 +41,17 @@ namespace Fluxo_De_Caixa
 
         private void FormUsuarios_Load(object sender, EventArgs e)
         {
-            loadClientes();
-            loadFornecedores();
-            SetartParametros();
-            loadDocumentos();
-            SetarVisoes();
+            try
+            {
+                loadClientes();
+                loadFornecedores();
+                SetartParametros();
+                loadDocumentos();
+                SetarVisoes();
+            } catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         private void SetartParametros()
@@ -104,6 +110,11 @@ namespace Fluxo_De_Caixa
 
             lsClientes = dao.getAll(1, "");
 
+            if (lsClientes.Count == 0)
+            {
+                throw new Exception("Tabela De Clientes Vazia!");
+            }
+
         }
 
         private void loadFornecedores()
@@ -112,8 +123,12 @@ namespace Fluxo_De_Caixa
 
             lsFornecedores = dao.getAll(1, "");
 
-        }
+            if (lsClientes.Count == 0)
+            {
+                throw new Exception("Tabela De Fornecedores Vazia!");
+            }
 
+        }
 
         //Botoes da Barra
         private void TbBrowser_Click(object sender, EventArgs e)
@@ -177,8 +192,8 @@ namespace Fluxo_De_Caixa
 
         private void TbDelete_Click(object sender, EventArgs e)
         {
-
-            DialogResult resultado = MessageBox.Show("Confirma A Exclusão ?", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            string msg = documento.Saldo == 0 ? "Documento Já Foi Baixado.\nDeseja A Exclusão Mesmo Assim ?": "Confirma A Exclusão ?";
+            DialogResult resultado = MessageBox.Show(msg, "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             switch (resultado)
 
@@ -216,6 +231,7 @@ namespace Fluxo_De_Caixa
             {
 
                 PopularDoc();
+                              
 
                 string Erros = Validacao();
 
@@ -235,6 +251,8 @@ namespace Fluxo_De_Caixa
                 {
 
                     case Visoes.Nova:
+
+                        documento.Doc = documento.Doc.Trim().PadLeft(9, '0');
 
                         documento.Saldo = (documento.Valor - documento.Abatimento + documento.Juros) - documento.VlrPago;
 
@@ -304,6 +322,8 @@ namespace Fluxo_De_Caixa
         private void TbCancelar_Click(object sender, EventArgs e)
         {
             visao = Visoes.Browser;
+
+            loadDocumentos();
 
             SetarVisoes();
         }
@@ -520,7 +540,7 @@ namespace Fluxo_De_Caixa
             string Result = "";
 
 
-            if (!Validacoes.NoZero(documento.Valor))
+            if (documento.Valor < 0 )
             {
                 Result += "Campo Valor É Obrigatório !\n";
             }
@@ -870,17 +890,35 @@ namespace Fluxo_De_Caixa
         {
             var form = new formBaixas(documento.IdEmpresa, documento.Id);
 
-            form.Show();
-            /*
+                       
             try
             {
-                form.Show
+                form.ShowDialog();
 
             }
             finally
             {
                 form.Dispose();
-            } */
+
+                daoDocumento dao = new daoDocumento();
+
+                documento = dao.Seek(1, Id);
+
+                if (documento == null)
+                {
+
+                    documento = new Documento();
+
+                    documento.Zerar();
+
+                    visao = Visoes.Nova;
+
+                }
+
+                Atualiza();
+
+                loadDocumentos();
+            } 
         }
 
         private void toolStripComboBox1_Click(object sender, EventArgs e)
