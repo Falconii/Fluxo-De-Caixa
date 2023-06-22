@@ -106,6 +106,10 @@
   <ItemGroup>
     <Compile Include="Configuracoes.cs" />
     <Compile Include="Dao\postgre\daoBaixa.cs" />
+    <Compile Include="Dao\postgre\daoCond.cs" />
+    <Compile Include="Dao\postgre\daoCarOS.cs" />
+    <Compile Include="Dao\postgre\daoDetOS.cs" />
+    <Compile Include="Dao\postgre\daoCabOS.cs" />
     <Compile Include="Dao\postgre\daoDocumento.cs" />
     <Compile Include="Dao\postgre\daoConta.cs" />
     <Compile Include="Dao\postgre\daoFornecedor.cs" />
@@ -125,6 +129,18 @@
     </Compile>
     <Compile Include="formBaixas.designer.cs">
       <DependentUpon>formBaixas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormCar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCar.Designer.cs">
+      <DependentUpon>FormCar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormCond.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCond.Designer.cs">
+      <DependentUpon>FormCond.cs</DependentUpon>
     </Compile>
     <Compile Include="formDocs.cs">
       <SubType>Form</SubType>
@@ -181,6 +197,10 @@
       <DependentUpon>formUsuarios.cs</DependentUpon>
     </Compile>
     <Compile Include="MDISingleton.cs" />
+    <Compile Include="Models\CarOS..cs" />
+    <Compile Include="Models\Cond .cs" />
+    <Compile Include="Models\DetOS.cs" />
+    <Compile Include="Models\CabOS.cs" />
     <Compile Include="Models\Baixa.cs" />
     <Compile Include="Models\RegPag.cs" />
     <Compile Include="Models\Fluxo.cs" />
@@ -206,6 +226,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="formBaixas.resx">
       <DependentUpon>formBaixas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCar.resx">
+      <DependentUpon>FormCar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="formDocs.resx">
       <DependentUpon>formDocs.cs</DependentUpon>

@@ -33,6 +33,8 @@
             this.clientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fornecedoresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.automoveisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.condPagamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usuáriosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.fimToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,7 +44,6 @@
             this.consultaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pagarReceberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.janelaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,6 +67,8 @@
             this.clientesToolStripMenuItem,
             this.fornecedoresToolStripMenuItem,
             this.contasToolStripMenuItem,
+            this.automoveisToolStripMenuItem,
+            this.condPagamentoToolStripMenuItem,
             this.usuáriosToolStripMenuItem,
             this.toolStripSeparator1,
             this.fimToolStripMenuItem});
@@ -76,40 +79,53 @@
             // clientesToolStripMenuItem
             // 
             this.clientesToolStripMenuItem.Name = "clientesToolStripMenuItem";
-            this.clientesToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.clientesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.clientesToolStripMenuItem.Text = "Clientes";
             this.clientesToolStripMenuItem.Click += new System.EventHandler(this.clientesToolStripMenuItem_Click);
             // 
             // fornecedoresToolStripMenuItem
             // 
             this.fornecedoresToolStripMenuItem.Name = "fornecedoresToolStripMenuItem";
-            this.fornecedoresToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.fornecedoresToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.fornecedoresToolStripMenuItem.Text = "Fornecedores";
             this.fornecedoresToolStripMenuItem.Click += new System.EventHandler(this.fornecedoresToolStripMenuItem_Click);
             // 
             // contasToolStripMenuItem
             // 
             this.contasToolStripMenuItem.Name = "contasToolStripMenuItem";
-            this.contasToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.contasToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.contasToolStripMenuItem.Text = "Contas";
             this.contasToolStripMenuItem.Click += new System.EventHandler(this.contasToolStripMenuItem_Click);
+            // 
+            // automoveisToolStripMenuItem
+            // 
+            this.automoveisToolStripMenuItem.Name = "automoveisToolStripMenuItem";
+            this.automoveisToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.automoveisToolStripMenuItem.Text = "Automoveis";
+            this.automoveisToolStripMenuItem.Click += new System.EventHandler(this.automoveisToolStripMenuItem_Click);
+            // 
+            // condPagamentoToolStripMenuItem
+            // 
+            this.condPagamentoToolStripMenuItem.Name = "condPagamentoToolStripMenuItem";
+            this.condPagamentoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.condPagamentoToolStripMenuItem.Text = "Cond Pagamento";
             // 
             // usuáriosToolStripMenuItem
             // 
             this.usuáriosToolStripMenuItem.Name = "usuáriosToolStripMenuItem";
-            this.usuáriosToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.usuáriosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.usuáriosToolStripMenuItem.Text = "Usuários";
             this.usuáriosToolStripMenuItem.Click += new System.EventHandler(this.usuáriosToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(142, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // fimToolStripMenuItem
             // 
             this.fimToolStripMenuItem.Name = "fimToolStripMenuItem";
-            this.fimToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.fimToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.fimToolStripMenuItem.Text = "Fim";
             this.fimToolStripMenuItem.Click += new System.EventHandler(this.FimToolStripMenuItem_Click);
             // 
@@ -157,20 +173,11 @@
             this.janelaToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
             this.janelaToolStripMenuItem.Text = "Janela";
             // 
-            // maskedTextBox1
-            // 
-            this.maskedTextBox1.Location = new System.Drawing.Point(448, 0);
-            this.maskedTextBox1.Name = "maskedTextBox1";
-            this.maskedTextBox1.Size = new System.Drawing.Size(100, 20);
-            this.maskedTextBox1.TabIndex = 3;
-            this.maskedTextBox1.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.maskedTextBox1_MaskInputRejected);
-            // 
             // FormPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.maskedTextBox1);
             this.Controls.Add(this.menuStrip1);
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
@@ -200,7 +207,8 @@
         private System.Windows.Forms.ToolStripMenuItem fluxoDeCaixaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consultaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pagarReceberToolStripMenuItem;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox1;
+        private System.Windows.Forms.ToolStripMenuItem automoveisToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem condPagamentoToolStripMenuItem;
     }
 }
 

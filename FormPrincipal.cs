@@ -57,6 +57,8 @@ namespace Fluxo_De_Caixa
         private formDocs docs;
         private FormFluxo fluxo;
         private FormRecPag recPag;
+        private FormCar formCar;
+        private FormCond formCond;
 
         public FormPrincipal(Usuario user)
         {
@@ -191,6 +193,19 @@ namespace Fluxo_De_Caixa
             recPag.Show();
         }
 
+        private void automoveisToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            formCar = new FormCar();
+
+            ((System.Windows.Forms.ToolStripMenuItem)sender).Enabled = false;
+
+            formCar.MdiParent = this;
+
+            formCar.menu = (ToolStripMenuItem)sender;
+
+            formCar.Show();
+        }
+
         private void loadClientes()
         {
             List<Cliente> lsClientes = new List<Cliente>();
@@ -221,9 +236,8 @@ namespace Fluxo_De_Caixa
 
         }
 
-        private void maskedTextBox1_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
-        {
+     
 
-        }
+      
     }
 }
