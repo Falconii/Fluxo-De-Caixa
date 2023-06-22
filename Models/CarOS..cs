@@ -37,7 +37,7 @@ namespace Fluxo_De_Caixa.Models
         {
             Id_Empresa = 1;
             Placa = "";
-            Id_Marca = 0;
+            Id_Marca = 1;
             Modelo = "";
             Cor = "";
             Ano = "";

@@ -8,15 +8,15 @@ using System.Windows.Forms;
 
 namespace Fluxo_De_Caixa.Dao.postgre
 {
-    class daoCarOS
+    class daoMarca
     {
-
+        /*
         public CarOS Insert(CarOS obj)
         {
 
             String StringInsert = $" INSERT INTO OS_CAR " +
                                 "(ID_EMPRESA, PLACA, ID_MARCA, MODELO, COR, ANO, USER_INSERT, USER_UPDATE) " +
-                                $" VALUES({obj.Id_Empresa},'{obj.Placa}',{obj.Id_Marca},'{obj.Modelo}', '{obj.Cor}','{obj.Ano}',{obj.User_Insert},{obj.User_Update})  RETURNING * ";
+                                $" VALUES({obj.Id_Empresa},'{obj.Placa}',{obj.Id_Marca},'{obj.Modelo}', {obj.Cor}','{obj.Ano}',{obj.User_Insert},{obj.User_Update})  RETURNING * ";
 
             using (var objConexao = new NpgsqlConnection(DataBase.RunCommand.connectionString))
             {
@@ -97,7 +97,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
         public CarOS Seek(int id_empresa, string placa)
         {
 
-            CarOS obj = null;
+            Marca obj = null;
 
             string strStringConexao = DataBase.RunCommand.connectionString;
 
@@ -130,7 +130,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
                             objDataReader.Read();
 
-                            obj = new CarOS();
+                            obj = new Marca();
 
                             obj = PopulaCarbOS(objDataReader);
 
@@ -152,34 +152,31 @@ namespace Fluxo_De_Caixa.Dao.postgre
             return obj;
         }
 
-        private CarOS PopulaCarbOS(NpgsqlDataReader objDataReader)
+        */
+        private Marca PopulaMarca(NpgsqlDataReader objDataReader)
         {
 
-            var obj = new CarOS();
+            var obj = new Marca();
 
             obj.Id_Empresa = Convert.ToInt32(objDataReader["Id_Empresa"]);
-            obj.Placa = objDataReader["Placa"].ToString();
-            obj.Id_Marca = Convert.ToInt32(objDataReader["Id_Marca"]);
-            obj.Modelo   = objDataReader["Modelo"].ToString();
-            obj.Cor = objDataReader["Cor"].ToString();
-            obj.Ano = objDataReader["Ano"].ToString();
+            obj.Id = Convert.ToInt32(objDataReader["Id"]);
+            obj.Descricao = objDataReader["Descricao"].ToString();
             obj.User_Insert = Convert.ToInt32(objDataReader["User_Insert"]);
             obj.User_Update = Convert.ToInt32(objDataReader["User_Update"]);
-            obj.Marca_Descricao = objDataReader["Marca_Descricao"].ToString();
 
             return obj;
         }
 
-        public List<CarOS> getAll(int Ordenacao, string Filtro)
+        public List<Marca> getAll(int Ordenacao, string Filtro)
         {
 
-            CarOS obj = null;
+            Marca obj = null;
 
             string strStringConexao = DataBase.RunCommand.connectionString;
 
-            List<CarOS> lista = new List<CarOS>();
+            List<Marca> lista = new List<Marca>();
 
-            string strSelect = SqlGridBrowse(Ordenacao, Filtro);
+            string strSelect = SqlGrid(Ordenacao, Filtro);
 
             Console.WriteLine(strSelect);
 
@@ -199,9 +196,9 @@ namespace Fluxo_De_Caixa.Dao.postgre
                             while (objDataReader.Read())
                             {
 
-                                obj = new CarOS();
+                                obj = new Marca();
 
-                                obj = PopulaCarbOS(objDataReader);
+                                obj = PopulaMarca(objDataReader);
 
                                 lista.Add(obj);
 
@@ -223,22 +220,14 @@ namespace Fluxo_De_Caixa.Dao.postgre
             return lista;
         }
 
+
         public string SqlGrid(int Ordenacao, string Filtro)
         {
             string Where = "";
 
             string OrderBy = "";
 
-            string strSelect = " SELECT   CAR.ID_EMPRESA " +
-                                ",CAR.PLACA " +
-                                ",CAR.ID_MARCA " +
-                                ",CAR.COR " +
-                                ",CAR.ANO " +
-                                ",CAR.USER_INSERT " +
-                                ",CAR.USER_UPDATE " +
-                                ",MARCA.DESCRICAO AS MARCA_DESCRICAO " +
-                                "FROM OS_CAR CAR " +
-                                "INNER JOIN MARCAS MARCA ON MARCA.ID_EMPRESA = CAR.ID_EMPRESA AND MARCA.ID = CAR.ID_MARCA ";
+            string strSelect = " SELECT MARCA.ID_EMPRESA,MARCA.ID,MARCA.DESCRICAO,MARCA.USER_INSERT,MARCA.USER_UPDATE FROM MARCAS MARCA ";
 
             //Adiciona WHERE 
             if (Filtro.Trim() != "")
@@ -246,10 +235,10 @@ namespace Fluxo_De_Caixa.Dao.postgre
                 switch (Ordenacao)
                 {
                     case 0:
-                        Where = $"WHERE CAR.ID_EMPRESA = 1 AND CAR.PLACA = '{Filtro}'";
+                        Where = $"WHERE MARCA.ID_EMPRESA = 1 AND MARCA.ID = {Filtro}";
                         break;
                     case 1:
-                        Where = $"WHERE CAR.ID_EMPRESA = 1 AND CAR.MODELO = '{Filtro}'";
+                        Where = $"WHERE MARCA.ID_EMPRESA = 1 AND MARCA.DESCRICAO = '{Filtro}'";
                         break;
                 }
             }
@@ -260,10 +249,10 @@ namespace Fluxo_De_Caixa.Dao.postgre
             switch (Ordenacao)
             {
                 case 0:
-                    OrderBy = $"ORDER BY CAR.ID_EMPRESA  ,  CAR.PLACA ";
+                    OrderBy = $"ORDER BY MARCA.ID_EMPRESA  ,  MARCA.ID ";
                     break;
                 case 1:
-                    OrderBy = $"ORDER BY CAR.ID_EMPRESA  ,  CAR.MODELO ";
+                    OrderBy = $"ORDER BY MARCA.ID_EMPRESA  ,  MARCA.MODELO ";
                     break;
 
             }
@@ -280,14 +269,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             string OrderBy = "";
 
-            string strSelect = " SELECT  " +
-                               " CAR.PLACA " +
-                               ",MARCA.DESCRICAO AS MARCA_DESCRICAO " +
-                               ",CAR.MODELO "+
-                               ",CAR.COR " +
-                               ",CAR.ANO " +
-                               "FROM OS_CAR CAR " +
-                               "INNER JOIN MARCAS MARCA ON MARCA.ID_EMPRESA = CAR.ID_EMPRESA AND MARCA.ID = CAR.ID_MARCA ";
+            string strSelect = " SELECT MARCA.ID_EMPRESA,MARCA.ID,MARCA.DESCRICAO,MARCA.USER_INSERT,MARCA.USER_UPDATE FROM MARCAS MARCA ";
 
             //Adiciona WHERE 
             if (Filtro.Trim() != "")
@@ -295,10 +277,10 @@ namespace Fluxo_De_Caixa.Dao.postgre
                 switch (Ordenacao)
                 {
                     case 0:
-                        Where = $"WHERE CAR.ID_EMPRESA = 1 AND CAR.PLACA = '{Filtro}'";
+                        Where = $"WHERE MARCA.ID_EMPRESA = 1 AND MARCA.ID = {Filtro}";
                         break;
                     case 1:
-                        Where = $"WHERE CAR.ID_EMPRESA = 1 AND CAR.MODELO = '{Filtro}'";
+                        Where = $"WHERE MARCA.ID_EMPRESA = 1 AND MARCA.DESCRICAO = '{Filtro}'";
                         break;
                 }
             }
@@ -309,10 +291,10 @@ namespace Fluxo_De_Caixa.Dao.postgre
             switch (Ordenacao)
             {
                 case 0:
-                    OrderBy = $"ORDER BY CAR.ID_EMPRESA  ,  CAR.PLACA ";
+                    OrderBy = $"ORDER BY MARCA.ID_EMPRESA  ,  MARCA.ID ";
                     break;
                 case 1:
-                    OrderBy = $"ORDER BY CAR.ID_EMPRESA  ,  CAR.MODELO ";
+                    OrderBy = $"ORDER BY MARCA.ID_EMPRESA  ,  MARCA.MODELO ";
                     break;
 
             }

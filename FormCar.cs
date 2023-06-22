@@ -27,6 +27,8 @@ namespace Fluxo_De_Caixa
 
         string proprietario = "Automóvel";
 
+        List<Marca> lsMarcas = new List<Marca>();
+
         public ToolStripMenuItem menu { get; internal set; }
 
         public FormCar()
@@ -41,6 +43,8 @@ namespace Fluxo_De_Caixa
         private void FormCar_Load(object sender, EventArgs e)
         {
             SetarVisoes();
+            loadMarcas();
+            loadCarOS();
         }
 
         private void SetarProperties(bool value)
@@ -61,13 +65,18 @@ namespace Fluxo_De_Caixa
             txtMarca.Enabled = value;
             txtCor.Enabled = value;
             txtAno.Enabled = value;
-            txtMarca.CharacterCasing = CharacterCasing.Upper;
             txtCor.CharacterCasing = CharacterCasing.Upper;
             txtMarca.MaxLength = 20;
             txtCor.MaxLength = 20;
             
         }
 
+        private void loadMarcas()
+        {
+            daoMarca dao = new daoMarca();
+            lsMarcas = dao.getAll(0, "");
+            lsMarcas.ForEach(m => { txtMarca.Items.Add($"{m.Descricao}"); });
+        }
         private void loadCarOS()
         {
 
@@ -96,6 +105,8 @@ namespace Fluxo_De_Caixa
                         carOS = new CarOS();
 
                         carOS.Zerar();
+
+                        carOS.Marca_Descricao = lsMarcas[0].Descricao;
 
                         visao = Visoes.Nova;
 
@@ -130,6 +141,8 @@ namespace Fluxo_De_Caixa
             carOS = new CarOS();
 
             carOS.Zerar();
+
+            carOS.Marca_Descricao = lsMarcas[0].Descricao;
 
             Atualiza();
 
@@ -251,14 +264,7 @@ namespace Fluxo_De_Caixa
 
 
         }
-
-        private void CbPesquisar_Click(object sender, EventArgs e)
-        {
-
-
-
-        }
-
+             
         private void TbCancelar_Click(object sender, EventArgs e)
         {
             visao = Visoes.Browser;
@@ -316,6 +322,8 @@ namespace Fluxo_De_Caixa
 
                 carOS.Zerar();
 
+                carOS.Marca_Descricao = lsMarcas[0].Descricao;
+
                 visao = Visoes.Nova;
 
             }
@@ -335,12 +343,15 @@ namespace Fluxo_De_Caixa
             dbGridView.Columns[01].HeaderText = "MARCA";
             dbGridView.Columns[01].Width = 200;
             dbGridView.Columns[01].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dbGridView.Columns[02].HeaderText = "COR";
+            dbGridView.Columns[02].HeaderText = "MODELO";
             dbGridView.Columns[02].Width = 200;
             dbGridView.Columns[02].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dbGridView.Columns[03].HeaderText = "ANO";
-            dbGridView.Columns[03].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dbGridView.Columns[03].HeaderText = "COR";
+            dbGridView.Columns[03].Width = 200;
             dbGridView.Columns[03].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dbGridView.Columns[04].HeaderText = "ANO";
+            dbGridView.Columns[04].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dbGridView.Columns[04].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
             dbGridView.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray;
             dbGridView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -358,7 +369,7 @@ namespace Fluxo_De_Caixa
             try //inicio do tratamento de exceções 
             {
 
-                daoConta dao = new daoConta();
+                daoCarOS dao = new daoCarOS();
 
                 string strSelect = dao.SqlGridBrowse(Ordenacao, edPesquisar.Text.Trim());
 
@@ -397,9 +408,9 @@ namespace Fluxo_De_Caixa
         {
             string Result = "";
 
-            if (!Validacoes.IsTamanho(carOS.Placa, 1, 6))
+            if (!Validacoes.IsTamanho(carOS.Placa, 1, 8))
             {
-                Result += "Campo Código É Obrigatorio!\n";
+                Result += "Campo Placa Inválido!\n";
             }
 
             if (!Validacoes.IsTamanho(carOS.Modelo, 1, 20))
@@ -418,10 +429,10 @@ namespace Fluxo_De_Caixa
 
         private void Atualiza()
         {
-
+            int index = lsMarcas.FindIndex(m => m.Id == carOS.Id_Marca);
             txtPlaca.Text = carOS.Placa;
-            txtMarca.Text = carOS.Marca_Descricao;
-            txtModelo.Text = carOS.Marca_Descricao;
+            txtMarca.SelectedIndex = index;
+            txtModelo.Text = carOS.Modelo;
             txtCor.Text = carOS.Cor.Trim();
             txtAno.Text = carOS.Ano;
 
@@ -432,10 +443,18 @@ namespace Fluxo_De_Caixa
 
         private void PopularCarOS()
         {
+
+            var marca = lsMarcas.Find(m => m.Descricao == carOS.Marca_Descricao);
+            int id = 0;
+            if (marca != null)
+            {
+                id = marca.Id;
+            }
             txtPlaca.TextMaskFormat = MaskFormat.ExcludePromptAndLiterals;
             carOS.Placa = txtPlaca.Text;
             txtPlaca.TextMaskFormat = MaskFormat.IncludePromptAndLiterals;
-            carOS.Marca = txtMarca.Text;
+            carOS.Id_Marca = id;
+            carOS.Modelo = txtModelo.Text;
             carOS.Cor = txtCor.Text ;
             carOS.Ano = txtAno.Text;
            
@@ -560,11 +579,10 @@ namespace Fluxo_De_Caixa
 
         }
 
-        private void lblDescricao_Click(object sender, EventArgs e)
-        {
-
-        }
-
        
+        private void btBuscar_Click_1(object sender, EventArgs e)
+        {
+            loadCarOS();
+        }
     }
 }

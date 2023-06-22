@@ -47,14 +47,16 @@ namespace Fluxo_De_Caixa
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPrincipal = new System.Windows.Forms.TabPage();
             this.gbIdentificacao = new System.Windows.Forms.GroupBox();
+            this.txtMarca = new System.Windows.Forms.ComboBox();
+            this.lblModelo = new System.Windows.Forms.Label();
+            this.txtModelo = new System.Windows.Forms.TextBox();
+            this.txtAno = new System.Windows.Forms.MaskedTextBox();
+            this.lblAno = new System.Windows.Forms.Label();
             this.txtPlaca = new System.Windows.Forms.MaskedTextBox();
             this.lblCor = new System.Windows.Forms.Label();
             this.txtCor = new System.Windows.Forms.TextBox();
             this.lblMarca = new System.Windows.Forms.Label();
             this.lblPlaca = new System.Windows.Forms.Label();
-            this.lblAno = new System.Windows.Forms.Label();
-            this.txtMarca = new System.Windows.Forms.TextBox();
-            this.txtAno = new System.Windows.Forms.MaskedTextBox();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dbGridView)).BeginInit();
             this.tabControl.SuspendLayout();
@@ -92,6 +94,7 @@ namespace Fluxo_De_Caixa
             this.tbBrowser.Name = "tbBrowser";
             this.tbBrowser.Size = new System.Drawing.Size(34, 36);
             this.tbBrowser.ToolTipText = "Click Para Alternar As Visões de Browser e Consulta";
+            this.tbBrowser.Click += new System.EventHandler(this.TbBrowser_Click);
             // 
             // toolStripSeparator1
             // 
@@ -108,11 +111,11 @@ namespace Fluxo_De_Caixa
             // cbPesquisar
             // 
             this.cbPesquisar.Items.AddRange(new object[] {
-            "CÓDIGO",
-            "RAZÃO SOCIAL",
-            "FANTASIA"});
+            "PLACA",
+            "MODELO"});
             this.cbPesquisar.Name = "cbPesquisar";
             this.cbPesquisar.Size = new System.Drawing.Size(121, 39);
+            this.cbPesquisar.SelectedIndexChanged += new System.EventHandler(this.CbPesquisar_SelectedIndexChanged);
             // 
             // edPesquisar
             // 
@@ -128,6 +131,7 @@ namespace Fluxo_De_Caixa
             this.btBuscar.Name = "btBuscar";
             this.btBuscar.Size = new System.Drawing.Size(23, 36);
             this.btBuscar.Text = "Click Aqui Para Pesquisar";
+            this.btBuscar.Click += new System.EventHandler(this.btBuscar_Click_1);
             // 
             // toolStripSeparator2
             // 
@@ -144,6 +148,7 @@ namespace Fluxo_De_Caixa
             this.tbIncluir.Name = "tbIncluir";
             this.tbIncluir.Size = new System.Drawing.Size(34, 36);
             this.tbIncluir.ToolTipText = "Clicl Aqui Para Incluir Um Usuario  Novo";
+            this.tbIncluir.Click += new System.EventHandler(this.TbIncluir_Click);
             // 
             // tbEditar
             // 
@@ -154,6 +159,7 @@ namespace Fluxo_De_Caixa
             this.tbEditar.Name = "tbEditar";
             this.tbEditar.Size = new System.Drawing.Size(34, 36);
             this.tbEditar.ToolTipText = "Click Aqui Para Editar O Usuário";
+            this.tbEditar.Click += new System.EventHandler(this.TbEditar_Click);
             // 
             // tbDelete
             // 
@@ -164,6 +170,7 @@ namespace Fluxo_De_Caixa
             this.tbDelete.Name = "tbDelete";
             this.tbDelete.Size = new System.Drawing.Size(34, 36);
             this.tbDelete.ToolTipText = "Click Aqui Para Excluir O Usuário";
+            this.tbDelete.Click += new System.EventHandler(this.TbDelete_Click);
             // 
             // tbOk
             // 
@@ -174,6 +181,7 @@ namespace Fluxo_De_Caixa
             this.tbOk.Name = "tbOk";
             this.tbOk.Size = new System.Drawing.Size(34, 36);
             this.tbOk.ToolTipText = "Click Aqui Para Confirmar";
+            this.tbOk.Click += new System.EventHandler(this.TbOk_Click);
             // 
             // tbCancelar
             // 
@@ -184,6 +192,7 @@ namespace Fluxo_De_Caixa
             this.tbCancelar.Name = "tbCancelar";
             this.tbCancelar.Size = new System.Drawing.Size(36, 36);
             this.tbCancelar.ToolTipText = "Click Aqui Para Cancelar";
+            this.tbCancelar.Click += new System.EventHandler(this.TbCancelar_Click);
             // 
             // dbGridView
             // 
@@ -225,8 +234,10 @@ namespace Fluxo_De_Caixa
             // 
             // gbIdentificacao
             // 
-            this.gbIdentificacao.Controls.Add(this.txtAno);
             this.gbIdentificacao.Controls.Add(this.txtMarca);
+            this.gbIdentificacao.Controls.Add(this.lblModelo);
+            this.gbIdentificacao.Controls.Add(this.txtModelo);
+            this.gbIdentificacao.Controls.Add(this.txtAno);
             this.gbIdentificacao.Controls.Add(this.lblAno);
             this.gbIdentificacao.Controls.Add(this.txtPlaca);
             this.gbIdentificacao.Controls.Add(this.lblCor);
@@ -240,6 +251,52 @@ namespace Fluxo_De_Caixa
             this.gbIdentificacao.TabStop = false;
             this.gbIdentificacao.Text = "Identificação";
             // 
+            // txtMarca
+            // 
+            this.txtMarca.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.txtMarca.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.txtMarca.FormattingEnabled = true;
+            this.txtMarca.Location = new System.Drawing.Point(134, 46);
+            this.txtMarca.Name = "txtMarca";
+            this.txtMarca.Size = new System.Drawing.Size(145, 21);
+            this.txtMarca.TabIndex = 2;
+            // 
+            // lblModelo
+            // 
+            this.lblModelo.AutoSize = true;
+            this.lblModelo.Location = new System.Drawing.Point(296, 31);
+            this.lblModelo.Name = "lblModelo";
+            this.lblModelo.Size = new System.Drawing.Size(42, 13);
+            this.lblModelo.TabIndex = 18;
+            this.lblModelo.Text = "Modelo";
+            // 
+            // txtModelo
+            // 
+            this.txtModelo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtModelo.Location = new System.Drawing.Point(299, 48);
+            this.txtModelo.Name = "txtModelo";
+            this.txtModelo.Size = new System.Drawing.Size(143, 20);
+            this.txtModelo.TabIndex = 3;
+            // 
+            // txtAno
+            // 
+            this.txtAno.Location = new System.Drawing.Point(653, 48);
+            this.txtAno.Mask = "9999/9999";
+            this.txtAno.Name = "txtAno";
+            this.txtAno.PromptChar = ' ';
+            this.txtAno.Size = new System.Drawing.Size(100, 20);
+            this.txtAno.TabIndex = 5;
+            this.txtAno.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            // 
+            // lblAno
+            // 
+            this.lblAno.AutoSize = true;
+            this.lblAno.Location = new System.Drawing.Point(650, 32);
+            this.lblAno.Name = "lblAno";
+            this.lblAno.Size = new System.Drawing.Size(26, 13);
+            this.lblAno.TabIndex = 16;
+            this.lblAno.Text = "Ano";
+            // 
             // txtPlaca
             // 
             this.txtPlaca.Location = new System.Drawing.Point(13, 48);
@@ -252,20 +309,19 @@ namespace Fluxo_De_Caixa
             // lblCor
             // 
             this.lblCor.AutoSize = true;
-            this.lblCor.Location = new System.Drawing.Point(292, 32);
+            this.lblCor.Location = new System.Drawing.Point(464, 32);
             this.lblCor.Name = "lblCor";
             this.lblCor.Size = new System.Drawing.Size(23, 13);
             this.lblCor.TabIndex = 14;
             this.lblCor.Text = "Cor";
-            this.lblCor.Click += new System.EventHandler(this.lblDescricao_Click);
             // 
             // txtCor
             // 
             this.txtCor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtCor.Location = new System.Drawing.Point(295, 48);
+            this.txtCor.Location = new System.Drawing.Point(467, 48);
             this.txtCor.Name = "txtCor";
             this.txtCor.Size = new System.Drawing.Size(164, 20);
-            this.txtCor.TabIndex = 2;
+            this.txtCor.TabIndex = 4;
             this.txtCor.TextChanged += new System.EventHandler(this.txtDescricao_TextChanged);
             // 
             // lblMarca
@@ -285,32 +341,6 @@ namespace Fluxo_De_Caixa
             this.lblPlaca.Size = new System.Drawing.Size(34, 13);
             this.lblPlaca.TabIndex = 8;
             this.lblPlaca.Text = "Placa";
-            // 
-            // lblAno
-            // 
-            this.lblAno.AutoSize = true;
-            this.lblAno.Location = new System.Drawing.Point(473, 32);
-            this.lblAno.Name = "lblAno";
-            this.lblAno.Size = new System.Drawing.Size(26, 13);
-            this.lblAno.TabIndex = 16;
-            this.lblAno.Text = "Ano";
-            // 
-            // txtMarca
-            // 
-            this.txtMarca.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtMarca.Location = new System.Drawing.Point(134, 48);
-            this.txtMarca.Name = "txtMarca";
-            this.txtMarca.Size = new System.Drawing.Size(143, 20);
-            this.txtMarca.TabIndex = 1;
-            // 
-            // txtAno
-            // 
-            this.txtAno.Location = new System.Drawing.Point(476, 48);
-            this.txtAno.Mask = "9999/9999";
-            this.txtAno.Name = "txtAno";
-            this.txtAno.PromptChar = ' ';
-            this.txtAno.Size = new System.Drawing.Size(100, 20);
-            this.txtAno.TabIndex = 3;
             // 
             // FormCar
             // 
@@ -361,8 +391,10 @@ namespace Fluxo_De_Caixa
         private System.Windows.Forms.TextBox txtCor;
         private System.Windows.Forms.Label lblMarca;
         private System.Windows.Forms.Label lblPlaca;
-        private System.Windows.Forms.TextBox txtMarca;
         private System.Windows.Forms.Label lblAno;
         private System.Windows.Forms.MaskedTextBox txtAno;
+        private System.Windows.Forms.ComboBox txtMarca;
+        private System.Windows.Forms.Label lblModelo;
+        private System.Windows.Forms.TextBox txtModelo;
     }
 }
