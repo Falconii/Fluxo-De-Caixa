@@ -63,8 +63,10 @@ namespace Fluxo_De_Caixa
                     break;
             }
             txtMarca.Enabled = value;
+            txtModelo.Enabled = value;
             txtCor.Enabled = value;
             txtAno.Enabled = value;
+            txtModelo.CharacterCasing = CharacterCasing.Upper;
             txtCor.CharacterCasing = CharacterCasing.Upper;
             txtMarca.MaxLength = 20;
             txtCor.MaxLength = 20;
@@ -97,7 +99,7 @@ namespace Fluxo_De_Caixa
 
                     daoCarOS dao = new daoCarOS();
 
-                    carOS = dao.Seek(1, Placa);
+                    carOS = dao.Seek(1, Placa.Replace("-",""));
 
                     if (carOS == null)
                     {
@@ -313,7 +315,7 @@ namespace Fluxo_De_Caixa
 
             daoCarOS dao = new daoCarOS();
 
-            carOS = dao.Seek(carOS.Id_Empresa, Placa);
+            carOS = dao.Seek(carOS.Id_Empresa, Placa.Replace("-",""));
 
             if (carOS == null)
             {
@@ -444,7 +446,7 @@ namespace Fluxo_De_Caixa
         private void PopularCarOS()
         {
 
-            var marca = lsMarcas.Find(m => m.Descricao == carOS.Marca_Descricao);
+            var marca = lsMarcas.Find(m => m.Descricao == txtMarca.Text);
             int id = 0;
             if (marca != null)
             {
@@ -574,12 +576,7 @@ namespace Fluxo_De_Caixa
             WindowState = System.Windows.Forms.FormWindowState.Maximized;
         }
 
-        private void txtDescricao_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-       
+    
         private void btBuscar_Click_1(object sender, EventArgs e)
         {
             loadCarOS();

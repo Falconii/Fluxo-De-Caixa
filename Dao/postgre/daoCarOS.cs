@@ -60,15 +60,16 @@ namespace Fluxo_De_Caixa.Dao.postgre
         public void Update(CarOS obj)
         {
 
-            String StringUpdate = $" UPDATE  OS_CAR " +
-                        $"ID_EMPRESA 		= {obj.Id_Empresa} " +
+            String StringUpdate = $" UPDATE  OS_CAR SET " +
+                        $"ID_EMPRESA 		= {obj.Id_Empresa}, " +
                         $"PLACA 			= '{obj.Placa}', " +
                         $"ID_MARCA 			= '{obj.Id_Marca}', " +
                         $"MODELO 			= '{obj.Modelo}', " +
                         $"COR 				= '{obj.Cor}', " +
                         $"ANO 				= '{obj.Ano}', " +
-                        $"USER_INSERT 		= {obj.User_Insert} " +
-                        $"USER_UPDATE  		= {obj.User_Update} ";
+                        $"USER_INSERT 		= {obj.User_Insert}, " +
+                        $"USER_UPDATE  		= {obj.User_Update} " +
+                        $"WHERE ID_EMPRESA = {obj.Id_Empresa} AND PLACA = '{obj.Placa}' ";
 
             Console.WriteLine(StringUpdate);
 
@@ -88,7 +89,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
         public void Delete(CarOS obj)
         {
 
-            String StringDelete = $" DELETE FROM  OSCAB  WHERE ID_EMPRESA = {obj.Id_Empresa} AND PLACA = {obj.Placa} ";
+            String StringDelete = $" DELETE FROM  OS_CAR  WHERE ID_EMPRESA = {obj.Id_Empresa} AND PLACA = '{obj.Placa}' ";
 
             DataBase.RunCommand.CreateCommand(StringDelete);
 
@@ -102,8 +103,9 @@ namespace Fluxo_De_Caixa.Dao.postgre
             string strStringConexao = DataBase.RunCommand.connectionString;
 
             string strSelect =  " SELECT   CAR.ID_EMPRESA " +
-                                ",CAR.PLACA as PLANCA " +
+                                ",CAR.PLACA as PLACA " +
                                 ",CAR.ID_MARCA AS ID_MARCA " +
+                                ",CAR.MODELO   AS MODELO " +
                                 ",CAR.COR   AS COR " +
                                 ",CAR.ANO   AS ANO " +
                                 ",CAR.USER_INSERT  AS USER_INSERT " +
@@ -232,6 +234,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
             string strSelect = " SELECT   CAR.ID_EMPRESA " +
                                 ",CAR.PLACA " +
                                 ",CAR.ID_MARCA " +
+                                ",CAR.MODELO " +
                                 ",CAR.COR " +
                                 ",CAR.ANO " +
                                 ",CAR.USER_INSERT " +
@@ -281,11 +284,11 @@ namespace Fluxo_De_Caixa.Dao.postgre
             string OrderBy = "";
 
             string strSelect = " SELECT  " +
-                               " CAR.PLACA " +
+                               " LEFT(CAR.PLACA,3) || '-' || RIGHT(CAR.PLACA,4) AS PLACA " +
                                ",MARCA.DESCRICAO AS MARCA_DESCRICAO " +
                                ",CAR.MODELO "+
                                ",CAR.COR " +
-                               ",CAR.ANO " +
+                               ", LEFT(CAR.ANO,4) || '-' || RIGHT(CAR.ANO,4) AS ANO " +
                                "FROM OS_CAR CAR " +
                                "INNER JOIN MARCAS MARCA ON MARCA.ID_EMPRESA = CAR.ID_EMPRESA AND MARCA.ID = CAR.ID_MARCA ";
 

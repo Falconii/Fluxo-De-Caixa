@@ -109,6 +109,7 @@
             this.condPagamentoToolStripMenuItem.Name = "condPagamentoToolStripMenuItem";
             this.condPagamentoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.condPagamentoToolStripMenuItem.Text = "Cond Pagamento";
+            this.condPagamentoToolStripMenuItem.Click += new System.EventHandler(this.condPagamentoToolStripMenuItem_Click);
             // 
             // usuáriosToolStripMenuItem
             // 

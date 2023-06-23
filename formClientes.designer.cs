@@ -45,6 +45,19 @@
             this.dbGridView = new System.Windows.Forms.DataGridView();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPrincipal = new System.Windows.Forms.TabPage();
+            this.gbEndereco = new System.Windows.Forms.GroupBox();
+            this.txtCep = new System.Windows.Forms.MaskedTextBox();
+            this.lblEstado = new System.Windows.Forms.Label();
+            this.lblCep = new System.Windows.Forms.Label();
+            this.cbUFF = new System.Windows.Forms.ComboBox();
+            this.lblCidade = new System.Windows.Forms.Label();
+            this.txtCidade = new System.Windows.Forms.TextBox();
+            this.lblBairro = new System.Windows.Forms.Label();
+            this.txtBairro = new System.Windows.Forms.TextBox();
+            this.txtNro = new System.Windows.Forms.TextBox();
+            this.lblNro = new System.Windows.Forms.Label();
+            this.txtEndereco = new System.Windows.Forms.TextBox();
+            this.lblEndereco = new System.Windows.Forms.Label();
             this.gbSenha = new System.Windows.Forms.GroupBox();
             this.cbConta = new System.Windows.Forms.ComboBox();
             this.lbConta = new System.Windows.Forms.Label();
@@ -59,26 +72,13 @@
             this.lblRazao = new System.Windows.Forms.Label();
             this.txtCodigo = new System.Windows.Forms.TextBox();
             this.lblCodigo = new System.Windows.Forms.Label();
-            this.gbEndereco = new System.Windows.Forms.GroupBox();
-            this.lblBairro = new System.Windows.Forms.Label();
-            this.txtBairro = new System.Windows.Forms.TextBox();
-            this.txtNro = new System.Windows.Forms.TextBox();
-            this.lblNro = new System.Windows.Forms.Label();
-            this.txtEndereco = new System.Windows.Forms.TextBox();
-            this.lblEndereco = new System.Windows.Forms.Label();
-            this.lblCidade = new System.Windows.Forms.Label();
-            this.txtCidade = new System.Windows.Forms.TextBox();
-            this.cbUFF = new System.Windows.Forms.ComboBox();
-            this.lblCep = new System.Windows.Forms.Label();
-            this.lblEstado = new System.Windows.Forms.Label();
-            this.txtCep = new System.Windows.Forms.MaskedTextBox();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dbGridView)).BeginInit();
             this.tabControl.SuspendLayout();
             this.tabPrincipal.SuspendLayout();
+            this.gbEndereco.SuspendLayout();
             this.gbSenha.SuspendLayout();
             this.gbIdentificacao.SuspendLayout();
-            this.gbEndereco.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -255,6 +255,131 @@
             this.tabPrincipal.Text = "Principal";
             this.tabPrincipal.UseVisualStyleBackColor = true;
             // 
+            // gbEndereco
+            // 
+            this.gbEndereco.Controls.Add(this.txtCep);
+            this.gbEndereco.Controls.Add(this.lblEstado);
+            this.gbEndereco.Controls.Add(this.lblCep);
+            this.gbEndereco.Controls.Add(this.cbUFF);
+            this.gbEndereco.Controls.Add(this.lblCidade);
+            this.gbEndereco.Controls.Add(this.txtCidade);
+            this.gbEndereco.Controls.Add(this.lblBairro);
+            this.gbEndereco.Controls.Add(this.txtBairro);
+            this.gbEndereco.Controls.Add(this.txtNro);
+            this.gbEndereco.Controls.Add(this.lblNro);
+            this.gbEndereco.Controls.Add(this.txtEndereco);
+            this.gbEndereco.Controls.Add(this.lblEndereco);
+            this.gbEndereco.Location = new System.Drawing.Point(37, 152);
+            this.gbEndereco.Name = "gbEndereco";
+            this.gbEndereco.Size = new System.Drawing.Size(965, 210);
+            this.gbEndereco.TabIndex = 2;
+            this.gbEndereco.TabStop = false;
+            this.gbEndereco.Text = "Endereço";
+            // 
+            // txtCep
+            // 
+            this.txtCep.Location = new System.Drawing.Point(13, 167);
+            this.txtCep.Mask = "99999-999";
+            this.txtCep.Name = "txtCep";
+            this.txtCep.PromptChar = ' ';
+            this.txtCep.Size = new System.Drawing.Size(124, 20);
+            this.txtCep.TabIndex = 21;
+            this.txtCep.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            // 
+            // lblEstado
+            // 
+            this.lblEstado.AutoSize = true;
+            this.lblEstado.Location = new System.Drawing.Point(744, 89);
+            this.lblEstado.Name = "lblEstado";
+            this.lblEstado.Size = new System.Drawing.Size(40, 13);
+            this.lblEstado.TabIndex = 20;
+            this.lblEstado.Text = "Estado";
+            // 
+            // lblCep
+            // 
+            this.lblCep.AutoSize = true;
+            this.lblCep.Location = new System.Drawing.Point(10, 150);
+            this.lblCep.Name = "lblCep";
+            this.lblCep.Size = new System.Drawing.Size(28, 13);
+            this.lblCep.TabIndex = 19;
+            this.lblCep.Text = "CEP";
+            // 
+            // cbUFF
+            // 
+            this.cbUFF.FormattingEnabled = true;
+            this.cbUFF.Location = new System.Drawing.Point(747, 105);
+            this.cbUFF.Name = "cbUFF";
+            this.cbUFF.Size = new System.Drawing.Size(212, 21);
+            this.cbUFF.TabIndex = 5;
+            // 
+            // lblCidade
+            // 
+            this.lblCidade.AutoSize = true;
+            this.lblCidade.Location = new System.Drawing.Point(422, 90);
+            this.lblCidade.Name = "lblCidade";
+            this.lblCidade.Size = new System.Drawing.Size(40, 13);
+            this.lblCidade.TabIndex = 16;
+            this.lblCidade.Text = "Cidade";
+            // 
+            // txtCidade
+            // 
+            this.txtCidade.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtCidade.Location = new System.Drawing.Point(425, 107);
+            this.txtCidade.Name = "txtCidade";
+            this.txtCidade.Size = new System.Drawing.Size(293, 20);
+            this.txtCidade.TabIndex = 4;
+            // 
+            // lblBairro
+            // 
+            this.lblBairro.AutoSize = true;
+            this.lblBairro.Location = new System.Drawing.Point(10, 90);
+            this.lblBairro.Name = "lblBairro";
+            this.lblBairro.Size = new System.Drawing.Size(34, 13);
+            this.lblBairro.TabIndex = 14;
+            this.lblBairro.Text = "Bairro";
+            // 
+            // txtBairro
+            // 
+            this.txtBairro.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtBairro.Location = new System.Drawing.Point(13, 107);
+            this.txtBairro.Name = "txtBairro";
+            this.txtBairro.Size = new System.Drawing.Size(366, 20);
+            this.txtBairro.TabIndex = 3;
+            // 
+            // txtNro
+            // 
+            this.txtNro.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtNro.Location = new System.Drawing.Point(598, 48);
+            this.txtNro.Name = "txtNro";
+            this.txtNro.Size = new System.Drawing.Size(120, 20);
+            this.txtNro.TabIndex = 2;
+            // 
+            // lblNro
+            // 
+            this.lblNro.AutoSize = true;
+            this.lblNro.Location = new System.Drawing.Point(595, 32);
+            this.lblNro.Name = "lblNro";
+            this.lblNro.Size = new System.Drawing.Size(24, 13);
+            this.lblNro.TabIndex = 12;
+            this.lblNro.Text = "Nro";
+            // 
+            // txtEndereco
+            // 
+            this.txtEndereco.Location = new System.Drawing.Point(13, 48);
+            this.txtEndereco.Name = "txtEndereco";
+            this.txtEndereco.Size = new System.Drawing.Size(565, 20);
+            this.txtEndereco.TabIndex = 0;
+            this.txtEndereco.TabStop = false;
+            // 
+            // lblEndereco
+            // 
+            this.lblEndereco.AutoSize = true;
+            this.lblEndereco.Location = new System.Drawing.Point(10, 32);
+            this.lblEndereco.Name = "lblEndereco";
+            this.lblEndereco.Size = new System.Drawing.Size(53, 13);
+            this.lblEndereco.TabIndex = 8;
+            this.lblEndereco.Text = "Endereco";
+            // 
             // gbSenha
             // 
             this.gbSenha.Controls.Add(this.cbConta);
@@ -390,139 +515,14 @@
             this.lblCodigo.TabIndex = 8;
             this.lblCodigo.Text = "Codigo";
             // 
-            // gbEndereco
-            // 
-            this.gbEndereco.Controls.Add(this.txtCep);
-            this.gbEndereco.Controls.Add(this.lblEstado);
-            this.gbEndereco.Controls.Add(this.lblCep);
-            this.gbEndereco.Controls.Add(this.cbUFF);
-            this.gbEndereco.Controls.Add(this.lblCidade);
-            this.gbEndereco.Controls.Add(this.txtCidade);
-            this.gbEndereco.Controls.Add(this.lblBairro);
-            this.gbEndereco.Controls.Add(this.txtBairro);
-            this.gbEndereco.Controls.Add(this.txtNro);
-            this.gbEndereco.Controls.Add(this.lblNro);
-            this.gbEndereco.Controls.Add(this.txtEndereco);
-            this.gbEndereco.Controls.Add(this.lblEndereco);
-            this.gbEndereco.Location = new System.Drawing.Point(37, 152);
-            this.gbEndereco.Name = "gbEndereco";
-            this.gbEndereco.Size = new System.Drawing.Size(965, 210);
-            this.gbEndereco.TabIndex = 2;
-            this.gbEndereco.TabStop = false;
-            this.gbEndereco.Text = "Endereço";
-            // 
-            // lblBairro
-            // 
-            this.lblBairro.AutoSize = true;
-            this.lblBairro.Location = new System.Drawing.Point(10, 90);
-            this.lblBairro.Name = "lblBairro";
-            this.lblBairro.Size = new System.Drawing.Size(34, 13);
-            this.lblBairro.TabIndex = 14;
-            this.lblBairro.Text = "Bairro";
-            // 
-            // txtBairro
-            // 
-            this.txtBairro.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtBairro.Location = new System.Drawing.Point(13, 107);
-            this.txtBairro.Name = "txtBairro";
-            this.txtBairro.Size = new System.Drawing.Size(366, 20);
-            this.txtBairro.TabIndex = 3;
-            // 
-            // txtNro
-            // 
-            this.txtNro.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtNro.Location = new System.Drawing.Point(598, 48);
-            this.txtNro.Name = "txtNro";
-            this.txtNro.Size = new System.Drawing.Size(120, 20);
-            this.txtNro.TabIndex = 2;
-            // 
-            // lblNro
-            // 
-            this.lblNro.AutoSize = true;
-            this.lblNro.Location = new System.Drawing.Point(595, 32);
-            this.lblNro.Name = "lblNro";
-            this.lblNro.Size = new System.Drawing.Size(24, 13);
-            this.lblNro.TabIndex = 12;
-            this.lblNro.Text = "Nro";
-            // 
-            // txtEndereco
-            // 
-            this.txtEndereco.Location = new System.Drawing.Point(13, 48);
-            this.txtEndereco.Name = "txtEndereco";
-            this.txtEndereco.Size = new System.Drawing.Size(565, 20);
-            this.txtEndereco.TabIndex = 0;
-            this.txtEndereco.TabStop = false;
-            // 
-            // lblEndereco
-            // 
-            this.lblEndereco.AutoSize = true;
-            this.lblEndereco.Location = new System.Drawing.Point(10, 32);
-            this.lblEndereco.Name = "lblEndereco";
-            this.lblEndereco.Size = new System.Drawing.Size(53, 13);
-            this.lblEndereco.TabIndex = 8;
-            this.lblEndereco.Text = "Endereco";
-            // 
-            // lblCidade
-            // 
-            this.lblCidade.AutoSize = true;
-            this.lblCidade.Location = new System.Drawing.Point(422, 90);
-            this.lblCidade.Name = "lblCidade";
-            this.lblCidade.Size = new System.Drawing.Size(40, 13);
-            this.lblCidade.TabIndex = 16;
-            this.lblCidade.Text = "Cidade";
-            // 
-            // txtCidade
-            // 
-            this.txtCidade.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtCidade.Location = new System.Drawing.Point(425, 107);
-            this.txtCidade.Name = "txtCidade";
-            this.txtCidade.Size = new System.Drawing.Size(293, 20);
-            this.txtCidade.TabIndex = 4;
-            // 
-            // cbUFF
-            // 
-            this.cbUFF.FormattingEnabled = true;
-            this.cbUFF.Location = new System.Drawing.Point(747, 105);
-            this.cbUFF.Name = "cbUFF";
-            this.cbUFF.Size = new System.Drawing.Size(212, 21);
-            this.cbUFF.TabIndex = 5;
-            // 
-            // lblCep
-            // 
-            this.lblCep.AutoSize = true;
-            this.lblCep.Location = new System.Drawing.Point(10, 150);
-            this.lblCep.Name = "lblCep";
-            this.lblCep.Size = new System.Drawing.Size(28, 13);
-            this.lblCep.TabIndex = 19;
-            this.lblCep.Text = "CEP";
-            // 
-            // lblEstado
-            // 
-            this.lblEstado.AutoSize = true;
-            this.lblEstado.Location = new System.Drawing.Point(744, 89);
-            this.lblEstado.Name = "lblEstado";
-            this.lblEstado.Size = new System.Drawing.Size(40, 13);
-            this.lblEstado.TabIndex = 20;
-            this.lblEstado.Text = "Estado";
-            // 
-            // txtCep
-            // 
-            this.txtCep.Location = new System.Drawing.Point(13, 167);
-            this.txtCep.Mask = "99999-999";
-            this.txtCep.Name = "txtCep";
-            this.txtCep.PromptChar = ' ';
-            this.txtCep.Size = new System.Drawing.Size(124, 20);
-            this.txtCep.TabIndex = 21;
-            this.txtCep.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
-            // 
             // formClientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1022, 580);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.tabControl);
             this.Controls.Add(this.dbGridView);
+            this.Controls.Add(this.tabControl);
             this.Name = "formClientes";
             this.Text = "Cadastro De Clientes";
             this.Activated += new System.EventHandler(this.FormUsuarios_Activated);
@@ -533,12 +533,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.dbGridView)).EndInit();
             this.tabControl.ResumeLayout(false);
             this.tabPrincipal.ResumeLayout(false);
+            this.gbEndereco.ResumeLayout(false);
+            this.gbEndereco.PerformLayout();
             this.gbSenha.ResumeLayout(false);
             this.gbSenha.PerformLayout();
             this.gbIdentificacao.ResumeLayout(false);
             this.gbIdentificacao.PerformLayout();
-            this.gbEndereco.ResumeLayout(false);
-            this.gbEndereco.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

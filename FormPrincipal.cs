@@ -86,10 +86,7 @@ namespace Fluxo_De_Caixa
             this.Close();
         }
 
-        private void importaçãoDePlanilhasToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
+      
 
         private void usuáriosToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -206,6 +203,19 @@ namespace Fluxo_De_Caixa
             formCar.Show();
         }
 
+        private void condPagamentoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            formCond = new FormCond();
+
+            ((System.Windows.Forms.ToolStripMenuItem)sender).Enabled = false;
+
+            formCond.MdiParent = this;
+
+            formCond.menu = (ToolStripMenuItem)sender;
+
+            formCond.Show();
+        }
+
         private void loadClientes()
         {
             List<Cliente> lsClientes = new List<Cliente>();
@@ -237,7 +247,5 @@ namespace Fluxo_De_Caixa
         }
 
      
-
-      
     }
 }

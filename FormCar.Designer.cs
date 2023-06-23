@@ -208,6 +208,8 @@ namespace Fluxo_De_Caixa
             this.dbGridView.ReadOnly = true;
             this.dbGridView.Size = new System.Drawing.Size(880, 408);
             this.dbGridView.TabIndex = 4;
+            this.dbGridView.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.DbGridView_RowEnter);
+            this.dbGridView.DoubleClick += new System.EventHandler(this.DbGridView_DoubleClick);
             // 
             // tabControl
             // 
@@ -322,7 +324,6 @@ namespace Fluxo_De_Caixa
             this.txtCor.Name = "txtCor";
             this.txtCor.Size = new System.Drawing.Size(164, 20);
             this.txtCor.TabIndex = 4;
-            this.txtCor.TextChanged += new System.EventHandler(this.txtDescricao_TextChanged);
             // 
             // lblMarca
             // 
@@ -348,8 +349,8 @@ namespace Fluxo_De_Caixa
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(880, 450);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.tabControl);
             this.Controls.Add(this.dbGridView);
+            this.Controls.Add(this.tabControl);
             this.Name = "FormCar";
             this.Text = "Cadastro De Automóveis";
             this.Activated += new System.EventHandler(this.FormCar_Activated);
