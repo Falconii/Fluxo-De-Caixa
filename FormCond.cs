@@ -1,4 +1,5 @@
-﻿using Fluxo_De_Caixa.Models;
+﻿using Fluxo_De_Caixa.Dao.postgre;
+using Fluxo_De_Caixa.Models;
 using Fluxo_De_Caixa.Util;
 using System;
 using System.Collections.Generic;
@@ -51,7 +52,8 @@ namespace Fluxo_De_Caixa
 
         private void button1_Click(object sender, EventArgs e)
         {
-            OsPDF osPDF = new OsPDF("", 100, 1);
+           
+            OsPDF osPDF = new OsPDF("", 1, 1);
             osPDF.ImprimirOS();
         }
     }

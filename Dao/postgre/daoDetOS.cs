@@ -247,13 +247,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
                 switch (Ordenacao)
                 {
                     case 0:
-                        Where = $"WHERE DOC.DOC = '{Filtro}'";
-                        break;
-                    case 1:
-                        Where = $"WHERE DOC.RAZAO LIKE '%{Filtro.Trim()}%'";
-                        break;
-                    case 2:
-                        Where = $"WHERE DOC.TIPO = '{Filtro.Trim()}'";
+                        Where = $"WHERE DET.ID_EMPRESA = 1 AND _DET.ID_OS = {Filtro}";
                         break;
                 }
 
@@ -266,15 +260,8 @@ namespace Fluxo_De_Caixa.Dao.postgre
             switch (Ordenacao)
             {
                 case 0:
-                    OrderBy = $"ORDER BY DOC.DOC";
+                    OrderBy = $"ORDER BY DET.ID_OS,DET.ITEM";
                     break;
-                case 1:
-                    OrderBy = $"ORDER BY DOC.RAZAO";
-                    break;
-                case 2:
-                    OrderBy = $"ORDER BY DOC.TIPO";
-                    break;
-
             }
 
             strSelect += $" {Where} {OrderBy} ";
@@ -295,20 +282,21 @@ namespace Fluxo_De_Caixa.Dao.postgre
                                 " 	  , BAI.EMISSAO  		                        " +
                                 " 	  , BAI.VALOR     	                            " +
                                 "     , BAI.OBS                                     " +
-                                " FROM OSCAB BAI                                   ";
+                                " FROM FROM OS_DET DET                                  ";
 
             //Adiciona WHERE 
             if (Filtro.Trim() != "")
             {
+
+
                 switch (Ordenacao)
                 {
                     case 0:
-                        Where = $"WHERE BAI.ID_EMPRESA = 1 AND BAI.ID = {Filtro}";
-                        break;
-                    case 1:
-                        Where = $"WHERE BAI.ID_EMPRESA = 1 AND BAI.ID_DOC = {Filtro}";
+                        Where = $"WHERE DET.ID_EMPRESA = 1 AND _DET.ID_OS = {Filtro}";
                         break;
                 }
+
+
             }
 
             //Adiciona ORDER BY
@@ -317,13 +305,10 @@ namespace Fluxo_De_Caixa.Dao.postgre
             switch (Ordenacao)
             {
                 case 0:
-                    OrderBy = $"ORDER BY BAI.ID_EMPRESA  ,  BAI.DOC ";
+                    OrderBy = $"ORDER BY DET.ID_OS,DET.ITEM";
                     break;
-                case 1:
-                    OrderBy = $"ORDER BY BAI.ID_EMPRESA  ,  BAI.ID_DOC ";
-                    break;
-
             }
+
 
             strSelect += $" {Where} {OrderBy} ";
 

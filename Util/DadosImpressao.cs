@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fluxo_De_Caixa.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,11 +16,32 @@ namespace Fluxo_De_Caixa.Util
         public string Cidade       = "CAMPINAS";
         public string Estado       = "SP";
         public string Telefone     = "(19)3269-1020";
+        public CabOS  cabec        = new CabOS();
+        public List<DetOS> lsdetalhe = new List<DetOS>();
+        public CarOS automovel = new CarOS();
+
+        public DadosImpressao()
+        {
+            Zerar();
+        }
+
+        public DadosImpressao(CabOS cabec, List<DetOS> lsdetalhe, CarOS automovel)
+        {
+            this.cabec = cabec;
+            this.lsdetalhe = lsdetalhe;
+            this.automovel = automovel;
+        }
 
         public string getEnderecoCompleto()
         {
             return $"{Endereco} {Bairro} {Cep}-{Cidade},{Estado}";
         }
 
+        public void Zerar()
+        {
+            this.cabec     = new CabOS();
+            this.lsdetalhe = new List<DetOS>();
+            this.automovel = new CarOS();
+        }
     }
 }
