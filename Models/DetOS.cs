@@ -33,7 +33,7 @@ namespace Fluxo_De_Caixa.Models
 
         public void Zerar()
         {
-            Id_Empresa = 0;
+            Id_Empresa = 1;
             Id_Os = 0;
             Item = 0;
             Qtd = 0;

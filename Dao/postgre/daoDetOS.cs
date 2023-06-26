@@ -91,7 +91,15 @@ namespace Fluxo_De_Caixa.Dao.postgre
             DataBase.RunCommand.CreateCommand(StringDelete);
 
         }
-           
+
+        public void DeleteByOS(int id_empresa,int id_os)
+        {
+
+            String StringDelete = $" DELETE FROM  OS_DET  WHERE ID_EMPRESA = {id_empresa} AND ID_OS = {id_os} ";
+
+            DataBase.RunCommand.CreateCommand(StringDelete);
+
+        }
 
         public DetOS Seek(int id_empresa, int id_os, int item)
         {

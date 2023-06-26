@@ -38,6 +38,7 @@ namespace Fluxo_De_Caixa.Models
         public string Car_Ano { get; set; }
         public string Cond_Descricao { get; set; }
         public string Marca_Descricao { get; set; }
+        public double _Total_OS { get; set; }
 
         public CabOS(int id_Empresa, int id, DateTime entrada, DateTime? saida, int id_Cliente, string id_Carro, int id_Cond, string horas_Servico, int km, string obs, double lucro, string mao_Obra, double mao_Obra_Vlr, double pecas_Vlr, int user_Insert, int user_Update, string cli_Codigo, string cli_Razao, string cli_Cnpj_Cpf, string cli_Endereco, string cli_Nro, string cli_Bairro, string cli_Cidade, string cli_Uf, string cli_Cep, string cli_Tel1, string cli_Email, string car_Placa, int car_Id_Marca, string car_Modelo, string car_Cor, string car_Ano, string cond_Descricao, string marca_Descricao)
         {
@@ -75,6 +76,7 @@ namespace Fluxo_De_Caixa.Models
             Car_Ano = car_Ano;
             Cond_Descricao = cond_Descricao;
             Marca_Descricao = marca_Descricao;
+            _Total_OS = Mao_Obra_Vlr + Pecas_Vlr;
         }
 
         public CabOS()
@@ -119,6 +121,7 @@ namespace Fluxo_De_Caixa.Models
             Car_Ano = "";
             Cond_Descricao = "";
             Marca_Descricao = "";
+            _Total_OS = Mao_Obra_Vlr + Pecas_Vlr;
         }
     }
 }

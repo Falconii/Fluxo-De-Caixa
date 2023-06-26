@@ -13,10 +13,19 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
         public CabOS Insert(CabOS obj)
         {
+            string dt_saida = obj.Saida?.ToString("yyyy-MM-dd");
+
+            if (dt_saida == null)
+            {
+                dt_saida = "NULL";
+            } else
+            {
+                dt_saida = $"'{obj.Saida?.ToString("yyyy-MM-dd")}'";
+            }
 
             String StringInsert = $" INSERT INTO OS_CAB " +
-                                "(ID_EMPRESA, ENTRADA, SAIDA, ID_CLIENTE, ID_CARRO, ID_COND, HORAS_SERVICO, KM, OBS, LUCRO,  MAO_OBRA, MAO_OBRA_VLR, PECAS_VLR, USER_INSERT, USER_UPDATE) " +
-                                $" VALUES({obj.Id_Empresa},'{obj.Entrada.ToString("yyyy-MM-dd")}','{obj.Saida?.ToString("yyyy-MM-dd")}',{obj.Id_Cliente},'{obj.Id_Carro}',{obj.Id_Cond},'{obj.Horas_Servico}',{obj.Km},{obj.Lucro.DoubleParseDb()},'{obj.Obs}','{obj.Mao_Obra}',{obj.Mao_Obra_Vlr.DoubleParseDb()},{obj.Pecas_Vlr.DoubleParseDb()},{obj.User_Insert},{obj.User_Update})  RETURNING ID ";
+                                  "(ID_EMPRESA, ENTRADA, SAIDA, ID_CLIENTE, ID_CARRO, ID_COND, HORAS_SERVICO, KM, OBS, LUCRO,  MAO_OBRA, MAO_OBRA_VLR, PECAS_VLR, USER_INSERT, USER_UPDATE) " +
+                                 $" VALUES({obj.Id_Empresa},'{obj.Entrada.ToString("yyyy-MM-dd")}',{dt_saida},{obj.Id_Cliente},'{obj.Id_Carro}',{obj.Id_Cond},'{obj.Horas_Servico}',{obj.Km},'{obj.Obs}',{obj.Lucro.DoubleParseDb()},'{obj.Mao_Obra}',{obj.Mao_Obra_Vlr.DoubleParseDb()},{obj.Pecas_Vlr.DoubleParseDb()},{obj.User_Insert},{obj.User_Update})  RETURNING ID ";
 
             using (var objConexao = new NpgsqlConnection(DataBase.RunCommand.connectionString))
             {
@@ -59,17 +68,26 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
         public void Update(CabOS obj)
         {
+            string dt_saida = obj.Saida?.ToString("yyyy-MM-dd");
 
-            String StringUpdate = $" UPDATE  OSCAB SET " +
+            if (dt_saida == null)
+            {
+                dt_saida = "NULL";
+            }
+            else
+            {
+                dt_saida = $"'{obj.Saida?.ToString("yyyy-MM-dd")}'";
+            }
+            String StringUpdate = $" UPDATE  OS_CAB SET " +
                         $"ENTRADA  	        =  '{obj.Entrada.ToString("yyyy-MM-dd")}', " +
-                        $"SAIDA   	        =  '{obj.Saida?.ToString("yyyy-MM-dd")}', " +
+                        $"SAIDA   	        =  {dt_saida}, " +
                         $"ID_CLIENTE        =  {obj.Id_Cliente}, " +
                         $"ID_CARRO          =  '{obj.Id_Carro}', " +
                         $"ID_COND           =  {obj.Id_Cond}, " +
                         $"HORAS_SERVICO     =  '{obj.Horas_Servico}', " +
                         $"KM                =  {obj.Km}, " +
-                        $"OBS               =  {obj.Lucro.DoubleParseDb()}, " +
-                        $"LUCRO             =  '{obj.Obs}', " +
+                        $"LUCRO               =  {obj.Lucro.DoubleParseDb()}, " +
+                        $"OBS             =  '{obj.Obs}', " +
                         $"MAO_OBRA          =  '{obj.Mao_Obra}', " +
                         $"MAO_OBRA_VLR      =  {obj.Mao_Obra_Vlr.DoubleParseDb()}, " +
                         $"PECAS_VLR         =  {obj.Pecas_Vlr.DoubleParseDb()}, " +
@@ -94,7 +112,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
         public void Delete(CabOS obj)
         {
 
-            String StringDelete = $" DELETE FROM  OSCAB  WHERE ID_EMPRESA = {obj.Id_Empresa} AND ID = {obj.Id} ";
+            String StringDelete = $" DELETE FROM  OS_CAB  WHERE ID_EMPRESA = {obj.Id_Empresa} AND ID = {obj.Id} ";
 
             DataBase.RunCommand.CreateCommand(StringDelete);
 
@@ -196,6 +214,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
 
            obj.Id_Empresa = Convert.ToInt32(objDataReader["ID_EMPRESA"]);
+            obj.Id    = Convert.ToInt32(objDataReader["ID"]);
             try
             {
                 obj.Entrada = Convert.ToDateTime(objDataReader["Entrada"]);
