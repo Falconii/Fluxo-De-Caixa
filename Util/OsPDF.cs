@@ -31,7 +31,7 @@ namespace Fluxo_De_Caixa.Util
         {
             
             daoCabOS dao = new daoCabOS();
-            cab = dao.Seek(1, 6);
+            cab = dao.Seek(1,nro);
             daoDetOS det = new daoDetOS();
             detalhes = det.getAll(1, nro.ToString());
             
@@ -380,7 +380,7 @@ namespace Fluxo_De_Caixa.Util
                 textFormatter.Alignment = PdfSharp.Drawing.Layout.XParagraphAlignment.Right;
                 textFormatter.DrawString("TOTAL DAS PEÇAS", FontSubTitulo, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XRect(ColunaDescricao + 2, linha + 03, ColunaPreco - ColunaDescricao-5, FontSubTitulo.Height));
                 textFormatter.Alignment = PdfSharp.Drawing.Layout.XParagraphAlignment.Right;
-                textFormatter.DrawString("999.99", FontSubTitulo, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XRect(ColunaPreco, linha + 03, (page.Width - 10) - ColunaPreco - 3, FontSubTitulo.Height));
+                textFormatter.DrawString(cab.Pecas_Vlr.ToString("###,##0.00"), FontSubTitulo, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XRect(ColunaPreco, linha + 03, (page.Width - 10) - ColunaPreco - 3, FontSubTitulo.Height));
 
                 PosicaoFinal = PosicaoReta;
                 linha += (AlturaLinhaBanco * 0.5);
@@ -394,7 +394,7 @@ namespace Fluxo_De_Caixa.Util
                 textFormatter.Alignment = PdfSharp.Drawing.Layout.XParagraphAlignment.Right;
                 textFormatter.DrawString("TOTAL DA O.S.", FontSubTitulo, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XRect(ColunaDescricao + 2, linha + 03, ColunaPreco - ColunaDescricao -5, FontSubTitulo.Height));
                 textFormatter.Alignment = PdfSharp.Drawing.Layout.XParagraphAlignment.Right;
-                textFormatter.DrawString("999.99", FontSubTitulo, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XRect(ColunaPreco, linha + 03, (page.Width - 10) - ColunaPreco - 2, FontSubTitulo.Height));
+                textFormatter.DrawString(cab._Total_OS.ToString("###,##0.00"), FontSubTitulo, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XRect(ColunaPreco, linha + 03, (page.Width - 10) - ColunaPreco - 2, FontSubTitulo.Height));
 
                 PosicaoFinal = PosicaoReta;
                 linha += (AlturaLinhaBanco * 0.5);

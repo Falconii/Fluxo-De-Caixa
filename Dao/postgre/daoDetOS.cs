@@ -42,7 +42,6 @@ namespace Fluxo_De_Caixa.Dao.postgre
                     {
                         obj = null;
 
-                        throw new Exception(ex.Message);
                     }
                     finally
                     {
@@ -54,6 +53,33 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             return obj;
 
+
+        }
+
+        public void InsertByOS(List<DetOS> detalhes)
+        {
+            try
+            {
+                try
+                {
+                    for(int  x = 0; x < detalhes.Count; x++)
+                    {
+                        DetOS det = Insert(detalhes[x]);
+                        if (det == null)
+                        {
+                            throw new Exception($"Falha Na Inclusão Produto {detalhes[x].Descricao}");
+                        }
+                    }
+                } catch(Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Falha Na Inclusao Produto {ex.Message}");
+            }
 
         }
 
@@ -92,12 +118,46 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
         }
 
-        public void DeleteByOS(int id_empresa,int id_os)
+        public int DeleteByOS(int id_empresa, int id_os)
         {
 
-            String StringDelete = $" DELETE FROM  OS_DET  WHERE ID_EMPRESA = {id_empresa} AND ID_OS = {id_os} ";
+            int Ct_det = 0;
 
-            DataBase.RunCommand.CreateCommand(StringDelete);
+            String StringDeleteDet = $" DELETE FROM  OS_DET  WHERE ID_EMPRESA = {id_empresa} AND ID_OS = {id_os} RETURNING ID_OS";
+
+            using (var objConexao = new NpgsqlConnection(DataBase.RunCommand.connectionString))
+            {
+                using (var objCommand = new NpgsqlCommand(StringDeleteDet, objConexao))
+                {
+                    try
+                    {
+                        objConexao.Open();
+
+                        var objDataReader = objCommand.ExecuteReader();
+
+                        if (objDataReader.HasRows)
+                        {
+
+                            objDataReader.Read();
+
+                            Ct_det++;
+
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                        throw new Exception($"Falha Na Exclusão Dos Produtos {ex.Message}");
+                    }
+                    finally
+                    {
+                        objConexao.Close();
+                    }
+                }
+            }
+
+            return Ct_det;
 
         }
 

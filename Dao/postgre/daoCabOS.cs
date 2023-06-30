@@ -18,7 +18,8 @@ namespace Fluxo_De_Caixa.Dao.postgre
             if (dt_saida == null)
             {
                 dt_saida = "NULL";
-            } else
+            }
+            else
             {
                 dt_saida = $"'{obj.Saida?.ToString("yyyy-MM-dd")}'";
             }
@@ -51,7 +52,6 @@ namespace Fluxo_De_Caixa.Dao.postgre
                     {
                         obj = null;
 
-                        throw new Exception(ex.Message);
                     }
                     finally
                     {
@@ -104,7 +104,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
             }
             catch (ExceptionErroImportacao ex)
             {
-                MessageBox.Show(ex.Message, "Atenção!");
+                throw new Exception(ex.Message);
             }
 
         }
@@ -117,7 +117,156 @@ namespace Fluxo_De_Caixa.Dao.postgre
             DataBase.RunCommand.CreateCommand(StringDelete);
 
         }
-           
+
+        public void DeleteFullOs(CabOS obj)
+        {
+            int Ct_det = 0;
+            int Ct_cab = 0;
+            daoDetOS dao = new daoDetOS();
+
+            String StringDeleteCab = $" DELETE FROM  OS_CAB  WHERE ID_EMPRESA = {obj.Id_Empresa} AND ID = {obj.Id} RETURNING ID";
+            try
+            {
+                try
+                {
+                    Ct_det = dao.DeleteByOS(obj.Id_Empresa, obj.Id);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+
+                using (var objConexao = new NpgsqlConnection(DataBase.RunCommand.connectionString))
+                {
+                    using (var objCommand = new NpgsqlCommand(StringDeleteCab, objConexao))
+                    {
+                        try
+                        {
+                            objConexao.Open();
+
+                            var objDataReader = objCommand.ExecuteReader();
+
+                            if (objDataReader.HasRows)
+                            {
+
+                                objDataReader.Read();
+
+                                Ct_cab++;
+
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+
+                            throw new Exception($"Falha Na Exclusão No Cabeçalho {ex.Message}");
+                        }
+                        finally
+                        {
+                            objConexao.Close();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+
+        public CabOS SaveFullOs(CabOS cabec, List<DetOS> detalhe, string operacao)
+        {
+
+            int Ct_det = 0;
+
+            double TotalPecas = 0;
+
+            daoDetOS dao = new daoDetOS();
+
+            try
+            {
+                if (operacao == "I")
+                {
+                    try
+                    {
+                        cabec = Insert(cabec);
+                        if (cabec == null)
+                        {
+                            throw new Exception("Falha No Cadastro Da OS");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        Update(cabec);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+                }
+                try
+                {
+                    Ct_det = dao.DeleteByOS(cabec.Id_Empresa, cabec.Id);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                try
+                {
+                    detalhe.ForEach(det => det.Id_Os = cabec.Id);
+                    dao.InsertByOS(detalhe);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                detalhe.ForEach(det => TotalPecas += det.Valor);
+                cabec.Pecas_Vlr = TotalPecas;
+                cabec._Total_OS = cabec.Mao_Obra_Vlr + cabec.Pecas_Vlr;
+                 
+                if (operacao == "I")
+                {
+                    try
+                    {
+                        cabec = Insert(cabec);
+                        if (cabec == null)
+                        {
+                            throw new Exception("Falha No Cadastro Da OS");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        Update(cabec);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return cabec;
+        }
 
         public CabOS Seek(int id_empresa, int id)
         {
@@ -126,7 +275,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             string strStringConexao = DataBase.RunCommand.connectionString;
 
-            string strSelect =  "SELECT   CAB.ID_EMPRESA		" +
+            string strSelect = "SELECT   CAB.ID_EMPRESA		" +
                                 "        ,CAB.ID                " +
                                 "        ,CAB.ENTRADA           " +
                                 "        ,CAB.SAIDA             " +
@@ -206,23 +355,23 @@ namespace Fluxo_De_Caixa.Dao.postgre
             return obj;
         }
 
-
         private CabOS PopulaCabOS(NpgsqlDataReader objDataReader)
         {
 
             var obj = new CabOS();
 
 
-           obj.Id_Empresa = Convert.ToInt32(objDataReader["ID_EMPRESA"]);
-            obj.Id    = Convert.ToInt32(objDataReader["ID"]);
+            obj.Id_Empresa = Convert.ToInt32(objDataReader["ID_EMPRESA"]);
+            obj.Id = Convert.ToInt32(objDataReader["ID"]);
             try
             {
                 obj.Entrada = Convert.ToDateTime(objDataReader["Entrada"]);
-            } catch(Exception _)
+            }
+            catch (Exception _)
             {
                 obj.Entrada = DateTime.Now;
             }
-           
+
             try
             {
                 obj.Saida = Convert.ToDateTime(objDataReader["Saida"]);
@@ -231,38 +380,40 @@ namespace Fluxo_De_Caixa.Dao.postgre
             {
                 obj.Saida = null;
             }
-            
-           obj.Id_Cliente = Convert.ToInt32(objDataReader["Id_Cliente"]);
-           obj.Id_Carro = objDataReader["Id_Carro"].ToString();
-           obj.Horas_Servico = objDataReader["Horas_Servico"].ToString();
-           obj.Km = Convert.ToInt32(objDataReader["KM"]);
-           obj.Lucro = Convert.ToDouble(objDataReader["LUCRO"]);
-           obj.Obs = objDataReader["OBS"].ToString();
-           obj.Id_Cond = Convert.ToInt32(objDataReader["Id_Cond"]);
-           obj.Mao_Obra = objDataReader["Mao_Obra"].ToString();
-           obj.Mao_Obra_Vlr = Convert.ToDouble(objDataReader["Mao_Obra_Vlr"]);
-           obj.Pecas_Vlr = Convert.ToDouble(objDataReader["Pecas_Vlr"]);
-           obj.User_Insert = Convert.ToInt32(objDataReader["User_Insert"]);
-           obj.User_Update = Convert.ToInt32(objDataReader["User_Update"]);
-           obj.Cli_Codigo = objDataReader["Cli_Codigo"].ToString();
-           obj.Cli_Razao  = objDataReader["Cli_Razao"].ToString();
-           obj.Cli_Cnpj_Cpf = objDataReader["Cli_Cnpj_Cpf"].ToString();
-           obj.Cli_Endereco = objDataReader["Cli_Endereco"].ToString();
-           obj.Cli_Nro = objDataReader["Cli_Nro"].ToString();
-           obj.Cli_Bairro = objDataReader["Cli_Bairro"].ToString();
-           obj.Cli_Cidade = objDataReader["Cli_Cidade"].ToString();
-           obj.Cli_Uf = objDataReader["Cli_Uf"].ToString();
-           obj.Cli_Cep = objDataReader["Cli_Cep"].ToString();
-           obj.Cli_Tel1 = objDataReader["Cli_Tel1"].ToString();
-           obj.Cli_Email = objDataReader["Cli_Email"].ToString();
-           obj.Car_Placa = objDataReader["Car_Placa"].ToString();
-           obj.Car_Id_Marca = Convert.ToInt32(objDataReader["CAR_ID_MARCA"]);
-           obj.Car_Modelo   = objDataReader["Car_Modelo"].ToString();
+
+            obj.Id_Cliente = Convert.ToInt32(objDataReader["Id_Cliente"]);
+            obj.Id_Carro = objDataReader["Id_Carro"].ToString();
+            obj.Horas_Servico = objDataReader["Horas_Servico"].ToString();
+            obj.Km = Convert.ToInt32(objDataReader["KM"]);
+            obj.Lucro = Convert.ToDouble(objDataReader["LUCRO"]);
+            obj.Obs = objDataReader["OBS"].ToString();
+            obj.Id_Cond = Convert.ToInt32(objDataReader["Id_Cond"]);
+            obj.Mao_Obra = objDataReader["Mao_Obra"].ToString();
+            obj.Mao_Obra_Vlr = Convert.ToDouble(objDataReader["Mao_Obra_Vlr"]);
+            obj.Pecas_Vlr = Convert.ToDouble(objDataReader["Pecas_Vlr"]);
+            obj.User_Insert = Convert.ToInt32(objDataReader["User_Insert"]);
+            obj.User_Update = Convert.ToInt32(objDataReader["User_Update"]);
+            obj.Cli_Codigo = objDataReader["Cli_Codigo"].ToString();
+            obj.Cli_Razao = objDataReader["Cli_Razao"].ToString();
+            obj.Cli_Cnpj_Cpf = objDataReader["Cli_Cnpj_Cpf"].ToString();
+            obj.Cli_Endereco = objDataReader["Cli_Endereco"].ToString();
+            obj.Cli_Nro = objDataReader["Cli_Nro"].ToString();
+            obj.Cli_Bairro = objDataReader["Cli_Bairro"].ToString();
+            obj.Cli_Cidade = objDataReader["Cli_Cidade"].ToString();
+            obj.Cli_Uf = objDataReader["Cli_Uf"].ToString();
+            obj.Cli_Cep = objDataReader["Cli_Cep"].ToString();
+            obj.Cli_Tel1 = objDataReader["Cli_Tel1"].ToString();
+            obj.Cli_Email = objDataReader["Cli_Email"].ToString();
+            obj.Car_Placa = objDataReader["Car_Placa"].ToString();
+            obj.Car_Id_Marca = Convert.ToInt32(objDataReader["CAR_ID_MARCA"]);
+            obj.Car_Modelo = objDataReader["Car_Modelo"].ToString();
             obj.Car_Cor = objDataReader["Car_Cor"].ToString();
-           obj.Car_Ano = objDataReader["Car_Ano"].ToString();
-           obj.Cond_Descricao = objDataReader["Cond_Descricao"].ToString();
-           obj.Marca_Descricao = objDataReader["Marca_Descricao"].ToString();
-           return obj;
+            obj.Car_Ano = objDataReader["Car_Ano"].ToString();
+            obj.Cond_Descricao = objDataReader["Cond_Descricao"].ToString();
+            obj.Marca_Descricao = objDataReader["Marca_Descricao"].ToString();
+            obj._Total_OS = obj.Pecas_Vlr + obj.Mao_Obra_Vlr;
+
+            return obj;
         }
 
         private CabOS PopulaOSBrowse(NpgsqlDataReader objDataReader)
@@ -272,6 +423,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
 
             obj.Id_Empresa = Convert.ToInt32(objDataReader["ID_EMPRESA"]);
+            obj.Id = Convert.ToInt32(objDataReader["ID"]);
             try
             {
                 obj.Entrada = Convert.ToDateTime(objDataReader["Entrada"]);
@@ -312,7 +464,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
             obj.Car_Cor = objDataReader["Car_Cor"].ToString();
             obj.Car_Ano = objDataReader["Car_Ano"].ToString();
             obj.Cond_Descricao = objDataReader["Cond_Descricao"].ToString();
-
+            obj._Total_OS = obj.Pecas_Vlr + obj.Mao_Obra_Vlr;
             return obj;
         }
 
@@ -348,7 +500,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
                                 obj = new CabOS();
 
-                                obj = PopulaOSBrowse(objDataReader);
+                                obj = PopulaCabOS(objDataReader);
 
                                 lista.Add(obj);
 
@@ -378,38 +530,44 @@ namespace Fluxo_De_Caixa.Dao.postgre
             string OrderBy = "";
 
             string strSelect = "SELECT   CAB.ID_EMPRESA		" +
-                    "        ,CAB.ID                " +
-                    "        ,CAB.ENTRADA           " +
-                    "        ,CAB.SAIDA             " +
-                    "        ,CAB.ID_CLIENTE        " +
-                    "        ,CAB.ID_CARRO          " +
-                    "        ,CAB.ID_COND           " +
-                    "        ,CAB.HORAS_SERVICO     " +
-                    "        ,CAB.KM                " +
-                    "        ,CAB.OBS               " +
-                    "        ,CAB.LUCRO             " +
-                    "        ,CAB.MAO_OBRA          " +
-                    "        ,CAB.MAO_OBRA_VLR      " +
-                    "        ,CAB.PECAS_VLR         " +
-                    "        ,CAB.USER_INSERT       " +
-                    "        ,CAB.USER_UPDATE       " +
-                    "        ,CLI.CODIGO     AS CLI_CODIGO		 " +
-                    "        ,CLI.RAZAO      AS CLI_RAZAO		 " +
-                    "        ,CLI.CNPJ_CPF   AS CLI_CNPJ_CPF     " +
-                    "        ,CLI.TEL1       AS CLI_TEL1         " +
-                    "        ,CLI.EMAIL      AS CLI_EMAIL        " +
-                    "        ,CAR.PLACA      AS CAR_PLACA        " +
-                    "        ,CAR.ID_MARCA   AS CAR_ID_MARCA     " +
-                    "        ,CAR.COR        AS CAR_COR          " +
-                    "        ,CAR.ANO        AS CAR_ANO          " +
-                    "        ,COALESCE(COND.DESCRICAO,'') AS COND_DESCRICAO " +
-                    "        ,MARCA.DESCRICAO AS MARCA_DESCRICAO " +
-                    "FROM OS_CAB CAB " +
-                    "INNER JOIN CLIENTES  CLI   ON CLI.ID_EMPRESA  = CAB.ID_EMPRESA  AND CLI.CODIGO     = CAB.ID_CLIENTE    " +
-                    "INNER JOIN OS_CAR    CAR   ON CAR.ID_EMPRESA  = CAB.ID_EMPRESA  AND CAR.PLACA      = CAB.ID_CARRO      " +
-                    "INNER JOIN MARCAS    MARCA ON MARCA.ID_EMPRESA = CAR.ID_EMPRESA AND MARCA.ID       = CAR.ID_MARCA      " +
-                    "LEFT  JOIN CONDICOES COND ON COND.ID_EMPRESA = CAB.ID_EMPRESA  AND COND.ID         = CAB.ID_COND       ";
-
+                               "        ,CAB.ID                " +
+                               "        ,CAB.ENTRADA           " +
+                               "        ,CAB.SAIDA             " +
+                               "        ,CAB.ID_CLIENTE        " +
+                               "        ,CAB.ID_CARRO          " +
+                               "        ,CAB.ID_COND           " +
+                               "        ,CAB.HORAS_SERVICO     " +
+                               "        ,CAB.KM                " +
+                               "        ,CAB.OBS               " +
+                               "        ,CAB.LUCRO             " +
+                               "        ,CAB.MAO_OBRA          " +
+                               "        ,CAB.MAO_OBRA_VLR      " +
+                               "        ,CAB.PECAS_VLR         " +
+                               "        ,CAB.USER_INSERT       " +
+                               "        ,CAB.USER_UPDATE       " +
+                               "        ,CLI.CODIGO     AS CLI_CODIGO		 " +
+                               "        ,CLI.RAZAO      AS CLI_RAZAO		 " +
+                               "        ,CLI.CNPJ_CPF   AS CLI_CNPJ_CPF     " +
+                                "        ,CLI.ENDERECOF  AS CLI_ENDERECO     " +
+                                "        ,CLI.NROF       AS CLI_NRO          " +
+                                "        ,CLI.BAIRROF    AS CLI_BAIRRO       " +
+                                "        ,CLI.CIDADEF    AS CLI_CIDADE       " +
+                                "        ,CLI.UFF        AS CLI_UF           " +
+                                "        ,CLI.CEPF       AS CLI_CEP          " +
+                               "        ,CLI.TEL1       AS CLI_TEL1         " +
+                               "        ,CLI.EMAIL      AS CLI_EMAIL        " +
+                                "        ,LEFT(CAR.PLACA,3) || '-' || RIGHT(CAR.PLACA,4)     AS CAR_PLACA        " +
+                                "        ,CAR.ID_MARCA   AS CAR_ID_MARCA     " +
+                                "        ,CAR.MODELO     AS CAR_MODELO    " +
+                                "        ,CAR.COR        AS CAR_COR          " +
+                                "        , LEFT(CAR.ANO,4) || '-' || RIGHT(CAR.ANO,4)       AS CAR_ANO          " +
+                                "        ,COALESCE(COND.DESCRICAO,'') AS COND_DESCRICAO " +
+                                "        ,MARCA.DESCRICAO AS MARCA_DESCRICAO " +
+                               "FROM OS_CAB CAB " +
+                               "INNER JOIN CLIENTES  CLI   ON CLI.ID_EMPRESA  = CAB.ID_EMPRESA  AND CLI.CODIGO     = CAB.ID_CLIENTE    " +
+                               "INNER JOIN OS_CAR    CAR   ON CAR.ID_EMPRESA  = CAB.ID_EMPRESA  AND CAR.PLACA      = CAB.ID_CARRO      " +
+                               "INNER JOIN MARCAS    MARCA ON MARCA.ID_EMPRESA = CAR.ID_EMPRESA AND MARCA.ID       = CAR.ID_MARCA      " +
+                               "LEFT  JOIN CONDICOES COND ON COND.ID_EMPRESA = CAB.ID_EMPRESA  AND COND.ID         = CAB.ID_COND       ";
             //Adiciona WHERE 
             if (Filtro.Trim() != "")
             {
@@ -418,13 +576,13 @@ namespace Fluxo_De_Caixa.Dao.postgre
                 switch (Ordenacao)
                 {
                     case 0:
-                        Where = $"WHERE DOC.DOC = '{Filtro}'";
+                        Where = $"WHERE CAB.ID = '{Filtro}'";
                         break;
                     case 1:
-                        Where = $"WHERE DOC.RAZAO LIKE '%{Filtro.Trim()}%'";
+                        Where = $"WHERE CLI.RAZAO LIKE '%{Filtro.Trim()}%'";
                         break;
                     case 2:
-                        Where = $"WHERE DOC.TIPO = '{Filtro.Trim()}'";
+                        Where = $"WHERE CLI.CNPJ_CPF  = '{Filtro.Trim()}'";
                         break;
                 }
 
@@ -437,13 +595,13 @@ namespace Fluxo_De_Caixa.Dao.postgre
             switch (Ordenacao)
             {
                 case 0:
-                    OrderBy = $"ORDER BY DOC.DOC";
+                    OrderBy = $"ORDER BY CAB.ID";
                     break;
                 case 1:
-                    OrderBy = $"ORDER BY DOC.RAZAO";
+                    OrderBy = $"ORDER BY CLI.RAZAO";
                     break;
                 case 2:
-                    OrderBy = $"ORDER BY DOC.TIPO";
+                    OrderBy = $"ORDER BY CLI.CNPJ_CPF";
                     break;
 
             }
