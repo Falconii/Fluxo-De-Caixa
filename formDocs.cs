@@ -448,8 +448,6 @@ namespace Fluxo_De_Caixa
 
         }
 
-   
-
         public void preencheDataGridView()
         {
             //faz a conexão
@@ -730,8 +728,6 @@ namespace Fluxo_De_Caixa
 
             loadDocumentos();
         }
-
-
 
         private void FormUsuarios_FormClosed(object sender, FormClosedEventArgs e)
         {

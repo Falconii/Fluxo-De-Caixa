@@ -58,7 +58,7 @@ namespace Fluxo_De_Caixa
         private FormFluxo fluxo;
         private FormRecPag recPag;
         private FormCar formCar;
-        private FormCond formCond;
+        private FormOS formOS;
 
         public FormPrincipal(Usuario user)
         {
@@ -205,15 +205,7 @@ namespace Fluxo_De_Caixa
 
         private void condPagamentoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            formCond = new FormCond();
-
-            ((System.Windows.Forms.ToolStripMenuItem)sender).Enabled = false;
-
-            formCond.MdiParent = this;
-
-            formCond.menu = (ToolStripMenuItem)sender;
-
-            formCond.Show();
+            
         }
 
         private void loadClientes()
@@ -246,6 +238,17 @@ namespace Fluxo_De_Caixa
 
         }
 
-     
+        private void lançamentoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            formOS = new FormOS();
+
+            ((System.Windows.Forms.ToolStripMenuItem)sender).Enabled = false;
+
+            formOS.MdiParent = this;
+
+            formOS.menu = (ToolStripMenuItem)sender;
+
+            formOS.Show();
+        }
     }
 }

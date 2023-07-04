@@ -67,9 +67,9 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             String StringUpdate = $" UPDATE  CLIENTES SET " +
                  $"RAZAO    = '{obj.Razao}', " +
-                 $"CNPJ_CPF = '{obj.Cnpj_Cpf}', " + 
-                 $"FANTASI  = '{obj.Fantasi}', "+
-                 $" ENDERECOF = '{obj.Enderecof}', " +
+                 $"CNPJ_CPF = '{obj.Cnpj_Cpf}', " +
+                 $"FANTASI  = '{obj.Fantasi}', " +
+                 $"ENDERECOF = '{obj.Enderecof}', " +
                  $"NROF = '{obj.Nrof}'," +
                  $"BAIRROF = '{obj.Bairrof}'," +
                  $"CIDADEF = '{obj.Cidadef}', " +
@@ -106,7 +106,8 @@ namespace Fluxo_De_Caixa.Dao.postgre
             {
                 throw new Exception("Existem Documentos Para Este Cliente!\nNão Nosso Deletá-lo.");
 
-            } else
+            }
+            else
             {
 
                 String StringDelete = $" DELETE FROM  CLIENTES  WHERE ID_EMPRESA = {obj.IdEmpresa} AND CODIGO = {obj.Codigo} ";
@@ -117,7 +118,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
         }
 
-        public Cliente Seek(int id_empresa,int codigo)
+        public Cliente Seek(int id_empresa, int codigo)
         {
 
             Cliente obj = null;
@@ -164,14 +165,14 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             return obj;
         }
-    
+
         private Cliente PopulaCliente(NpgsqlDataReader objDataReader)
         {
 
             var obj = new Cliente();
             obj.IdEmpresa = Convert.ToInt32(objDataReader["ID_EMPRESA"]);
             obj.Codigo = Convert.ToInt32(objDataReader["CODIGO"]);
-            obj.Razao  = objDataReader["RAZAO"].ToString();
+            obj.Razao = objDataReader["RAZAO"].ToString();
             obj.Cnpj_Cpf = objDataReader["CNPJ_CPF"].ToString();
             obj.Fantasi = objDataReader["FANTASI"].ToString();
             obj.Enderecof = objDataReader["ENDERECOF"].ToString();
@@ -179,7 +180,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
             obj.Bairrof = objDataReader["BAIRROF"].ToString();
             obj.Cidadef = objDataReader["CIDADEF"].ToString();
             obj.Uff = objDataReader["UFF"].ToString();
-            obj.Cepf = objDataReader["CEPF"].ToString();;
+            obj.Cepf = objDataReader["CEPF"].ToString();
             obj.Tel1 = objDataReader["TEL1"].ToString();
             obj.Email = objDataReader["EMAIL"].ToString();
             obj.Conta = objDataReader["CONTA"].ToString();
@@ -241,7 +242,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             return lista;
         }
-  
+
         public string SqlGrid(int Ordenacao, string Filtro)
         {
             string Where = "";
@@ -252,7 +253,14 @@ namespace Fluxo_De_Caixa.Dao.postgre
                                 " CLIENTES.ID_EMPRESA" +
                                 " , CLIENTES.CODIGO " +
                                 " , CLIENTES.RAZAO " +
+                                " , CLIENTES.CNPJ_CPF "+
                                 " , CLIENTES.FANTASI " +
+                                " , CLIENTES.ENDERECOF " +
+                                " , CLIENTES.NROF " +
+                                " , CLIENTES.BAIRROF " +
+                                " , CLIENTES.CIDADEF " +
+                                " , CLIENTES.UFF " +
+                                " , CLIENTES.CEPF " +
                                 " , CLIENTES.TEL1 " +
                                 " , CLIENTES.EMAIL " +
                                 " , CLIENTES.CONTA " +
@@ -316,7 +324,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
                                 " , CLIENTES.FANTASI FANTASIA " +
                                 " , CLIENTES.TEL1 TEL1 " +
                                 " , CLIENTES.EMAIL  EMAIL " +
-                                " , CON.DESCRICAO CONTA "+
+                                " , CON.DESCRICAO CONTA " +
                                 " FROM CLIENTES " +
                                 " INNER JOIN CONTAS CON ON CLIENTES.ID_EMPRESA = CON.ID_EMPRESA AND CON.CODIGO = CLIENTES.CONTA ";
 

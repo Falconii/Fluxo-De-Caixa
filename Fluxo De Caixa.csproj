@@ -143,11 +143,11 @@
     <Compile Include="FormCar.Designer.cs">
       <DependentUpon>FormCar.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormCond.cs">
+    <Compile Include="FormOS.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormCond.Designer.cs">
-      <DependentUpon>FormCond.cs</DependentUpon>
+    <Compile Include="FormOS.Designer.cs">
+      <DependentUpon>FormOS.cs</DependentUpon>
     </Compile>
     <Compile Include="formDocs.cs">
       <SubType>Form</SubType>
@@ -178,6 +178,12 @@
     </Compile>
     <Compile Include="FormLogin.designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormParcelas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormParcelas.Designer.cs">
+      <DependentUpon>FormParcelas.cs</DependentUpon>
     </Compile>
     <Compile Include="FormPrincipal.cs">
       <SubType>Form</SubType>
@@ -228,6 +234,7 @@
     <Compile Include="Util\Coluna_Copy.cs" />
     <Compile Include="Util\ControleColunas.cs" />
     <Compile Include="Util\DadosImpressao.cs" />
+    <Compile Include="Util\Duplicata.cs" />
     <Compile Include="Util\OsPDF.cs" />
     <Compile Include="Util\Parametro_01.cs" />
     <Compile Include="Util\UsuarioSistema.cs" />
@@ -240,8 +247,8 @@
     <EmbeddedResource Include="FormCar.resx">
       <DependentUpon>FormCar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormCond.resx">
-      <DependentUpon>FormCond.cs</DependentUpon>
+    <EmbeddedResource Include="FormOS.resx">
+      <DependentUpon>FormOS.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="formDocs.resx">
       <DependentUpon>formDocs.cs</DependentUpon>
@@ -257,6 +264,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormParcelas.resx">
+      <DependentUpon>FormParcelas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPrincipal.resx">
       <DependentUpon>FormPrincipal.cs</DependentUpon>

@@ -87,6 +87,7 @@
             this.toolStrip1.Size = new System.Drawing.Size(1022, 39);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "TooBar";
+            this.toolStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStrip1_ItemClicked);
             // 
             // tbVoltar
             // 

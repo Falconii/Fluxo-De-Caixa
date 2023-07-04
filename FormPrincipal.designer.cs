@@ -34,10 +34,11 @@
             this.fornecedoresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.automoveisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.condPagamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usuáriosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.fimToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.lançamentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.documentosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.documentosToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.fluxoDeCaixaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,6 +52,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cadastrosToolStripMenuItem,
+            this.toolStripMenuItem1,
             this.documentosToolStripMenuItem,
             this.fluxoDeCaixaToolStripMenuItem,
             this.janelaToolStripMenuItem});
@@ -68,7 +70,6 @@
             this.fornecedoresToolStripMenuItem,
             this.contasToolStripMenuItem,
             this.automoveisToolStripMenuItem,
-            this.condPagamentoToolStripMenuItem,
             this.usuáriosToolStripMenuItem,
             this.toolStripSeparator1,
             this.fimToolStripMenuItem});
@@ -104,13 +105,6 @@
             this.automoveisToolStripMenuItem.Text = "Automoveis";
             this.automoveisToolStripMenuItem.Click += new System.EventHandler(this.automoveisToolStripMenuItem_Click);
             // 
-            // condPagamentoToolStripMenuItem
-            // 
-            this.condPagamentoToolStripMenuItem.Name = "condPagamentoToolStripMenuItem";
-            this.condPagamentoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.condPagamentoToolStripMenuItem.Text = "Cond Pagamento";
-            this.condPagamentoToolStripMenuItem.Click += new System.EventHandler(this.condPagamentoToolStripMenuItem_Click);
-            // 
             // usuáriosToolStripMenuItem
             // 
             this.usuáriosToolStripMenuItem.Name = "usuáriosToolStripMenuItem";
@@ -129,6 +123,21 @@
             this.fimToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.fimToolStripMenuItem.Text = "Fim";
             this.fimToolStripMenuItem.Click += new System.EventHandler(this.FimToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lançamentoToolStripMenuItem});
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(114, 20);
+            this.toolStripMenuItem1.Text = "Ordem De Serviço";
+            // 
+            // lançamentoToolStripMenuItem
+            // 
+            this.lançamentoToolStripMenuItem.Name = "lançamentoToolStripMenuItem";
+            this.lançamentoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.lançamentoToolStripMenuItem.Text = "Lançamento";
+            this.lançamentoToolStripMenuItem.Click += new System.EventHandler(this.lançamentoToolStripMenuItem_Click);
             // 
             // documentosToolStripMenuItem
             // 
@@ -209,7 +218,8 @@
         private System.Windows.Forms.ToolStripMenuItem consultaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pagarReceberToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem automoveisToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem condPagamentoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem lançamentoToolStripMenuItem;
     }
 }
 

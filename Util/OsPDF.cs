@@ -65,48 +65,7 @@ namespace Fluxo_De_Caixa.Util
                 var FontEan13 = new PdfSharp.Drawing.XFont("EAN-13", 10, PdfSharp.Drawing.XFontStyle.Regular);
 
 
-                string CodigoBanco = "033-7";
-
-                //String NomeBanco = "BANCO SANTANDER";
-
-                string LogoBanco = "C:\\LOGOS\\SANTANDER.PNG";
-
-                //string localdepagamento = "PAGÁVEL EM QUALQUER BANCO ATÉ O VENCIMENTO";
-
-                //string vencimento = "27/12/2064";
-
-                //string beneficiario = "MARIA MADALENA DA SILVA";
-
-                //string Agencia_Conta = "22222-90//92929292";
-
-                //string NossoNro = "1234567890-11";
-
-                //string DataDocumento = "12/12/2019";
-
-                //string NroDocumento = "909090900-A";
-
-                //string EspecieDoc = "DM";
-
-                //string Aceite = "NÃO";
-
-                //string DataProcessamento = "12/12/12";
-
-                //string Carteira = "COBRANÇA SIMPLES";
-
-                //string Especie = "R$";
-
-                //string Quantidade = "1.890,00";
-
-                //string Valor = "12.000,50";
-
-                //string ValorDocumento = "140.000,76";
-
-                string Linha01 = "BANCO: NAO RECEBER APOS VENCIMENTO.";
-                string Linha02 = "REF MESES:  07/2019 08/2019";
-                string Linha03 = "VALORES EXPRESSOS EM REAIS";
-                string Linha04 = "";
-                string Linha05 = "";
-                string Linha06 = "";
+                string Logo = "C:\\LOGOS\\LOGO.PNG";
 
                 int NroItem = 0;
 
@@ -114,13 +73,6 @@ namespace Fluxo_De_Caixa.Util
 
 
 
-                //string nome = "MARCOS RENATO FALCONI";
-
-                //string endereco = "RUA MICHEL MASLJUR, 236";
-
-                //string cidade = "Campinas,SP";
-
-                //double offset = 0f;
 
                 double linha = 10f;
 
@@ -137,12 +89,6 @@ namespace Fluxo_De_Caixa.Util
                 double ColunaAceite = 264f;
 
                 double ColunaDataProcessamento = 352f;
-
-                //double ColunaEspecie = 146f;
-
-                //double ColunaQuantidade = 219f;
-
-                //double ColunaValor = 293f;
 
                 double ColunaQtd = 30f;
 
@@ -162,18 +108,19 @@ namespace Fluxo_De_Caixa.Util
 
 
                 //Ficha Do Caixa
-                graphics.DrawLine(PdfSharp.Drawing.XPens.Black, 120, linha, 120, linha + AlturaLinhaBanco);
+                graphics.DrawLine(PdfSharp.Drawing.XPens.Black, 80, linha, 80, linha +( AlturaLinhaBanco*2));
                 //graphics.DrawLine(PdfSharp.Drawing.XPens.Black, 120 + 60, linha, 120 + 60, linha + AlturaLinhaBanco);
-                graphics.DrawLine(PdfSharp.Drawing.XPens.Black, 10, PosicaoReta, page.Width - 10, PosicaoReta);
+                graphics.DrawLine(PdfSharp.Drawing.XPens.Black, 80, PosicaoReta, page.Width - 10, PosicaoReta);
+               
                 //Logo 
-                graphics.DrawImage(PdfSharp.Drawing.XImage.FromFile(LogoBanco), 9, linha, 108.5, PosicaoReta - 9);
+                graphics.DrawImage(PdfSharp.Drawing.XImage.FromFile(Logo),22, linha+3,50,50);
                 //Nome Da Empresa
                 textFormatter.Alignment = PdfSharp.Drawing.Layout.XParagraphAlignment.Center;
                 textFormatter.DrawString($"{dadosImpressao.EmpresaRazao}", FontNroBanco, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XRect(140, linha+2 , page.Width-150, Font.Height));
                 //Endereço
                 textFormatter.Alignment = PdfSharp.Drawing.Layout.XParagraphAlignment.Left;
-                textFormatter.DrawString($"{dadosImpressao.getEnderecoCompleto()}", Font, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XRect(125, PosicaoReta - 10, 400, Font.Height));
-                //Endereço
+                textFormatter.DrawString($"{dadosImpressao.getEnderecoCompleto()}", Font, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XRect(120, PosicaoReta - 10, 400, Font.Height));
+                //Telefone
                 textFormatter.Alignment = PdfSharp.Drawing.Layout.XParagraphAlignment.Right;
                 textFormatter.DrawString($"Tel.: {dadosImpressao.Telefone}", Font, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XRect(180, PosicaoReta - 10, 400, Font.Height));
                 //Linha HUm
@@ -182,10 +129,14 @@ namespace Fluxo_De_Caixa.Util
 
                 graphics.DrawLine(PdfSharp.Drawing.XPens.Black, ColunaVencimenos, linha, ColunaVencimenos, linha + AlturaLinhaBanco);
                 graphics.DrawLine(PdfSharp.Drawing.XPens.Black, 10, PosicaoReta, page.Width - 10, PosicaoReta);
+                graphics.DrawLine(PdfSharp.Drawing.XPens.Black, ColunaDataProcessamento, linha, ColunaDataProcessamento, linha + AlturaLinhaBanco);
                 //Cliente
                 textFormatter.Alignment = PdfSharp.Drawing.Layout.XParagraphAlignment.Left;
-                textFormatter.DrawString("Nome Do Cliente", FontSubTitulo, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XRect(12, linha + 02, 250, FontSubTitulo.Height));
-                textFormatter.DrawString(cab.Cli_Razao, FontDados, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XRect(12, PosicaoReta - 15, 300, FontSubTitulo.Height));
+                textFormatter.DrawString("Nome Do Cliente", FontSubTitulo, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XRect(82, linha + 02, 250, FontSubTitulo.Height));
+                textFormatter.DrawString(cab.Cli_Razao, FontDados, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XRect(82, PosicaoReta - 15, 300, FontSubTitulo.Height));
+                //Telefone
+                textFormatter.DrawString("Telefone", FontSubTitulo, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XRect(ColunaDataProcessamento+2, linha + 02, 60, FontSubTitulo.Height));
+                textFormatter.DrawString(cab.Cli_Tel1, FontDados, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XRect(ColunaDataProcessamento+2, PosicaoReta - 15, 60, FontSubTitulo.Height));
 
                 //Data Entrada
                 textFormatter.Alignment = PdfSharp.Drawing.Layout.XParagraphAlignment.Left;
@@ -235,7 +186,7 @@ namespace Fluxo_De_Caixa.Util
                 //MODELO
                 textFormatter.Alignment = PdfSharp.Drawing.Layout.XParagraphAlignment.Left;
                 textFormatter.DrawString("Modelo", FontSubTitulo, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XRect(ColunaEspecieDoc + 02, linha + 02, 250, FontSubTitulo.Height));
-                textFormatter.Alignment = PdfSharp.Drawing.Layout.XParagraphAlignment.Center;
+                textFormatter.Alignment = PdfSharp.Drawing.Layout.XParagraphAlignment.Left;
                 textFormatter.DrawString($"{cab.Car_Modelo}", FontDados, PdfSharp.Drawing.XBrushes.Black, new PdfSharp.Drawing.XRect(ColunaEspecieDoc + 02, PosicaoReta - 15, 090, FontSubTitulo.Height));
 
                 //COR

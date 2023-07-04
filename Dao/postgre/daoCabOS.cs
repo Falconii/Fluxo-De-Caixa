@@ -591,7 +591,6 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             //Adiciona ORDER BY
 
-
             switch (Ordenacao)
             {
                 case 0:
@@ -618,33 +617,23 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             string OrderBy = "";
 
-            string strSelect = "SELECT   CAB.ID_EMPRESA		" +
-                    "        ,CAB.ID                " +
+            string strSelect = "SELECT 	" +
+                    "         CAB.ID                        " +
+                    "        ,CLI.CODIGO     AS CLI_CODIGO		 " +
+                    "        ,CLI.RAZAO      AS CLI_RAZAO		 " +
+                    "        ,CLI.TEL1       AS CLI_TEL1         " +
                     "        ,CAB.ENTRADA           " +
                     "        ,CAB.SAIDA             " +
-                    "        ,CAB.ID_CLIENTE        " +
-                    "        ,CAB.ID_CARRO          " +
-                    "        ,CAB.ID_COND           " +
                     "        ,CAB.HORAS_SERVICO     " +
                     "        ,CAB.KM                " +
                     "        ,CAB.OBS               " +
-                    "        ,CAB.LUCRO             " +
-                    "        ,CAB.MAO_OBRA          " +
                     "        ,CAB.MAO_OBRA_VLR      " +
                     "        ,CAB.PECAS_VLR         " +
-                    "        ,CAB.USER_INSERT       " +
-                    "        ,CAB.USER_UPDATE       " +
-                    "        ,CLI.CODIGO     AS CLI_CODIGO		 " +
-                    "        ,CLI.RAZAO      AS CLI_RAZAO		 " +
-                    "        ,CLI.CNPJ_CPF   AS CLI_CNPJ_CPF     " +
-                    "        ,CLI.TEL1       AS CLI_TEL1         " +
-                    "        ,CLI.EMAIL      AS CLI_EMAIL        " +
-                    "        ,CAR.PLACA      AS CAR_PLACA        " +
-                    "        ,CAR.ID_MARCA   AS CAR_ID_MARCA     " +
-                    "        ,CAR.COR        AS CAR_COR          " +
-                    "        ,CAR.ANO        AS CAR_ANO          " +
-                    "        ,COALESCE(COND.DESCRICAO,'') AS COND_DESCRICAO " +
+                    "        ,LEFT(CAR.PLACA,3) || '-' || RIGHT(CAR.PLACA,4)     AS CAR_PLACA        " +
                     "        ,MARCA.DESCRICAO AS MARCA_DESCRICAO " +
+                    "        ,CAR.MODELO      AS CAR_MODELO       " +
+                    "        ,CAR.COR         AS CAR_COR          " +
+                     "       , LEFT(CAR.ANO,4) || '-' || RIGHT(CAR.ANO,4)       AS CAR_ANO          " +
                     "FROM OS_CAB CAB " +
                     "INNER JOIN CLIENTES  CLI   ON CLI.ID_EMPRESA  = CAB.ID_EMPRESA  AND CLI.CODIGO     = CAB.ID_CLIENTE    " +
                     "INNER JOIN OS_CAR    CAR   ON CAR.ID_EMPRESA  = CAB.ID_EMPRESA  AND CAR.PLACA      = CAB.ID_CARRO      " +
@@ -654,27 +643,36 @@ namespace Fluxo_De_Caixa.Dao.postgre
             //Adiciona WHERE 
             if (Filtro.Trim() != "")
             {
+
+
                 switch (Ordenacao)
                 {
                     case 0:
-                        Where = $"WHERE BAI.ID_EMPRESA = 1 AND BAI.ID = {Filtro}";
+                        Where = $"WHERE CAB.ID = '{Filtro}'";
                         break;
                     case 1:
-                        Where = $"WHERE BAI.ID_EMPRESA = 1 AND BAI.ID_DOC = {Filtro}";
+                        Where = $"WHERE CLI.RAZAO LIKE '%{Filtro.Trim()}%'";
+                        break;
+                    case 2:
+                        Where = $"WHERE CLI.CNPJ_CPF  = '{Filtro.Trim()}'";
                         break;
                 }
+
+
             }
 
             //Adiciona ORDER BY
 
-
             switch (Ordenacao)
             {
                 case 0:
-                    OrderBy = $"ORDER BY BAI.ID_EMPRESA  ,  BAI.DOC ";
+                    OrderBy = $"ORDER BY CAB.ID";
                     break;
                 case 1:
-                    OrderBy = $"ORDER BY BAI.ID_EMPRESA  ,  BAI.ID_DOC ";
+                    OrderBy = $"ORDER BY CLI.RAZAO";
+                    break;
+                case 2:
+                    OrderBy = $"ORDER BY CLI.CNPJ_CPF";
                     break;
 
             }
