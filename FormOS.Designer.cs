@@ -48,31 +48,9 @@ namespace Fluxo_De_Caixa
             this.dbGridView = new System.Windows.Forms.DataGridView();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPrincipal = new System.Windows.Forms.TabPage();
-            this.gbComplemento = new System.Windows.Forms.GroupBox();
-            this.gbCliente = new System.Windows.Forms.GroupBox();
-            this.cbCliente = new System.Windows.Forms.ComboBox();
-            this.lblCli_Tel1 = new System.Windows.Forms.Label();
-            this.txtCli_Tel1 = new System.Windows.Forms.TextBox();
-            this.lblCodigo = new System.Windows.Forms.Label();
-            this.gbComplemnto = new System.Windows.Forms.GroupBox();
-            this.lblObs = new System.Windows.Forms.Label();
-            this.txtObs = new System.Windows.Forms.TextBox();
-            this.lblKM = new System.Windows.Forms.Label();
-            this.txtKM = new System.Windows.Forms.TextBox();
-            this.lblHoras = new System.Windows.Forms.Label();
-            this.gbIdentificacao = new System.Windows.Forms.GroupBox();
-            this.txtId = new System.Windows.Forms.TextBox();
-            this.lblId = new System.Windows.Forms.Label();
-            this.txtSaida = new System.Windows.Forms.MaskedTextBox();
-            this.lblSaida = new System.Windows.Forms.Label();
-            this.lblEntrada = new System.Windows.Forms.Label();
-            this.lblValorDeMaoDeObraCabec = new System.Windows.Forms.Label();
-            this.txtVlrMaoDeMaoDeObraCabec = new System.Windows.Forms.TextBox();
-            this.lblVlrPecasCabec = new System.Windows.Forms.Label();
-            this.txtVlrDasPecasCabec = new System.Windows.Forms.TextBox();
-            this.lblTotalCabec = new System.Windows.Forms.Label();
-            this.txtValorOSCabec = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btSeekCar = new System.Windows.Forms.Button();
+            this.lblNovo = new System.Windows.Forms.Label();
             this.txtMarca = new System.Windows.Forms.ComboBox();
             this.lblModelo = new System.Windows.Forms.Label();
             this.txtModelo = new System.Windows.Forms.TextBox();
@@ -83,22 +61,44 @@ namespace Fluxo_De_Caixa
             this.txtCor = new System.Windows.Forms.TextBox();
             this.lblMarca = new System.Windows.Forms.Label();
             this.lblPlaca = new System.Windows.Forms.Label();
-            this.txtHorasServico = new System.Windows.Forms.MaskedTextBox();
-            this.txtMaoDeObra = new System.Windows.Forms.TextBox();
+            this.gbComplemento = new System.Windows.Forms.GroupBox();
             this.lblValorMaoDEObra = new System.Windows.Forms.Label();
             this.txtVlrMaoDeObra = new System.Windows.Forms.TextBox();
+            this.txtMaoDeObra = new System.Windows.Forms.TextBox();
+            this.gbCliente = new System.Windows.Forms.GroupBox();
+            this.cbCliente = new System.Windows.Forms.ComboBox();
+            this.lblCli_Tel1 = new System.Windows.Forms.Label();
+            this.txtCli_Tel1 = new System.Windows.Forms.TextBox();
+            this.lblCodigo = new System.Windows.Forms.Label();
+            this.gbComplemnto = new System.Windows.Forms.GroupBox();
+            this.txtHorasServico = new System.Windows.Forms.MaskedTextBox();
+            this.lblObs = new System.Windows.Forms.Label();
+            this.txtObs = new System.Windows.Forms.TextBox();
+            this.lblKM = new System.Windows.Forms.Label();
+            this.txtKM = new System.Windows.Forms.TextBox();
+            this.lblHoras = new System.Windows.Forms.Label();
+            this.gbIdentificacao = new System.Windows.Forms.GroupBox();
             this.txtEntrada = new System.Windows.Forms.MaskedTextBox();
-            this.lblNovo = new System.Windows.Forms.Label();
-            this.btSeekCar = new System.Windows.Forms.Button();
+            this.lblTotalCabec = new System.Windows.Forms.Label();
+            this.txtValorOSCabec = new System.Windows.Forms.TextBox();
+            this.lblValorDeMaoDeObraCabec = new System.Windows.Forms.Label();
+            this.txtVlrMaoDeMaoDeObraCabec = new System.Windows.Forms.TextBox();
+            this.lblVlrPecasCabec = new System.Windows.Forms.Label();
+            this.txtVlrDasPecasCabec = new System.Windows.Forms.TextBox();
+            this.txtSaida = new System.Windows.Forms.MaskedTextBox();
+            this.lblSaida = new System.Windows.Forms.Label();
+            this.lblEntrada = new System.Windows.Forms.Label();
+            this.txtId = new System.Windows.Forms.TextBox();
+            this.lblId = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dbGridView)).BeginInit();
             this.tabControl.SuspendLayout();
             this.tabPrincipal.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.gbComplemento.SuspendLayout();
             this.gbCliente.SuspendLayout();
             this.gbComplemnto.SuspendLayout();
             this.gbIdentificacao.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -193,6 +193,7 @@ namespace Fluxo_De_Caixa
             this.tbIncluir.Name = "tbIncluir";
             this.tbIncluir.Size = new System.Drawing.Size(34, 36);
             this.tbIncluir.ToolTipText = "Clicl Aqui Para Incluir Um Usuario  Novo";
+            this.tbIncluir.Click += new System.EventHandler(this.TbIncluir_Click);
             // 
             // tbEditar
             // 
@@ -203,6 +204,7 @@ namespace Fluxo_De_Caixa
             this.tbEditar.Name = "tbEditar";
             this.tbEditar.Size = new System.Drawing.Size(34, 36);
             this.tbEditar.ToolTipText = "Click Aqui Para Editar O Usuário";
+            this.tbEditar.Click += new System.EventHandler(this.TbEditar_Click);
             // 
             // tbDelete
             // 
@@ -213,6 +215,7 @@ namespace Fluxo_De_Caixa
             this.tbDelete.Name = "tbDelete";
             this.tbDelete.Size = new System.Drawing.Size(34, 36);
             this.tbDelete.ToolTipText = "Click Aqui Para Excluir O Usuário";
+            this.tbDelete.Click += new System.EventHandler(this.TbDelete_Click);
             // 
             // tbOk
             // 
@@ -223,6 +226,7 @@ namespace Fluxo_De_Caixa
             this.tbOk.Name = "tbOk";
             this.tbOk.Size = new System.Drawing.Size(34, 36);
             this.tbOk.ToolTipText = "Click Aqui Para Confirmar";
+            this.tbOk.Click += new System.EventHandler(this.TbOk_Click);
             // 
             // tbCancelar
             // 
@@ -233,6 +237,7 @@ namespace Fluxo_De_Caixa
             this.tbCancelar.Name = "tbCancelar";
             this.tbCancelar.Size = new System.Drawing.Size(36, 36);
             this.tbCancelar.ToolTipText = "Click Aqui Para Cancelar";
+            this.tbCancelar.Click += new System.EventHandler(this.TbCancelar_Click);
             // 
             // tbBaixar
             // 
@@ -289,252 +294,6 @@ namespace Fluxo_De_Caixa
             this.tabPrincipal.Text = "Principal";
             this.tabPrincipal.UseVisualStyleBackColor = true;
             // 
-            // gbComplemento
-            // 
-            this.gbComplemento.Controls.Add(this.lblValorMaoDEObra);
-            this.gbComplemento.Controls.Add(this.txtVlrMaoDeObra);
-            this.gbComplemento.Controls.Add(this.txtMaoDeObra);
-            this.gbComplemento.Location = new System.Drawing.Point(37, 490);
-            this.gbComplemento.Name = "gbComplemento";
-            this.gbComplemento.Size = new System.Drawing.Size(965, 120);
-            this.gbComplemento.TabIndex = 5;
-            this.gbComplemento.TabStop = false;
-            this.gbComplemento.Text = "Mão De Obra";
-            // 
-            // gbCliente
-            // 
-            this.gbCliente.Controls.Add(this.cbCliente);
-            this.gbCliente.Controls.Add(this.lblCli_Tel1);
-            this.gbCliente.Controls.Add(this.txtCli_Tel1);
-            this.gbCliente.Controls.Add(this.lblCodigo);
-            this.gbCliente.Location = new System.Drawing.Point(37, 145);
-            this.gbCliente.Name = "gbCliente";
-            this.gbCliente.Size = new System.Drawing.Size(965, 100);
-            this.gbCliente.TabIndex = 2;
-            this.gbCliente.TabStop = false;
-            this.gbCliente.Text = "Cliente";
-            // 
-            // cbCliente
-            // 
-            this.cbCliente.FormattingEnabled = true;
-            this.cbCliente.Location = new System.Drawing.Point(13, 51);
-            this.cbCliente.Name = "cbCliente";
-            this.cbCliente.Size = new System.Drawing.Size(572, 21);
-            this.cbCliente.TabIndex = 1;
-            // 
-            // lblCli_Tel1
-            // 
-            this.lblCli_Tel1.AutoSize = true;
-            this.lblCli_Tel1.Location = new System.Drawing.Point(632, 34);
-            this.lblCli_Tel1.Name = "lblCli_Tel1";
-            this.lblCli_Tel1.Size = new System.Drawing.Size(49, 13);
-            this.lblCli_Tel1.TabIndex = 39;
-            this.lblCli_Tel1.Text = "Telefone";
-            // 
-            // txtCli_Tel1
-            // 
-            this.txtCli_Tel1.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
-            this.txtCli_Tel1.Location = new System.Drawing.Point(635, 50);
-            this.txtCli_Tel1.Name = "txtCli_Tel1";
-            this.txtCli_Tel1.ReadOnly = true;
-            this.txtCli_Tel1.Size = new System.Drawing.Size(324, 20);
-            this.txtCli_Tel1.TabIndex = 2;
-            this.txtCli_Tel1.TabStop = false;
-            // 
-            // lblCodigo
-            // 
-            this.lblCodigo.AutoSize = true;
-            this.lblCodigo.Location = new System.Drawing.Point(10, 34);
-            this.lblCodigo.Name = "lblCodigo";
-            this.lblCodigo.Size = new System.Drawing.Size(40, 13);
-            this.lblCodigo.TabIndex = 29;
-            this.lblCodigo.Text = "Código";
-            // 
-            // gbComplemnto
-            // 
-            this.gbComplemnto.Controls.Add(this.txtHorasServico);
-            this.gbComplemnto.Controls.Add(this.lblObs);
-            this.gbComplemnto.Controls.Add(this.txtObs);
-            this.gbComplemnto.Controls.Add(this.lblKM);
-            this.gbComplemnto.Controls.Add(this.txtKM);
-            this.gbComplemnto.Controls.Add(this.lblHoras);
-            this.gbComplemnto.Location = new System.Drawing.Point(37, 375);
-            this.gbComplemnto.Name = "gbComplemnto";
-            this.gbComplemnto.Size = new System.Drawing.Size(965, 100);
-            this.gbComplemnto.TabIndex = 4;
-            this.gbComplemnto.TabStop = false;
-            this.gbComplemnto.Text = "Dados Complementares";
-            // 
-            // lblObs
-            // 
-            this.lblObs.AutoSize = true;
-            this.lblObs.Location = new System.Drawing.Point(330, 34);
-            this.lblObs.Name = "lblObs";
-            this.lblObs.Size = new System.Drawing.Size(65, 13);
-            this.lblObs.TabIndex = 39;
-            this.lblObs.Text = "Observação";
-            // 
-            // txtObs
-            // 
-            this.txtObs.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
-            this.txtObs.Location = new System.Drawing.Point(333, 50);
-            this.txtObs.Name = "txtObs";
-            this.txtObs.Size = new System.Drawing.Size(460, 20);
-            this.txtObs.TabIndex = 2;
-            this.txtObs.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // lblKM
-            // 
-            this.lblKM.AutoSize = true;
-            this.lblKM.Location = new System.Drawing.Point(165, 34);
-            this.lblKM.Name = "lblKM";
-            this.lblKM.Size = new System.Drawing.Size(23, 13);
-            this.lblKM.TabIndex = 37;
-            this.lblKM.Text = "KM";
-            // 
-            // txtKM
-            // 
-            this.txtKM.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
-            this.txtKM.Location = new System.Drawing.Point(168, 50);
-            this.txtKM.Name = "txtKM";
-            this.txtKM.Size = new System.Drawing.Size(145, 20);
-            this.txtKM.TabIndex = 1;
-            this.txtKM.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // lblHoras
-            // 
-            this.lblHoras.AutoSize = true;
-            this.lblHoras.Location = new System.Drawing.Point(10, 34);
-            this.lblHoras.Name = "lblHoras";
-            this.lblHoras.Size = new System.Drawing.Size(35, 13);
-            this.lblHoras.TabIndex = 29;
-            this.lblHoras.Text = "Horas";
-            // 
-            // gbIdentificacao
-            // 
-            this.gbIdentificacao.Controls.Add(this.txtEntrada);
-            this.gbIdentificacao.Controls.Add(this.lblTotalCabec);
-            this.gbIdentificacao.Controls.Add(this.txtValorOSCabec);
-            this.gbIdentificacao.Controls.Add(this.lblValorDeMaoDeObraCabec);
-            this.gbIdentificacao.Controls.Add(this.txtVlrMaoDeMaoDeObraCabec);
-            this.gbIdentificacao.Controls.Add(this.lblVlrPecasCabec);
-            this.gbIdentificacao.Controls.Add(this.txtVlrDasPecasCabec);
-            this.gbIdentificacao.Controls.Add(this.txtSaida);
-            this.gbIdentificacao.Controls.Add(this.lblSaida);
-            this.gbIdentificacao.Controls.Add(this.lblEntrada);
-            this.gbIdentificacao.Controls.Add(this.txtId);
-            this.gbIdentificacao.Controls.Add(this.lblId);
-            this.gbIdentificacao.Location = new System.Drawing.Point(37, 30);
-            this.gbIdentificacao.Name = "gbIdentificacao";
-            this.gbIdentificacao.Size = new System.Drawing.Size(965, 100);
-            this.gbIdentificacao.TabIndex = 1;
-            this.gbIdentificacao.TabStop = false;
-            this.gbIdentificacao.Text = "Identificação";
-            // 
-            // txtId
-            // 
-            this.txtId.Location = new System.Drawing.Point(13, 48);
-            this.txtId.Name = "txtId";
-            this.txtId.Size = new System.Drawing.Size(100, 20);
-            this.txtId.TabIndex = 0;
-            this.txtId.TabStop = false;
-            // 
-            // lblId
-            // 
-            this.lblId.AutoSize = true;
-            this.lblId.Location = new System.Drawing.Point(10, 32);
-            this.lblId.Name = "lblId";
-            this.lblId.Size = new System.Drawing.Size(46, 13);
-            this.lblId.TabIndex = 8;
-            this.lblId.Text = "Nº  O.S.";
-            // 
-            // txtSaida
-            // 
-            this.txtSaida.Location = new System.Drawing.Point(297, 48);
-            this.txtSaida.Mask = "99/99/9999";
-            this.txtSaida.Name = "txtSaida";
-            this.txtSaida.PromptChar = ' ';
-            this.txtSaida.Size = new System.Drawing.Size(116, 20);
-            this.txtSaida.TabIndex = 2;
-            // 
-            // lblSaida
-            // 
-            this.lblSaida.AutoSize = true;
-            this.lblSaida.Location = new System.Drawing.Point(294, 33);
-            this.lblSaida.Name = "lblSaida";
-            this.lblSaida.Size = new System.Drawing.Size(60, 13);
-            this.lblSaida.TabIndex = 13;
-            this.lblSaida.Text = "Data Saida";
-            // 
-            // lblEntrada
-            // 
-            this.lblEntrada.AutoSize = true;
-            this.lblEntrada.Location = new System.Drawing.Point(151, 31);
-            this.lblEntrada.Name = "lblEntrada";
-            this.lblEntrada.Size = new System.Drawing.Size(70, 13);
-            this.lblEntrada.TabIndex = 12;
-            this.lblEntrada.Text = "Data Entrada";
-            // 
-            // lblValorDeMaoDeObraCabec
-            // 
-            this.lblValorDeMaoDeObraCabec.AutoSize = true;
-            this.lblValorDeMaoDeObraCabec.Location = new System.Drawing.Point(437, 32);
-            this.lblValorDeMaoDeObraCabec.Name = "lblValorDeMaoDeObraCabec";
-            this.lblValorDeMaoDeObraCabec.Size = new System.Drawing.Size(106, 13);
-            this.lblValorDeMaoDeObraCabec.TabIndex = 47;
-            this.lblValorDeMaoDeObraCabec.Text = "Vlr  Da Mão De Obra";
-            // 
-            // txtVlrMaoDeMaoDeObraCabec
-            // 
-            this.txtVlrMaoDeMaoDeObraCabec.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
-            this.txtVlrMaoDeMaoDeObraCabec.Location = new System.Drawing.Point(440, 48);
-            this.txtVlrMaoDeMaoDeObraCabec.Name = "txtVlrMaoDeMaoDeObraCabec";
-            this.txtVlrMaoDeMaoDeObraCabec.ReadOnly = true;
-            this.txtVlrMaoDeMaoDeObraCabec.Size = new System.Drawing.Size(130, 20);
-            this.txtVlrMaoDeMaoDeObraCabec.TabIndex = 3;
-            this.txtVlrMaoDeMaoDeObraCabec.TabStop = false;
-            this.txtVlrMaoDeMaoDeObraCabec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // lblVlrPecasCabec
-            // 
-            this.lblVlrPecasCabec.AutoSize = true;
-            this.lblVlrPecasCabec.Location = new System.Drawing.Point(594, 32);
-            this.lblVlrPecasCabec.Name = "lblVlrPecasCabec";
-            this.lblVlrPecasCabec.Size = new System.Drawing.Size(74, 13);
-            this.lblVlrPecasCabec.TabIndex = 46;
-            this.lblVlrPecasCabec.Text = "Vlr Das Peças";
-            // 
-            // txtVlrDasPecasCabec
-            // 
-            this.txtVlrDasPecasCabec.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
-            this.txtVlrDasPecasCabec.Location = new System.Drawing.Point(597, 48);
-            this.txtVlrDasPecasCabec.Name = "txtVlrDasPecasCabec";
-            this.txtVlrDasPecasCabec.ReadOnly = true;
-            this.txtVlrDasPecasCabec.Size = new System.Drawing.Size(130, 20);
-            this.txtVlrDasPecasCabec.TabIndex = 4;
-            this.txtVlrDasPecasCabec.TabStop = false;
-            this.txtVlrDasPecasCabec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // lblTotalCabec
-            // 
-            this.lblTotalCabec.AutoSize = true;
-            this.lblTotalCabec.Location = new System.Drawing.Point(749, 32);
-            this.lblTotalCabec.Name = "lblTotalCabec";
-            this.lblTotalCabec.Size = new System.Drawing.Size(99, 13);
-            this.lblTotalCabec.TabIndex = 49;
-            this.lblTotalCabec.Text = "Valor Total Da O.S.";
-            // 
-            // txtValorOSCabec
-            // 
-            this.txtValorOSCabec.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
-            this.txtValorOSCabec.Location = new System.Drawing.Point(752, 48);
-            this.txtValorOSCabec.Name = "txtValorOSCabec";
-            this.txtValorOSCabec.ReadOnly = true;
-            this.txtValorOSCabec.Size = new System.Drawing.Size(130, 20);
-            this.txtValorOSCabec.TabIndex = 5;
-            this.txtValorOSCabec.TabStop = false;
-            this.txtValorOSCabec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.btSeekCar);
@@ -555,6 +314,25 @@ namespace Fluxo_De_Caixa
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Veiculo";
+            // 
+            // btSeekCar
+            // 
+            this.btSeekCar.AutoSize = true;
+            this.btSeekCar.Image = ((System.Drawing.Image)(resources.GetObject("btSeekCar.Image")));
+            this.btSeekCar.Location = new System.Drawing.Point(119, 36);
+            this.btSeekCar.Name = "btSeekCar";
+            this.btSeekCar.Size = new System.Drawing.Size(38, 38);
+            this.btSeekCar.TabIndex = 42;
+            this.btSeekCar.UseVisualStyleBackColor = true;
+            this.btSeekCar.Click += new System.EventHandler(this.btSeekCar_Click);
+            // 
+            // lblNovo
+            // 
+            this.lblNovo.Image = ((System.Drawing.Image)(resources.GetObject("lblNovo.Image")));
+            this.lblNovo.Location = new System.Drawing.Point(886, 68);
+            this.lblNovo.Name = "lblNovo";
+            this.lblNovo.Size = new System.Drawing.Size(73, 29);
+            this.lblNovo.TabIndex = 41;
             // 
             // txtMarca
             // 
@@ -646,24 +424,17 @@ namespace Fluxo_De_Caixa
             this.lblPlaca.TabIndex = 8;
             this.lblPlaca.Text = "Placa";
             // 
-            // txtHorasServico
+            // gbComplemento
             // 
-            this.txtHorasServico.Location = new System.Drawing.Point(13, 50);
-            this.txtHorasServico.Mask = "99:99";
-            this.txtHorasServico.Name = "txtHorasServico";
-            this.txtHorasServico.PromptChar = ' ';
-            this.txtHorasServico.Size = new System.Drawing.Size(100, 20);
-            this.txtHorasServico.TabIndex = 0;
-            // 
-            // txtMaoDeObra
-            // 
-            this.txtMaoDeObra.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
-            this.txtMaoDeObra.Location = new System.Drawing.Point(6, 31);
-            this.txtMaoDeObra.MaxLength = 600;
-            this.txtMaoDeObra.Multiline = true;
-            this.txtMaoDeObra.Name = "txtMaoDeObra";
-            this.txtMaoDeObra.Size = new System.Drawing.Size(460, 73);
-            this.txtMaoDeObra.TabIndex = 0;
+            this.gbComplemento.Controls.Add(this.lblValorMaoDEObra);
+            this.gbComplemento.Controls.Add(this.txtVlrMaoDeObra);
+            this.gbComplemento.Controls.Add(this.txtMaoDeObra);
+            this.gbComplemento.Location = new System.Drawing.Point(37, 490);
+            this.gbComplemento.Name = "gbComplemento";
+            this.gbComplemento.Size = new System.Drawing.Size(965, 120);
+            this.gbComplemento.TabIndex = 5;
+            this.gbComplemento.TabStop = false;
+            this.gbComplemento.Text = "Mão De Obra";
             // 
             // lblValorMaoDEObra
             // 
@@ -682,6 +453,155 @@ namespace Fluxo_De_Caixa
             this.txtVlrMaoDeObra.Size = new System.Drawing.Size(145, 20);
             this.txtVlrMaoDeObra.TabIndex = 1;
             this.txtVlrMaoDeObra.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtVlrMaoDeObra.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IsDoubleEntry);
+            // 
+            // txtMaoDeObra
+            // 
+            this.txtMaoDeObra.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
+            this.txtMaoDeObra.Location = new System.Drawing.Point(6, 31);
+            this.txtMaoDeObra.MaxLength = 600;
+            this.txtMaoDeObra.Multiline = true;
+            this.txtMaoDeObra.Name = "txtMaoDeObra";
+            this.txtMaoDeObra.Size = new System.Drawing.Size(460, 73);
+            this.txtMaoDeObra.TabIndex = 0;
+            // 
+            // gbCliente
+            // 
+            this.gbCliente.Controls.Add(this.cbCliente);
+            this.gbCliente.Controls.Add(this.lblCli_Tel1);
+            this.gbCliente.Controls.Add(this.txtCli_Tel1);
+            this.gbCliente.Controls.Add(this.lblCodigo);
+            this.gbCliente.Location = new System.Drawing.Point(37, 145);
+            this.gbCliente.Name = "gbCliente";
+            this.gbCliente.Size = new System.Drawing.Size(965, 100);
+            this.gbCliente.TabIndex = 2;
+            this.gbCliente.TabStop = false;
+            this.gbCliente.Text = "Cliente";
+            // 
+            // cbCliente
+            // 
+            this.cbCliente.FormattingEnabled = true;
+            this.cbCliente.Location = new System.Drawing.Point(13, 51);
+            this.cbCliente.Name = "cbCliente";
+            this.cbCliente.Size = new System.Drawing.Size(572, 21);
+            this.cbCliente.TabIndex = 1;
+            // 
+            // lblCli_Tel1
+            // 
+            this.lblCli_Tel1.AutoSize = true;
+            this.lblCli_Tel1.Location = new System.Drawing.Point(632, 34);
+            this.lblCli_Tel1.Name = "lblCli_Tel1";
+            this.lblCli_Tel1.Size = new System.Drawing.Size(49, 13);
+            this.lblCli_Tel1.TabIndex = 39;
+            this.lblCli_Tel1.Text = "Telefone";
+            // 
+            // txtCli_Tel1
+            // 
+            this.txtCli_Tel1.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
+            this.txtCli_Tel1.Location = new System.Drawing.Point(635, 50);
+            this.txtCli_Tel1.Name = "txtCli_Tel1";
+            this.txtCli_Tel1.ReadOnly = true;
+            this.txtCli_Tel1.Size = new System.Drawing.Size(324, 20);
+            this.txtCli_Tel1.TabIndex = 2;
+            this.txtCli_Tel1.TabStop = false;
+            // 
+            // lblCodigo
+            // 
+            this.lblCodigo.AutoSize = true;
+            this.lblCodigo.Location = new System.Drawing.Point(10, 34);
+            this.lblCodigo.Name = "lblCodigo";
+            this.lblCodigo.Size = new System.Drawing.Size(40, 13);
+            this.lblCodigo.TabIndex = 29;
+            this.lblCodigo.Text = "Código";
+            // 
+            // gbComplemnto
+            // 
+            this.gbComplemnto.Controls.Add(this.txtHorasServico);
+            this.gbComplemnto.Controls.Add(this.lblObs);
+            this.gbComplemnto.Controls.Add(this.txtObs);
+            this.gbComplemnto.Controls.Add(this.lblKM);
+            this.gbComplemnto.Controls.Add(this.txtKM);
+            this.gbComplemnto.Controls.Add(this.lblHoras);
+            this.gbComplemnto.Location = new System.Drawing.Point(37, 375);
+            this.gbComplemnto.Name = "gbComplemnto";
+            this.gbComplemnto.Size = new System.Drawing.Size(965, 100);
+            this.gbComplemnto.TabIndex = 4;
+            this.gbComplemnto.TabStop = false;
+            this.gbComplemnto.Text = "Dados Complementares";
+            // 
+            // txtHorasServico
+            // 
+            this.txtHorasServico.Location = new System.Drawing.Point(13, 50);
+            this.txtHorasServico.Mask = "99:99";
+            this.txtHorasServico.Name = "txtHorasServico";
+            this.txtHorasServico.PromptChar = ' ';
+            this.txtHorasServico.Size = new System.Drawing.Size(100, 20);
+            this.txtHorasServico.TabIndex = 0;
+            // 
+            // lblObs
+            // 
+            this.lblObs.AutoSize = true;
+            this.lblObs.Location = new System.Drawing.Point(330, 34);
+            this.lblObs.Name = "lblObs";
+            this.lblObs.Size = new System.Drawing.Size(65, 13);
+            this.lblObs.TabIndex = 39;
+            this.lblObs.Text = "Observação";
+            // 
+            // txtObs
+            // 
+            this.txtObs.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
+            this.txtObs.Location = new System.Drawing.Point(333, 50);
+            this.txtObs.Name = "txtObs";
+            this.txtObs.Size = new System.Drawing.Size(460, 20);
+            this.txtObs.TabIndex = 2;
+            // 
+            // lblKM
+            // 
+            this.lblKM.AutoSize = true;
+            this.lblKM.Location = new System.Drawing.Point(165, 34);
+            this.lblKM.Name = "lblKM";
+            this.lblKM.Size = new System.Drawing.Size(23, 13);
+            this.lblKM.TabIndex = 37;
+            this.lblKM.Text = "KM";
+            // 
+            // txtKM
+            // 
+            this.txtKM.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
+            this.txtKM.Location = new System.Drawing.Point(168, 50);
+            this.txtKM.Name = "txtKM";
+            this.txtKM.Size = new System.Drawing.Size(145, 20);
+            this.txtKM.TabIndex = 1;
+            this.txtKM.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // lblHoras
+            // 
+            this.lblHoras.AutoSize = true;
+            this.lblHoras.Location = new System.Drawing.Point(10, 34);
+            this.lblHoras.Name = "lblHoras";
+            this.lblHoras.Size = new System.Drawing.Size(35, 13);
+            this.lblHoras.TabIndex = 29;
+            this.lblHoras.Text = "Horas";
+            // 
+            // gbIdentificacao
+            // 
+            this.gbIdentificacao.Controls.Add(this.txtEntrada);
+            this.gbIdentificacao.Controls.Add(this.lblTotalCabec);
+            this.gbIdentificacao.Controls.Add(this.txtValorOSCabec);
+            this.gbIdentificacao.Controls.Add(this.lblValorDeMaoDeObraCabec);
+            this.gbIdentificacao.Controls.Add(this.txtVlrMaoDeMaoDeObraCabec);
+            this.gbIdentificacao.Controls.Add(this.lblVlrPecasCabec);
+            this.gbIdentificacao.Controls.Add(this.txtVlrDasPecasCabec);
+            this.gbIdentificacao.Controls.Add(this.txtSaida);
+            this.gbIdentificacao.Controls.Add(this.lblSaida);
+            this.gbIdentificacao.Controls.Add(this.lblEntrada);
+            this.gbIdentificacao.Controls.Add(this.txtId);
+            this.gbIdentificacao.Controls.Add(this.lblId);
+            this.gbIdentificacao.Location = new System.Drawing.Point(37, 30);
+            this.gbIdentificacao.Name = "gbIdentificacao";
+            this.gbIdentificacao.Size = new System.Drawing.Size(965, 100);
+            this.gbIdentificacao.TabIndex = 1;
+            this.gbIdentificacao.TabStop = false;
+            this.gbIdentificacao.Text = "Identificação";
             // 
             // txtEntrada
             // 
@@ -692,24 +612,109 @@ namespace Fluxo_De_Caixa
             this.txtEntrada.Size = new System.Drawing.Size(116, 20);
             this.txtEntrada.TabIndex = 1;
             // 
-            // lblNovo
+            // lblTotalCabec
             // 
-            this.lblNovo.Image = ((System.Drawing.Image)(resources.GetObject("lblNovo.Image")));
-            this.lblNovo.Location = new System.Drawing.Point(886, 68);
-            this.lblNovo.Name = "lblNovo";
-            this.lblNovo.Size = new System.Drawing.Size(73, 29);
-            this.lblNovo.TabIndex = 41;
+            this.lblTotalCabec.AutoSize = true;
+            this.lblTotalCabec.Location = new System.Drawing.Point(749, 32);
+            this.lblTotalCabec.Name = "lblTotalCabec";
+            this.lblTotalCabec.Size = new System.Drawing.Size(99, 13);
+            this.lblTotalCabec.TabIndex = 49;
+            this.lblTotalCabec.Text = "Valor Total Da O.S.";
             // 
-            // btSeekCar
+            // txtValorOSCabec
             // 
-            this.btSeekCar.AutoSize = true;
-            this.btSeekCar.Image = ((System.Drawing.Image)(resources.GetObject("btSeekCar.Image")));
-            this.btSeekCar.Location = new System.Drawing.Point(119, 36);
-            this.btSeekCar.Name = "btSeekCar";
-            this.btSeekCar.Size = new System.Drawing.Size(38, 38);
-            this.btSeekCar.TabIndex = 42;
-            this.btSeekCar.UseVisualStyleBackColor = true;
-            this.btSeekCar.Click += new System.EventHandler(this.btSeekCar_Click);
+            this.txtValorOSCabec.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
+            this.txtValorOSCabec.Location = new System.Drawing.Point(752, 48);
+            this.txtValorOSCabec.Name = "txtValorOSCabec";
+            this.txtValorOSCabec.ReadOnly = true;
+            this.txtValorOSCabec.Size = new System.Drawing.Size(130, 20);
+            this.txtValorOSCabec.TabIndex = 5;
+            this.txtValorOSCabec.TabStop = false;
+            this.txtValorOSCabec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // lblValorDeMaoDeObraCabec
+            // 
+            this.lblValorDeMaoDeObraCabec.AutoSize = true;
+            this.lblValorDeMaoDeObraCabec.Location = new System.Drawing.Point(437, 32);
+            this.lblValorDeMaoDeObraCabec.Name = "lblValorDeMaoDeObraCabec";
+            this.lblValorDeMaoDeObraCabec.Size = new System.Drawing.Size(106, 13);
+            this.lblValorDeMaoDeObraCabec.TabIndex = 47;
+            this.lblValorDeMaoDeObraCabec.Text = "Vlr  Da Mão De Obra";
+            // 
+            // txtVlrMaoDeMaoDeObraCabec
+            // 
+            this.txtVlrMaoDeMaoDeObraCabec.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
+            this.txtVlrMaoDeMaoDeObraCabec.Location = new System.Drawing.Point(440, 48);
+            this.txtVlrMaoDeMaoDeObraCabec.Name = "txtVlrMaoDeMaoDeObraCabec";
+            this.txtVlrMaoDeMaoDeObraCabec.ReadOnly = true;
+            this.txtVlrMaoDeMaoDeObraCabec.Size = new System.Drawing.Size(130, 20);
+            this.txtVlrMaoDeMaoDeObraCabec.TabIndex = 3;
+            this.txtVlrMaoDeMaoDeObraCabec.TabStop = false;
+            this.txtVlrMaoDeMaoDeObraCabec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // lblVlrPecasCabec
+            // 
+            this.lblVlrPecasCabec.AutoSize = true;
+            this.lblVlrPecasCabec.Location = new System.Drawing.Point(594, 32);
+            this.lblVlrPecasCabec.Name = "lblVlrPecasCabec";
+            this.lblVlrPecasCabec.Size = new System.Drawing.Size(74, 13);
+            this.lblVlrPecasCabec.TabIndex = 46;
+            this.lblVlrPecasCabec.Text = "Vlr Das Peças";
+            // 
+            // txtVlrDasPecasCabec
+            // 
+            this.txtVlrDasPecasCabec.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
+            this.txtVlrDasPecasCabec.Location = new System.Drawing.Point(597, 48);
+            this.txtVlrDasPecasCabec.Name = "txtVlrDasPecasCabec";
+            this.txtVlrDasPecasCabec.ReadOnly = true;
+            this.txtVlrDasPecasCabec.Size = new System.Drawing.Size(130, 20);
+            this.txtVlrDasPecasCabec.TabIndex = 4;
+            this.txtVlrDasPecasCabec.TabStop = false;
+            this.txtVlrDasPecasCabec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txtSaida
+            // 
+            this.txtSaida.Location = new System.Drawing.Point(297, 48);
+            this.txtSaida.Mask = "99/99/9999";
+            this.txtSaida.Name = "txtSaida";
+            this.txtSaida.PromptChar = ' ';
+            this.txtSaida.Size = new System.Drawing.Size(116, 20);
+            this.txtSaida.TabIndex = 2;
+            // 
+            // lblSaida
+            // 
+            this.lblSaida.AutoSize = true;
+            this.lblSaida.Location = new System.Drawing.Point(294, 33);
+            this.lblSaida.Name = "lblSaida";
+            this.lblSaida.Size = new System.Drawing.Size(60, 13);
+            this.lblSaida.TabIndex = 13;
+            this.lblSaida.Text = "Data Saida";
+            // 
+            // lblEntrada
+            // 
+            this.lblEntrada.AutoSize = true;
+            this.lblEntrada.Location = new System.Drawing.Point(151, 31);
+            this.lblEntrada.Name = "lblEntrada";
+            this.lblEntrada.Size = new System.Drawing.Size(70, 13);
+            this.lblEntrada.TabIndex = 12;
+            this.lblEntrada.Text = "Data Entrada";
+            // 
+            // txtId
+            // 
+            this.txtId.Location = new System.Drawing.Point(13, 48);
+            this.txtId.Name = "txtId";
+            this.txtId.Size = new System.Drawing.Size(100, 20);
+            this.txtId.TabIndex = 0;
+            this.txtId.TabStop = false;
+            // 
+            // lblId
+            // 
+            this.lblId.AutoSize = true;
+            this.lblId.Location = new System.Drawing.Point(10, 32);
+            this.lblId.Name = "lblId";
+            this.lblId.Size = new System.Drawing.Size(46, 13);
+            this.lblId.TabIndex = 8;
+            this.lblId.Text = "Nº  O.S.";
             // 
             // FormOS
             // 
@@ -729,6 +734,8 @@ namespace Fluxo_De_Caixa
             ((System.ComponentModel.ISupportInitialize)(this.dbGridView)).EndInit();
             this.tabControl.ResumeLayout(false);
             this.tabPrincipal.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.gbComplemento.ResumeLayout(false);
             this.gbComplemento.PerformLayout();
             this.gbCliente.ResumeLayout(false);
@@ -737,8 +744,6 @@ namespace Fluxo_De_Caixa
             this.gbComplemnto.PerformLayout();
             this.gbIdentificacao.ResumeLayout(false);
             this.gbIdentificacao.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -650,8 +650,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1340, 731);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.dbGridView);
             this.Controls.Add(this.tabControl);
+            this.Controls.Add(this.dbGridView);
             this.Name = "formDocs";
             this.Text = "Cadastro De Documentos";
             this.Activated += new System.EventHandler(this.FormUsuarios_Activated);
