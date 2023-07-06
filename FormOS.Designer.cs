@@ -383,7 +383,7 @@ namespace Fluxo_De_Caixa
             // txtPlaca
             // 
             this.txtPlaca.Location = new System.Drawing.Point(13, 48);
-            this.txtPlaca.Mask = "AAA-9A99";
+            this.txtPlaca.Mask = ">LLL-0C00";
             this.txtPlaca.Name = "txtPlaca";
             this.txtPlaca.PromptChar = ' ';
             this.txtPlaca.Size = new System.Drawing.Size(100, 20);
@@ -454,6 +454,7 @@ namespace Fluxo_De_Caixa
             this.txtVlrMaoDeObra.TabIndex = 1;
             this.txtVlrMaoDeObra.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtVlrMaoDeObra.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IsDoubleEntry);
+            this.txtVlrMaoDeObra.Leave += new System.EventHandler(this.txtVlrMaoDeObra_Leave);
             // 
             // txtMaoDeObra
             // 
@@ -485,6 +486,7 @@ namespace Fluxo_De_Caixa
             this.cbCliente.Name = "cbCliente";
             this.cbCliente.Size = new System.Drawing.Size(572, 21);
             this.cbCliente.TabIndex = 1;
+            this.cbCliente.SelectedIndexChanged += new System.EventHandler(this.cbCliente_SelectedIndexChanged);
             // 
             // lblCli_Tel1
             // 

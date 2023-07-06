@@ -25,8 +25,8 @@ namespace Fluxo_De_Caixa.Dao.postgre
             }
 
             String StringInsert = $" INSERT INTO OS_CAB " +
-                                  "(ID_EMPRESA, ENTRADA, SAIDA, ID_CLIENTE, ID_CARRO, ID_COND, HORAS_SERVICO, KM, OBS, LUCRO,  MAO_OBRA, MAO_OBRA_VLR, PECAS_VLR, USER_INSERT, USER_UPDATE) " +
-                                 $" VALUES({obj.Id_Empresa},'{obj.Entrada.ToString("yyyy-MM-dd")}',{dt_saida},{obj.Id_Cliente},'{obj.Id_Carro}',{obj.Id_Cond},'{obj.Horas_Servico}',{obj.Km},'{obj.Obs}',{obj.Lucro.DoubleParseDb()},'{obj.Mao_Obra}',{obj.Mao_Obra_Vlr.DoubleParseDb()},{obj.Pecas_Vlr.DoubleParseDb()},{obj.User_Insert},{obj.User_Update})  RETURNING ID ";
+                                  "(ID_EMPRESA, ENTRADA, SAIDA, ID_CLIENTE, ID_CARRO, HORAS_SERVICO, KM, OBS, LUCRO,  MAO_OBRA, MAO_OBRA_VLR, PECAS_VLR, USER_INSERT, USER_UPDATE) " +
+                                 $" VALUES({obj.Id_Empresa},'{obj.Entrada.ToString("yyyy-MM-dd")}',{dt_saida},{obj.Id_Cliente},'{obj.Id_Carro}','{obj.Horas_Servico}',{obj.Km},'{obj.Obs}',{obj.Lucro.DoubleParseDb()},'{obj.Mao_Obra}',{obj.Mao_Obra_Vlr.DoubleParseDb()},{obj.Pecas_Vlr.DoubleParseDb()},{obj.User_Insert},{obj.User_Update})  RETURNING ID ";
 
             using (var objConexao = new NpgsqlConnection(DataBase.RunCommand.connectionString))
             {
@@ -83,7 +83,6 @@ namespace Fluxo_De_Caixa.Dao.postgre
                         $"SAIDA   	        =  {dt_saida}, " +
                         $"ID_CLIENTE        =  {obj.Id_Cliente}, " +
                         $"ID_CARRO          =  '{obj.Id_Carro}', " +
-                        $"ID_COND           =  {obj.Id_Cond}, " +
                         $"HORAS_SERVICO     =  '{obj.Horas_Servico}', " +
                         $"KM                =  {obj.Km}, " +
                         $"LUCRO               =  {obj.Lucro.DoubleParseDb()}, " +
@@ -281,7 +280,6 @@ namespace Fluxo_De_Caixa.Dao.postgre
                                 "        ,CAB.SAIDA             " +
                                 "        ,CAB.ID_CLIENTE        " +
                                 "        ,CAB.ID_CARRO          " +
-                                "        ,CAB.ID_COND           " +
                                 "        ,CAB.HORAS_SERVICO     " +
                                 "        ,CAB.KM                " +
                                 "        ,CAB.OBS               " +
@@ -307,13 +305,11 @@ namespace Fluxo_De_Caixa.Dao.postgre
                                 "        ,CAR.MODELO     AS CAR_MODELO    " +
                                 "        ,CAR.COR        AS CAR_COR          " +
                                 "        , LEFT(CAR.ANO,4) || '-' || RIGHT(CAR.ANO,4)       AS CAR_ANO          " +
-                                "        ,COALESCE(COND.DESCRICAO,'') AS COND_DESCRICAO " +
                                 "        ,MARCA.DESCRICAO AS MARCA_DESCRICAO " +
                                 "FROM OS_CAB CAB " +
                                 "INNER JOIN CLIENTES  CLI   ON CLI.ID_EMPRESA  = CAB.ID_EMPRESA  AND CLI.CODIGO     = CAB.ID_CLIENTE    " +
                                 "INNER JOIN OS_CAR    CAR   ON CAR.ID_EMPRESA  = CAB.ID_EMPRESA  AND CAR.PLACA      = CAB.ID_CARRO      " +
-                                "INNER JOIN MARCAS    MARCA ON MARCA.ID_EMPRESA = CAR.ID_EMPRESA AND MARCA.ID       = CAR.ID_MARCA      " +
-                                "LEFT  JOIN CONDICOES COND ON COND.ID_EMPRESA = CAB.ID_EMPRESA  AND COND.ID         = CAB.ID_COND       ";
+                                "INNER JOIN MARCAS    MARCA ON MARCA.ID_EMPRESA = CAR.ID_EMPRESA AND MARCA.ID       = CAR.ID_MARCA      ";
 
             //Adiciona WHERE 
             strSelect += $"WHERE CAB.ID_EMPRESA = {id_empresa} and CAB.ID = {id}";
@@ -387,7 +383,6 @@ namespace Fluxo_De_Caixa.Dao.postgre
             obj.Km = Convert.ToInt32(objDataReader["KM"]);
             obj.Lucro = Convert.ToDouble(objDataReader["LUCRO"]);
             obj.Obs = objDataReader["OBS"].ToString();
-            obj.Id_Cond = Convert.ToInt32(objDataReader["Id_Cond"]);
             obj.Mao_Obra = objDataReader["Mao_Obra"].ToString();
             obj.Mao_Obra_Vlr = Convert.ToDouble(objDataReader["Mao_Obra_Vlr"]);
             obj.Pecas_Vlr = Convert.ToDouble(objDataReader["Pecas_Vlr"]);
@@ -409,7 +404,6 @@ namespace Fluxo_De_Caixa.Dao.postgre
             obj.Car_Modelo = objDataReader["Car_Modelo"].ToString();
             obj.Car_Cor = objDataReader["Car_Cor"].ToString();
             obj.Car_Ano = objDataReader["Car_Ano"].ToString();
-            obj.Cond_Descricao = objDataReader["Cond_Descricao"].ToString();
             obj.Marca_Descricao = objDataReader["Marca_Descricao"].ToString();
             obj._Total_OS = obj.Pecas_Vlr + obj.Mao_Obra_Vlr;
 
@@ -448,7 +442,6 @@ namespace Fluxo_De_Caixa.Dao.postgre
             obj.Km = Convert.ToInt32(objDataReader["KM"]);
             obj.Lucro = Convert.ToDouble(objDataReader["LUCRO"]);
             obj.Obs = objDataReader["OBS"].ToString();
-            obj.Id_Cond = Convert.ToInt32(objDataReader["Id_Cond"]);
             obj.Mao_Obra = objDataReader["Mao_Obra"].ToString();
             obj.Mao_Obra_Vlr = Convert.ToDouble(objDataReader["Mao_Obra_Vlr"]);
             obj.Pecas_Vlr = Convert.ToDouble(objDataReader["Pecas_Vlr"]);
@@ -463,7 +456,6 @@ namespace Fluxo_De_Caixa.Dao.postgre
             obj.Marca_Descricao = objDataReader["Marca_Descricao"].ToString();
             obj.Car_Cor = objDataReader["Car_Cor"].ToString();
             obj.Car_Ano = objDataReader["Car_Ano"].ToString();
-            obj.Cond_Descricao = objDataReader["Cond_Descricao"].ToString();
             obj._Total_OS = obj.Pecas_Vlr + obj.Mao_Obra_Vlr;
             return obj;
         }
@@ -535,7 +527,6 @@ namespace Fluxo_De_Caixa.Dao.postgre
                                "        ,CAB.SAIDA             " +
                                "        ,CAB.ID_CLIENTE        " +
                                "        ,CAB.ID_CARRO          " +
-                               "        ,CAB.ID_COND           " +
                                "        ,CAB.HORAS_SERVICO     " +
                                "        ,CAB.KM                " +
                                "        ,CAB.OBS               " +
@@ -561,13 +552,11 @@ namespace Fluxo_De_Caixa.Dao.postgre
                                 "        ,CAR.MODELO     AS CAR_MODELO    " +
                                 "        ,CAR.COR        AS CAR_COR          " +
                                 "        , LEFT(CAR.ANO,4) || '-' || RIGHT(CAR.ANO,4)       AS CAR_ANO          " +
-                                "        ,COALESCE(COND.DESCRICAO,'') AS COND_DESCRICAO " +
                                 "        ,MARCA.DESCRICAO AS MARCA_DESCRICAO " +
                                "FROM OS_CAB CAB " +
                                "INNER JOIN CLIENTES  CLI   ON CLI.ID_EMPRESA  = CAB.ID_EMPRESA  AND CLI.CODIGO     = CAB.ID_CLIENTE    " +
                                "INNER JOIN OS_CAR    CAR   ON CAR.ID_EMPRESA  = CAB.ID_EMPRESA  AND CAR.PLACA      = CAB.ID_CARRO      " +
-                               "INNER JOIN MARCAS    MARCA ON MARCA.ID_EMPRESA = CAR.ID_EMPRESA AND MARCA.ID       = CAR.ID_MARCA      " +
-                               "LEFT  JOIN CONDICOES COND ON COND.ID_EMPRESA = CAB.ID_EMPRESA  AND COND.ID         = CAB.ID_COND       ";
+                               "INNER JOIN MARCAS    MARCA ON MARCA.ID_EMPRESA = CAR.ID_EMPRESA AND MARCA.ID       = CAR.ID_MARCA      ";
             //Adiciona WHERE 
             if (Filtro.Trim() != "")
             {
@@ -637,9 +626,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
                     "FROM OS_CAB CAB " +
                     "INNER JOIN CLIENTES  CLI   ON CLI.ID_EMPRESA  = CAB.ID_EMPRESA  AND CLI.CODIGO     = CAB.ID_CLIENTE    " +
                     "INNER JOIN OS_CAR    CAR   ON CAR.ID_EMPRESA  = CAB.ID_EMPRESA  AND CAR.PLACA      = CAB.ID_CARRO      " +
-                    "INNER JOIN MARCAS    MARCA ON MARCA.ID_EMPRESA = CAR.ID_EMPRESA AND MARCA.ID       = CAR.ID_MARCA      " +
-                    "LEFT  JOIN CONDICOES COND ON COND.ID_EMPRESA = CAB.ID_EMPRESA  AND COND.ID         = CAB.ID_COND       ";
-
+                    "INNER JOIN MARCAS    MARCA ON MARCA.ID_EMPRESA = CAR.ID_EMPRESA AND MARCA.ID       = CAR.ID_MARCA      ";
             //Adiciona WHERE 
             if (Filtro.Trim() != "")
             {

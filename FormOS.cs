@@ -26,10 +26,8 @@ namespace Fluxo_De_Caixa
 
         CarOS Car = new CarOS();
 
-
         int Ordenacao = 0; //CODIGO 
 
-        string proprietario = "Ordem De Derviço";
 
         int Id = 0;
 
@@ -37,7 +35,6 @@ namespace Fluxo_De_Caixa
 
         List<Marca> lsMarcas = new List<Marca>();
 
-        bool NewCar = false;
 
         public ToolStripMenuItem menu { get; internal set; }
 
@@ -173,19 +170,30 @@ namespace Fluxo_De_Caixa
 
                 PopularOS();
 
+                if (lblNovo.Visible)
+                {
+                    PopularCarOS();
+                }
 
                 string Erros = Validacao();
 
                 if (Erros != "")
                 {
 
-                    MessageBox.Show(Erros);
+                    MessageBox.Show(Erros, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                     return;
 
                 }
 
-                
+                string Avisos = this.Avisos();
+
+                if (Avisos != "")
+                {
+
+                    MessageBox.Show(Avisos, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
                 daoCabOS dao = new daoCabOS();
 
 
@@ -194,6 +202,28 @@ namespace Fluxo_De_Caixa
 
                     case Visoes.Nova:
 
+                        if (lblNovo.Visible)
+                        {
+                            try
+                            {
+                                daoCarOS daoCar = new daoCarOS();
+
+                                CarOS result = daoCar.Insert(this.Car);
+
+                                if (result == null)
+                                {
+                                    throw new Exception("Falha Na Inclusão Do Veículo!");
+                                }
+
+                            }
+                            catch (Exception ex)
+                            {
+
+                                MessageBox.Show($"Erro: {ex.Message}", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                                return;
+                            }
+                        }
 
                         cabOS.User_Insert = UsuarioSistema.Usuario.Codigo;
 
@@ -220,11 +250,34 @@ namespace Fluxo_De_Caixa
                         Atualiza();
 
                         SetarVisoes();
-                
+
                         break;
 
                     case Visoes.Edicao:
-                        /*
+
+                        if (lblNovo.Visible)
+                        {
+                            try
+                            {
+                                daoCarOS daoCar = new daoCarOS();
+
+                                CarOS result = daoCar.Insert(this.Car);
+
+                                if (result == null)
+                                {
+                                    throw new Exception("Falha Na Inclusão Do Veículo!");
+                                }
+
+                            }
+                            catch (Exception ex)
+                            {
+
+                                MessageBox.Show($"Erro: {ex.Message}", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                                return;
+                            }
+                        }
+
                         cabOS.User_Update = UsuarioSistema.Usuario.Codigo;
 
                         dao.Update(cabOS);
@@ -236,7 +289,7 @@ namespace Fluxo_De_Caixa
                         loadOS();
 
                         SetarVisoes();
-                        */
+
                         break;
 
                 }
@@ -337,23 +390,25 @@ namespace Fluxo_De_Caixa
             txtVlrDasPecasCabec.Enabled = value;
             txtValorOSCabec.Enabled = value;
             cbCliente.Enabled = value;
-            SetarPropertiesCar(value);
+            SetarPropertiesCar();
             txtHorasServico.Enabled = value;
             txtKM.Enabled = value;
             txtObs.Enabled = value;
             txtMaoDeObra.Enabled = value;
             txtVlrMaoDeObra.Enabled = value;
+            txtMaoDeObra.Enabled = value;
+            txtMaoDeObra.CharacterCasing = CharacterCasing.Upper;
             txtObs.CharacterCasing = CharacterCasing.Upper;
             txtObs.MaxLength = 30;
-            
+
         }
-        private void SetarPropertiesCar(bool value)
+        private void SetarPropertiesCar()
         {
-            txtPlaca.Enabled = value;
-            txtMarca.Enabled = value;
-            txtModelo.Enabled = value;
-            txtCor.Enabled = value;
-            txtAno.Enabled = value;
+            txtPlaca.Enabled = (visao == Visoes.Nova || visao == Visoes.Edicao) ? true : false;
+            txtMarca.Enabled = false;
+            txtModelo.Enabled = false;
+            txtCor.Enabled = false;
+            txtAno.Enabled = false;
             txtModelo.CharacterCasing = CharacterCasing.Upper;
             txtModelo.MaxLength = 20;
             txtCor.CharacterCasing = CharacterCasing.Upper;
@@ -479,22 +534,22 @@ namespace Fluxo_De_Caixa
             {
                 cod = cbCliente.SelectedItem.ToString().Substring(0, 6).IntParse();
             }
-             
+
             cabOS.Id = txtId.Text.IntParse();
-            cabOS.Entrada =  Convert.ToDateTime(txtEntrada.Text).Date;
+            cabOS.Entrada = Convert.ToDateTime(txtEntrada.Text).Date;
             cabOS.Id_Cliente = cod;
             cabOS.Mao_Obra_Vlr = txtVlrMaoDeMaoDeObraCabec.Text.DoubleParse(); ;
             cabOS.Pecas_Vlr = txtVlrDasPecasCabec.Text.DoubleParse();
             cabOS._Total_OS = txtValorOSCabec.Text.DoubleParse();
-            PopularCarOS();
+            PopularCarCabOS();
             cabOS.Horas_Servico = txtHorasServico.Text;
             cabOS.Km = txtKM.Text.IntParse();
             cabOS.Obs = txtObs.Text.Trim();
             cabOS.Mao_Obra = txtMaoDeObra.Text.Trim();
             cabOS.Mao_Obra_Vlr = txtVlrMaoDeObra.Text.DoubleParse();
-            
+            cabOS._Total_OS = cabOS.Mao_Obra_Vlr + cabOS.Pecas_Vlr;
         }
-        private void PopularCarOS()
+        private void PopularCarCabOS()
         {
             var marca = lsMarcas.Find(m => m.Descricao == txtMarca.Text);
             int id = 0;
@@ -510,6 +565,24 @@ namespace Fluxo_De_Caixa
             cabOS.Car_Cor = txtCor.Text;
             cabOS.Car_Ano = txtAno.Text;
         }
+        private void PopularCarOS()
+        {
+
+            var marca = lsMarcas.Find(m => m.Descricao == txtMarca.Text);
+            int id = 0;
+            if (marca != null)
+            {
+                id = marca.Id;
+            }
+            txtPlaca.TextMaskFormat = MaskFormat.ExcludePromptAndLiterals;
+            Car.Placa = txtPlaca.Text;
+            txtPlaca.TextMaskFormat = MaskFormat.IncludePromptAndLiterals;
+            Car.Id_Marca = id;
+            Car.Modelo = txtModelo.Text;
+            Car.Cor = txtCor.Text;
+            Car.Ano = txtAno.Text;
+
+        }
         private void Atualiza()
         {
 
@@ -518,6 +591,7 @@ namespace Fluxo_De_Caixa
             idx = lsClientes.FindIndex(cl => cl.Codigo == cabOS.Id_Cliente);
 
             cbCliente.SelectedIndex = idx;
+            if (idx >= 0) txtCli_Tel1.Text = lsClientes[idx].Tel1;
             txtId.Text = cabOS.Id.ToString();
             txtEntrada.Text = cabOS.Entrada.ToString("dd/MM/yy");
             txtSaida.Text = cabOS.Saida?.ToString("dd/MM/yy");
@@ -534,7 +608,7 @@ namespace Fluxo_De_Caixa
         private void AtualizaCar()
         {
             int index = lsMarcas.FindIndex(m => m.Id == cabOS.Car_Id_Marca);
-            txtPlaca.Text = cabOS.Car_Placa;
+            txtPlaca.Text = cabOS.Car_Placa.Trim();
             txtMarca.SelectedIndex = index;
             txtModelo.Text = cabOS.Car_Modelo;
             txtCor.Text = cabOS.Car_Cor;
@@ -692,7 +766,6 @@ namespace Fluxo_De_Caixa
             cab.Id = 0;
             cab.Id_Cliente = 14;
             cab.Id_Carro = "BEE4R22";
-            cab.Id_Cond = 0;
             cab.Horas_Servico = "07:25";
             cab.Km = 100000;
             cab.Obs = "OSBSERVAO IMPORTANTE";
@@ -756,10 +829,18 @@ namespace Fluxo_De_Caixa
               MessageBoxButtons.OK, MessageBoxIcon.Information);
                     lblNovo.Visible = true;
                     Car = new CarOS();
-                    Car.Placa = txtPlaca.Text.Replace("-","");
-
+                    Car.Placa = txtPlaca.Text.Replace("-", "");
+                    lblNovo.Visible = true;
+                    txtMarca.Enabled = true;
+                    txtModelo.Enabled = true;
+                    txtCor.Enabled = true;
+                    txtAno.Enabled = true;
                 }
-
+                else
+                {
+                    lblNovo.Visible = false;
+                    SetarPropertiesCar();
+                }
                 cabOS.Id_Carro = Car.Placa;
                 cabOS.Car_Placa = Car.Placa;
                 cabOS.Car_Id_Marca = Car.Id_Marca;
@@ -767,7 +848,7 @@ namespace Fluxo_De_Caixa
                 cabOS.Car_Modelo = Car.Modelo;
                 cabOS.Car_Cor = Car.Cor;
                 cabOS.Car_Ano = Car.Ano;
-                lblNovo.Visible = false;
+
 
                 AtualizaCar();
             }
@@ -793,26 +874,60 @@ namespace Fluxo_De_Caixa
             }
             Result += ValidaDatas();
 
-            if (!Validacoes.NoZero(cabOS.Mao_Obra_Vlr))
-            { 
-                Result += "Campo Valor Da Mão De Obra É Obrigatório !\n";
-            }
-
-            if (!Validacoes.NoZero(cabOS.Pecas_Vlr))
-            {
-                Result += "Campo Total De Peças  É Obrigatório !\n";
-            }
-
-            if (!Validacoes.NoZero(cabOS._Total_OS))
-            {
-                Result += "Campo Total Da O.S. É Obrigatório !\n";
-            }
-
-
             if (!Validacoes.IsTamanho(cabOS.Obs, 0, 100))
             {
                 Result += "Tamanho do Campo Observação Deve Ter No Máximo 100 !\n";
             }
+
+            return Result;
+
+        }
+        private string ValidacaoCar()
+        {
+            string Result = "";
+
+            if (!Validacoes.IsTamanho(Car.Placa, 1, 8))
+            {
+                Result += "Campo Placa Inválido!\n";
+            }
+
+            if (!Validacoes.IsTamanho(Car.Modelo, 1, 20))
+            {
+                Result += "Tamanho do Campo Marca Deve Ficar Entre 1 e 20 !\n";
+            }
+
+            if (!Validacoes.IsTamanho(Car.Cor, 1, 20))
+            {
+                Result += "Tamanho do Campo Cor Deve Ficar Entre 1 e 20 !\n";
+            }
+
+            return Result;
+
+        }
+        private string Avisos()
+        {
+            string Result = "";
+
+            if (lblNovo.Visible)
+            {
+                Result += "Veiculo Será Incluido No Cadastro\n";
+            }
+
+            if (!Validacoes.NoZero(cabOS.Mao_Obra_Vlr))
+            {
+                Result += "O.S. Não Tem Valor de Mão de Obra !\n";
+            }
+
+            if (!Validacoes.NoZero(cabOS.Pecas_Vlr))
+            {
+                Result += "O.S. Não Tem Valor de Peças !\n";
+            }
+
+            if (!Validacoes.NoZero(cabOS._Total_OS))
+            {
+                Result += "O.S. Será Considerada CORTESIA!\n";
+            }
+
 
             return Result;
 
@@ -866,6 +981,25 @@ namespace Fluxo_De_Caixa
         private void DigaNao()
         {
             MessageBox.Show("O.S. Encerrada. Não Pode Ser Mais Alterada Ou Excluída.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void cbCliente_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbCliente.SelectedIndex < 0)
+            {
+                txtCli_Tel1.Text = "";
+            }
+            else
+            {
+                Cliente cliente = lsClientes[cbCliente.SelectedIndex];
+                txtCli_Tel1.Text = cliente.Tel1;
+
+            }
+        }
+
+        private void txtVlrMaoDeObra_Leave(object sender, EventArgs e)
+        {
+            txtVlrMaoDeObra.Text.DoubleParse();
         }
     }
 }

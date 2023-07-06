@@ -98,8 +98,8 @@ namespace Fluxo_De_Caixa
             this.dbGridView.AllowUserToAddRows = false;
             this.dbGridView.AllowUserToDeleteRows = false;
             this.dbGridView.AllowUserToOrderColumns = true;
-            this.dbGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.dbGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dbGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dbGridView.Location = new System.Drawing.Point(0, 42);
@@ -113,8 +113,8 @@ namespace Fluxo_De_Caixa
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.dbGridView);
             this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.dbGridView);
             this.Name = "FormFluxo";
             this.Text = "Fluxo De Caixa";
             this.Activated += new System.EventHandler(this.FormFluxo_Activated);

@@ -10,7 +10,6 @@ namespace Fluxo_De_Caixa.Models
         public Nullable<DateTime> Saida { get; set; }
         public int Id_Cliente { get; set; }
         public string Id_Carro { get; set; }
-        public int Id_Cond { get; set; }
         public string Horas_Servico { get; set; }
         public int Km { get; set; }
         public string Obs { get; set; }
@@ -36,11 +35,10 @@ namespace Fluxo_De_Caixa.Models
         public string Car_Modelo { get; set; }
         public string Car_Cor { get; set; }
         public string Car_Ano { get; set; }
-        public string Cond_Descricao { get; set; }
         public string Marca_Descricao { get; set; }
         public double _Total_OS { get; set; }
 
-        public CabOS(int id_Empresa, int id, DateTime entrada, DateTime? saida, int id_Cliente, string id_Carro, int id_Cond, string horas_Servico, int km, string obs, double lucro, string mao_Obra, double mao_Obra_Vlr, double pecas_Vlr, int user_Insert, int user_Update, string cli_Codigo, string cli_Razao, string cli_Cnpj_Cpf, string cli_Endereco, string cli_Nro, string cli_Bairro, string cli_Cidade, string cli_Uf, string cli_Cep, string cli_Tel1, string cli_Email, string car_Placa, int car_Id_Marca, string car_Modelo, string car_Cor, string car_Ano, string cond_Descricao, string marca_Descricao)
+        public CabOS(int id_Empresa, int id, DateTime entrada, DateTime? saida, int id_Cliente, string id_Carro, string horas_Servico, int km, string obs, double lucro, string mao_Obra, double mao_Obra_Vlr, double pecas_Vlr, int user_Insert, int user_Update, string cli_Codigo, string cli_Razao, string cli_Cnpj_Cpf, string cli_Endereco, string cli_Nro, string cli_Bairro, string cli_Cidade, string cli_Uf, string cli_Cep, string cli_Tel1, string cli_Email, string car_Placa, int car_Id_Marca, string car_Modelo, string car_Cor, string car_Ano, string marca_Descricao, double total_OS)
         {
             Id_Empresa = id_Empresa;
             Id = id;
@@ -48,7 +46,6 @@ namespace Fluxo_De_Caixa.Models
             Saida = saida;
             Id_Cliente = id_Cliente;
             Id_Carro = id_Carro;
-            Id_Cond = id_Cond;
             Horas_Servico = horas_Servico;
             Km = km;
             Obs = obs;
@@ -74,9 +71,8 @@ namespace Fluxo_De_Caixa.Models
             Car_Modelo = car_Modelo;
             Car_Cor = car_Cor;
             Car_Ano = car_Ano;
-            Cond_Descricao = cond_Descricao;
             Marca_Descricao = marca_Descricao;
-            _Total_OS = Mao_Obra_Vlr + Pecas_Vlr;
+            _Total_OS = total_OS;
         }
 
         public CabOS()
@@ -93,7 +89,6 @@ namespace Fluxo_De_Caixa.Models
             Saida = null;
             Id_Cliente = 0;
             Id_Carro = "";
-            Id_Empresa = 0;
             Horas_Servico = "00:00";
             Km = 0;
             Obs = "";
@@ -119,7 +114,6 @@ namespace Fluxo_De_Caixa.Models
             Car_Modelo = "";
             Car_Cor = "";
             Car_Ano = "";
-            Cond_Descricao = "";
             Marca_Descricao = "";
             _Total_OS = Mao_Obra_Vlr + Pecas_Vlr;
         }
