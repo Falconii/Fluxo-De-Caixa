@@ -212,6 +212,7 @@
     <Compile Include="MDISingleton.cs" />
     <Compile Include="Models\CarOS..cs" />
     <Compile Include="Models\Cond .cs" />
+    <Compile Include="Models\Detalhe.cs" />
     <Compile Include="Models\Marca.cs" />
     <Compile Include="Models\DetOS.cs" />
     <Compile Include="Models\CabOS.cs" />

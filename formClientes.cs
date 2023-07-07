@@ -375,18 +375,18 @@ namespace Fluxo_De_Caixa
             dbGridView.Columns[00].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dbGridView.Columns[01].HeaderText = "RAZÃO SOCIAL";
             dbGridView.Columns[01].Width = 300;
-            dbGridView.Columns[00].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dbGridView.Columns[01].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dbGridView.Columns[02].HeaderText = "FANTASIA";
             dbGridView.Columns[02].Width = 300;
-            dbGridView.Columns[00].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dbGridView.Columns[02].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dbGridView.Columns[03].HeaderText = "TEL 01";
             dbGridView.Columns[03].Width = 100;
-            dbGridView.Columns[00].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dbGridView.Columns[03].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dbGridView.Columns[04].HeaderText = "EMAIL";
             dbGridView.Columns[04].Width = 350;
-            dbGridView.Columns[00].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dbGridView.Columns[04].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dbGridView.Columns[05].HeaderText = "CONTA";
-            dbGridView.Columns[00].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dbGridView.Columns[05].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dbGridView.Columns[05].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
             dbGridView.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray;

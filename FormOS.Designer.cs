@@ -29,6 +29,7 @@ namespace Fluxo_De_Caixa
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormOS));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tbBrowser = new System.Windows.Forms.ToolStripButton();
@@ -90,6 +91,28 @@ namespace Fluxo_De_Caixa
             this.lblEntrada = new System.Windows.Forms.Label();
             this.txtId = new System.Windows.Forms.TextBox();
             this.lblId = new System.Windows.Forms.Label();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btProdutoCancelar = new System.Windows.Forms.Label();
+            this.btProdutoOK = new System.Windows.Forms.Label();
+            this.btProdutoExcluir = new System.Windows.Forms.Button();
+            this.btProdutoAlterar = new System.Windows.Forms.Button();
+            this.btProdutoNovo = new System.Windows.Forms.Button();
+            this.txtItem = new System.Windows.Forms.TextBox();
+            this.lblItem = new System.Windows.Forms.Label();
+            this.txtDescricao = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtValor = new System.Windows.Forms.TextBox();
+            this.txtQtd = new System.Windows.Forms.TextBox();
+            this.lblQtd = new System.Windows.Forms.Label();
+            this.lblVlrPecas = new System.Windows.Forms.Label();
+            this.txtVlrPecas = new System.Windows.Forms.TextBox();
+            this.DataGridPecas = new System.Windows.Forms.DataGridView();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.lblVlrAgregado = new System.Windows.Forms.Label();
+            this.txtLucro = new System.Windows.Forms.TextBox();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dbGridView)).BeginInit();
             this.tabControl.SuspendLayout();
@@ -99,6 +122,10 @@ namespace Fluxo_De_Caixa
             this.gbCliente.SuspendLayout();
             this.gbComplemnto.SuspendLayout();
             this.gbIdentificacao.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DataGridPecas)).BeginInit();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -248,6 +275,7 @@ namespace Fluxo_De_Caixa
             this.tbBaixar.Name = "tbBaixar";
             this.tbBaixar.Size = new System.Drawing.Size(34, 36);
             this.tbBaixar.ToolTipText = "Manutenção Das Baixas";
+            this.tbBaixar.Click += new System.EventHandler(this.tbBaixar_Click);
             // 
             // dbGridView
             // 
@@ -272,11 +300,13 @@ namespace Fluxo_De_Caixa
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl.Controls.Add(this.tabPrincipal);
+            this.tabControl.Controls.Add(this.tabPage1);
+            this.tabControl.Controls.Add(this.tabPage2);
             this.tabControl.Location = new System.Drawing.Point(0, 42);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(1340, 927);
-            this.tabControl.TabIndex = 5;
+            this.tabControl.TabIndex = 2;
             // 
             // tabPrincipal
             // 
@@ -718,6 +748,227 @@ namespace Fluxo_De_Caixa
             this.lblId.TabIndex = 8;
             this.lblId.Text = "Nº  O.S.";
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.groupBox2);
+            this.tabPage1.Controls.Add(this.lblVlrPecas);
+            this.tabPage1.Controls.Add(this.txtVlrPecas);
+            this.tabPage1.Controls.Add(this.DataGridPecas);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1332, 901);
+            this.tabPage1.TabIndex = 2;
+            this.tabPage1.Text = "Peças";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.btProdutoCancelar);
+            this.groupBox2.Controls.Add(this.btProdutoOK);
+            this.groupBox2.Controls.Add(this.btProdutoExcluir);
+            this.groupBox2.Controls.Add(this.btProdutoAlterar);
+            this.groupBox2.Controls.Add(this.btProdutoNovo);
+            this.groupBox2.Controls.Add(this.txtItem);
+            this.groupBox2.Controls.Add(this.lblItem);
+            this.groupBox2.Controls.Add(this.txtDescricao);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.txtValor);
+            this.groupBox2.Controls.Add(this.txtQtd);
+            this.groupBox2.Controls.Add(this.lblQtd);
+            this.groupBox2.Location = new System.Drawing.Point(22, 63);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(1213, 117);
+            this.groupBox2.TabIndex = 4;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Identificação";
+            // 
+            // btProdutoCancelar
+            // 
+            this.btProdutoCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btProdutoCancelar.Image")));
+            this.btProdutoCancelar.Location = new System.Drawing.Point(976, 46);
+            this.btProdutoCancelar.Name = "btProdutoCancelar";
+            this.btProdutoCancelar.Size = new System.Drawing.Size(35, 25);
+            this.btProdutoCancelar.TabIndex = 55;
+            this.btProdutoCancelar.Click += new System.EventHandler(this.btProdutoCancelar_Click);
+            // 
+            // btProdutoOK
+            // 
+            this.btProdutoOK.Image = ((System.Drawing.Image)(resources.GetObject("btProdutoOK.Image")));
+            this.btProdutoOK.Location = new System.Drawing.Point(935, 43);
+            this.btProdutoOK.Name = "btProdutoOK";
+            this.btProdutoOK.Size = new System.Drawing.Size(35, 25);
+            this.btProdutoOK.TabIndex = 54;
+            this.btProdutoOK.Click += new System.EventHandler(this.btProdutoOK_Click);
+            // 
+            // btProdutoExcluir
+            // 
+            this.btProdutoExcluir.Location = new System.Drawing.Point(1128, 88);
+            this.btProdutoExcluir.Name = "btProdutoExcluir";
+            this.btProdutoExcluir.Size = new System.Drawing.Size(75, 23);
+            this.btProdutoExcluir.TabIndex = 53;
+            this.btProdutoExcluir.Text = "Excluir";
+            this.btProdutoExcluir.UseVisualStyleBackColor = true;
+            this.btProdutoExcluir.Click += new System.EventHandler(this.btProdutoExcluir_Click);
+            // 
+            // btProdutoAlterar
+            // 
+            this.btProdutoAlterar.Location = new System.Drawing.Point(1047, 88);
+            this.btProdutoAlterar.Name = "btProdutoAlterar";
+            this.btProdutoAlterar.Size = new System.Drawing.Size(75, 23);
+            this.btProdutoAlterar.TabIndex = 52;
+            this.btProdutoAlterar.Text = "Alterar";
+            this.btProdutoAlterar.UseVisualStyleBackColor = true;
+            this.btProdutoAlterar.Click += new System.EventHandler(this.btProdutoAlterar_Click);
+            // 
+            // btProdutoNovo
+            // 
+            this.btProdutoNovo.Location = new System.Drawing.Point(966, 88);
+            this.btProdutoNovo.Name = "btProdutoNovo";
+            this.btProdutoNovo.Size = new System.Drawing.Size(75, 23);
+            this.btProdutoNovo.TabIndex = 51;
+            this.btProdutoNovo.Text = "Novo";
+            this.btProdutoNovo.UseVisualStyleBackColor = true;
+            this.btProdutoNovo.Click += new System.EventHandler(this.btProdutoNovo_Click);
+            // 
+            // txtItem
+            // 
+            this.txtItem.Enabled = false;
+            this.txtItem.Location = new System.Drawing.Point(3, 48);
+            this.txtItem.Name = "txtItem";
+            this.txtItem.Size = new System.Drawing.Size(69, 20);
+            this.txtItem.TabIndex = 0;
+            this.txtItem.TabStop = false;
+            // 
+            // lblItem
+            // 
+            this.lblItem.AutoSize = true;
+            this.lblItem.Location = new System.Drawing.Point(0, 32);
+            this.lblItem.Name = "lblItem";
+            this.lblItem.Size = new System.Drawing.Size(27, 13);
+            this.lblItem.TabIndex = 50;
+            this.lblItem.Text = "Item";
+            // 
+            // txtDescricao
+            // 
+            this.txtDescricao.Location = new System.Drawing.Point(197, 48);
+            this.txtDescricao.Name = "txtDescricao";
+            this.txtDescricao.Size = new System.Drawing.Size(563, 20);
+            this.txtDescricao.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(194, 32);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(55, 13);
+            this.label1.TabIndex = 48;
+            this.label1.Text = "Descrição";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(787, 32);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(31, 13);
+            this.label3.TabIndex = 46;
+            this.label3.Text = "Valor";
+            // 
+            // txtValor
+            // 
+            this.txtValor.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
+            this.txtValor.Location = new System.Drawing.Point(790, 48);
+            this.txtValor.Name = "txtValor";
+            this.txtValor.Size = new System.Drawing.Size(130, 20);
+            this.txtValor.TabIndex = 3;
+            this.txtValor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtValor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IsDoubleEntry);
+            // 
+            // txtQtd
+            // 
+            this.txtQtd.Location = new System.Drawing.Point(95, 48);
+            this.txtQtd.Name = "txtQtd";
+            this.txtQtd.Size = new System.Drawing.Size(78, 20);
+            this.txtQtd.TabIndex = 1;
+            this.txtQtd.TabStop = false;
+            this.txtQtd.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtQtd.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IsDoubleEntry);
+            // 
+            // lblQtd
+            // 
+            this.lblQtd.AutoSize = true;
+            this.lblQtd.Location = new System.Drawing.Point(92, 32);
+            this.lblQtd.Name = "lblQtd";
+            this.lblQtd.Size = new System.Drawing.Size(24, 13);
+            this.lblQtd.TabIndex = 8;
+            this.lblQtd.Text = "Qtd";
+            // 
+            // lblVlrPecas
+            // 
+            this.lblVlrPecas.AutoSize = true;
+            this.lblVlrPecas.Location = new System.Drawing.Point(22, 18);
+            this.lblVlrPecas.Name = "lblVlrPecas";
+            this.lblVlrPecas.Size = new System.Drawing.Size(86, 13);
+            this.lblVlrPecas.TabIndex = 3;
+            this.lblVlrPecas.Text = "Total Das Peças";
+            // 
+            // txtVlrPecas
+            // 
+            this.txtVlrPecas.Location = new System.Drawing.Point(22, 37);
+            this.txtVlrPecas.Name = "txtVlrPecas";
+            this.txtVlrPecas.Size = new System.Drawing.Size(157, 20);
+            this.txtVlrPecas.TabIndex = 2;
+            this.txtVlrPecas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IsDoubleEntry);
+            this.txtVlrPecas.Leave += new System.EventHandler(this.txtVlrPecas_Leave);
+            // 
+            // DataGridPecas
+            // 
+            this.DataGridPecas.AllowUserToAddRows = false;
+            this.DataGridPecas.AllowUserToDeleteRows = false;
+            this.DataGridPecas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DataGridPecas.Location = new System.Drawing.Point(22, 199);
+            this.DataGridPecas.Name = "DataGridPecas";
+            this.DataGridPecas.Size = new System.Drawing.Size(1213, 413);
+            this.DataGridPecas.TabIndex = 0;
+            this.DataGridPecas.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridPecas_RowEnter);
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.lblVlrAgregado);
+            this.tabPage2.Controls.Add(this.txtLucro);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1332, 901);
+            this.tabPage2.TabIndex = 3;
+            this.tabPage2.Text = "Outros";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // lblVlrAgregado
+            // 
+            this.lblVlrAgregado.AutoSize = true;
+            this.lblVlrAgregado.Location = new System.Drawing.Point(18, 22);
+            this.lblVlrAgregado.Name = "lblVlrAgregado";
+            this.lblVlrAgregado.Size = new System.Drawing.Size(80, 13);
+            this.lblVlrAgregado.TabIndex = 1;
+            this.lblVlrAgregado.Text = "Valor Agregado";
+            // 
+            // txtLucro
+            // 
+            this.txtLucro.Location = new System.Drawing.Point(18, 41);
+            this.txtLucro.Name = "txtLucro";
+            this.txtLucro.Size = new System.Drawing.Size(124, 20);
+            this.txtLucro.TabIndex = 0;
+            this.txtLucro.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtLucro.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IsDoubleEntry);
+            // 
+            // imageList1
+            // 
+            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            // 
             // FormOS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -746,6 +997,13 @@ namespace Fluxo_De_Caixa
             this.gbComplemnto.PerformLayout();
             this.gbIdentificacao.ResumeLayout(false);
             this.gbIdentificacao.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DataGridPecas)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -813,5 +1071,27 @@ namespace Fluxo_De_Caixa
         private System.Windows.Forms.MaskedTextBox txtEntrada;
         private System.Windows.Forms.Button btSeekCar;
         private System.Windows.Forms.Label lblNovo;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.Label lblVlrPecas;
+        private System.Windows.Forms.TextBox txtVlrPecas;
+        private System.Windows.Forms.DataGridView DataGridPecas;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.Label lblVlrAgregado;
+        private System.Windows.Forms.TextBox txtLucro;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.TextBox txtDescricao;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtValor;
+        private System.Windows.Forms.TextBox txtQtd;
+        private System.Windows.Forms.Label lblQtd;
+        private System.Windows.Forms.TextBox txtItem;
+        private System.Windows.Forms.Label lblItem;
+        private System.Windows.Forms.Button btProdutoExcluir;
+        private System.Windows.Forms.Button btProdutoAlterar;
+        private System.Windows.Forms.Button btProdutoNovo;
+        private System.Windows.Forms.Label btProdutoCancelar;
+        private System.Windows.Forms.Label btProdutoOK;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }

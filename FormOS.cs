@@ -10,9 +10,6 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Fluxo_De_Caixa
@@ -22,18 +19,25 @@ namespace Fluxo_De_Caixa
 
         Visoes visao = Visoes.Browser;
 
+        Visoes visaoProduto = Visoes.Browser;
+
         CabOS cabOS = new CabOS();
 
         CarOS Car = new CarOS();
 
-        int Ordenacao = 0; //CODIGO 
+        Detalhe detalhe = new Detalhe();
 
+        List<DetOS> lsDetOS = new List<DetOS>();
+
+        int Ordenacao = 0; //CODIGO 
 
         int Id = 0;
 
         List<Cliente> lsClientes = new List<Cliente>();
 
         List<Marca> lsMarcas = new List<Marca>();
+
+        List<Detalhe> lsDetalhes = new List<Detalhe>();
 
 
         public ToolStripMenuItem menu { get; internal set; }
@@ -51,6 +55,7 @@ namespace Fluxo_De_Caixa
             SetartParametros();
             loadOS();
             SetarVisoes();
+            SetarVisoesProduto();
         }
 
         private void FormCond_Activated(object sender, EventArgs e)
@@ -74,8 +79,10 @@ namespace Fluxo_De_Caixa
                 case Visoes.Browser:
 
                     visao = Visoes.Consulta;
+                    visaoProduto = Visoes.Browser;
 
                     daoCabOS dao = new daoCabOS();
+                    daoDetOS daoDet = new daoDetOS();
 
                     cabOS = dao.Seek(1, Id);
 
@@ -84,8 +91,14 @@ namespace Fluxo_De_Caixa
 
                         cabOS = new CabOS();
 
+                        lsClientes.Clear();
+
                         visao = Visoes.Nova;
 
+                    } else
+                    {
+                        lsDetOS = daoDet.getAll(1, cabOS.Id.ToString());
+                        lsDetOS.ForEach(det => { lsDetalhes.Add(new Detalhe(det.Item, det.Qtd, det.Descricao, det.Valor)); });
                     }
 
                     Atualiza();
@@ -101,6 +114,7 @@ namespace Fluxo_De_Caixa
             }
 
             SetarVisoes();
+            SetarVisoesProduto();
         }
         private void TbEditar_Click(object sender, EventArgs e)
         {
@@ -111,17 +125,24 @@ namespace Fluxo_De_Caixa
             }
             visao = Visoes.Edicao;
 
+            visaoProduto = Visoes.Browser;
+
             SetarVisoes();
+            SetarVisoesProduto();
         }
         private void TbIncluir_Click(object sender, EventArgs e)
         {
             visao = Visoes.Nova;
+
+            visaoProduto = Visoes.Browser;
 
             cabOS = new CabOS();
 
             Atualiza();
 
             SetarVisoes();
+
+            SetarVisoesProduto();
         }
         private void TbDelete_Click(object sender, EventArgs e)
         {
@@ -130,6 +151,14 @@ namespace Fluxo_De_Caixa
                 DigaNao();
                 return;
             }
+
+            if (visaoProduto != Visoes.Browser)
+            {
+                MessageBox.Show("Peças Em Manutenção. Favor Encerrar Ação!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
+
             string msg = "Confirma A Exclusão ?";
 
             DialogResult resultado = MessageBox.Show(msg, "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -164,9 +193,17 @@ namespace Fluxo_De_Caixa
         }
         private void TbOk_Click(object sender, EventArgs e)
         {
+            CabOS retorno = new CabOS();
 
             try
             {
+
+                if (visaoProduto != Visoes.Browser)
+                {
+                    MessageBox.Show("Peças Em Manutenção. Favor Encerrar Ação!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    return;
+                }
 
                 PopularOS();
 
@@ -185,6 +222,8 @@ namespace Fluxo_De_Caixa
                     return;
 
                 }
+
+                DetalhesTolsDetOS();
 
                 string Avisos = this.Avisos();
 
@@ -227,7 +266,9 @@ namespace Fluxo_De_Caixa
 
                         cabOS.User_Insert = UsuarioSistema.Usuario.Codigo;
 
-                        CabOS retorno = dao.Insert(cabOS);
+                        lsDetOS.ForEach(det => { det.User_Insert = cabOS.User_Insert; });
+
+                        retorno  = dao.SaveFullOs(cabOS, lsDetOS, "I");
 
                         if (retorno != null)
                         {
@@ -280,7 +321,9 @@ namespace Fluxo_De_Caixa
 
                         cabOS.User_Update = UsuarioSistema.Usuario.Codigo;
 
-                        dao.Update(cabOS);
+                        lsDetOS.ForEach(det => { det.User_Insert = cabOS.User_Insert; });
+
+                        CabOS retorno = dao.SaveFullOs(cabOS, lsDetOS, "A");
 
                         MessageBox.Show($"O.S. Alterada Com Sucesso!", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -396,11 +439,23 @@ namespace Fluxo_De_Caixa
             txtObs.Enabled = value;
             txtMaoDeObra.Enabled = value;
             txtVlrMaoDeObra.Enabled = value;
+            txtVlrPecas.Enabled = false;
+            DataGridPecas.ReadOnly = !value;
             txtMaoDeObra.Enabled = value;
+            txtLucro.Enabled = value;
             txtMaoDeObra.CharacterCasing = CharacterCasing.Upper;
             txtObs.CharacterCasing = CharacterCasing.Upper;
             txtObs.MaxLength = 30;
 
+        }
+        private void SetarPropertiesProduto(bool value)
+        {
+            txtItem.Enabled = false;
+            txtQtd.Enabled = value;
+            txtDescricao.Enabled = value;
+            txtValor.Enabled = value;
+            txtDescricao.CharacterCasing = CharacterCasing.Upper;
+            txtDescricao.MaxLength = 100;
         }
         private void SetarPropertiesCar()
         {
@@ -547,6 +602,8 @@ namespace Fluxo_De_Caixa
             cabOS.Obs = txtObs.Text.Trim();
             cabOS.Mao_Obra = txtMaoDeObra.Text.Trim();
             cabOS.Mao_Obra_Vlr = txtVlrMaoDeObra.Text.DoubleParse();
+            cabOS.Pecas_Vlr = txtVlrPecas.Text.DoubleParse();
+            cabOS.Lucro = txtLucro.Text.DoubleParse();
             cabOS._Total_OS = cabOS.Mao_Obra_Vlr + cabOS.Pecas_Vlr;
         }
         private void PopularCarCabOS()
@@ -583,6 +640,13 @@ namespace Fluxo_De_Caixa
             Car.Ano = txtAno.Text;
 
         }
+        private void PopularDetalhe()
+        {
+            detalhe.Item = txtItem.Text.IntParse();
+            detalhe.Qtd = txtQtd.Text.DoubleParse();
+            detalhe.Descricao = txtDescricao.Text.Trim();
+            detalhe.Valor = txtValor.Text.DoubleParse();
+        }
         private void Atualiza()
         {
 
@@ -604,6 +668,17 @@ namespace Fluxo_De_Caixa
             txtObs.Text = cabOS.Obs.Trim();
             txtMaoDeObra.Text = cabOS.Mao_Obra.Trim();
             txtVlrMaoDeObra.Text = string.Format("{0:0.00}", cabOS.Mao_Obra_Vlr);
+            txtVlrPecas.Text = string.Format("{0:0.00}", cabOS.Pecas_Vlr);
+            txtLucro.Text = string.Format("{0:0.00}", cabOS.Lucro);
+            AtualizaPecas();
+        }
+        private void AtualizaValores()
+        {
+            txtVlrMaoDeMaoDeObraCabec.Text = string.Format("{0:0.00}", cabOS.Mao_Obra_Vlr);
+            txtVlrDasPecasCabec.Text = string.Format("{0:0.00}", cabOS.Pecas_Vlr);
+            txtValorOSCabec.Text = string.Format("{0:0.00}", cabOS._Total_OS);
+            txtVlrMaoDeObra.Text = string.Format("{0:0.00}", cabOS.Mao_Obra_Vlr);
+            txtVlrPecas.Text = string.Format("{0:0.00}", cabOS.Pecas_Vlr);
         }
         private void AtualizaCar()
         {
@@ -614,6 +689,17 @@ namespace Fluxo_De_Caixa
             txtCor.Text = cabOS.Car_Cor;
             txtAno.Text = cabOS.Car_Ano;
 
+        }
+        private void AtualizaPecas()
+        {
+            preencheDataGridPecas();
+        }
+        private void AtualizaDetalhe()
+        {
+            txtItem.Text = detalhe.Item.ToString();
+            txtQtd.Text = string.Format("{0:0.00}", detalhe.Qtd);
+            txtDescricao.Text = detalhe.Descricao;
+            txtValor.Text = string.Format("{0:0.00}", detalhe.Valor);
         }
         private void DbGridView_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
@@ -795,7 +881,7 @@ namespace Fluxo_De_Caixa
                 detalhes.Add(det);
 
             }
-            //daoCab.SaveFullOs(cab, detalhes, "I");
+            daoCab.SaveFullOs(cab, detalhes, "I");
             /*
                List<CabOS> os = new List<CabOS>();
                Console.WriteLine("Inicio....");
@@ -807,8 +893,8 @@ namespace Fluxo_De_Caixa
                Console.WriteLine("Fim.....");
                */
 
-            OsPDF osPDF = new OsPDF("", 7, 1);
-            osPDF.ImprimirOS();
+           // OsPDF osPDF = new OsPDF("", 7, 1);
+           // osPDF.ImprimirOS();
 
         }
         private void btSeekCar_Click(object sender, EventArgs e)
@@ -999,7 +1085,272 @@ namespace Fluxo_De_Caixa
 
         private void txtVlrMaoDeObra_Leave(object sender, EventArgs e)
         {
-            txtVlrMaoDeObra.Text.DoubleParse();
+            cabOS.Mao_Obra_Vlr =   txtVlrMaoDeObra.Text.DoubleParse();
+            cabOS._Total_OS = cabOS.Mao_Obra_Vlr + cabOS.Pecas_Vlr;
+            AtualizaValores();
         }
+
+
+        private void txtVlrPecas_Leave(object sender, EventArgs e)
+        {
+            
+        }
+
+        // cadastro de peças
+        private void ConfiguraDataGridPecas()
+        {
+            DataGridPecas.AutoResizeColumns();
+            DataGridPecas.Columns[00].HeaderText = "ITEM";
+            DataGridPecas.Columns[00].Width = 50;
+            DataGridPecas.Columns[00].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            DataGridPecas.Columns[01].HeaderText = "QTD";
+            DataGridPecas.Columns[01].Width = 80;
+            DataGridPecas.Columns[01].DefaultCellStyle.Format = "N4";
+            DataGridPecas.Columns[01].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            DataGridPecas.Columns[02].HeaderText = "DESCRIÇÃO";
+            DataGridPecas.Columns[02].Width = 600;
+            DataGridPecas.Columns[02].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            DataGridPecas.Columns[03].HeaderText = "VALOR";
+            DataGridPecas.Columns[03].DefaultCellStyle.Format = "N2";
+            DataGridPecas.Columns[03].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            DataGridPecas.Columns[03].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            DataGridPecas.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray;
+            DataGridPecas.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            DataGridPecas.BorderStyle = BorderStyle.Fixed3D;
+            DataGridPecas.EnableHeadersVisualStyles = false;
+
+        }
+
+
+        public void preencheDataGridPecas()
+        {
+            try {
+
+                var bindingList = new BindingList<Detalhe>(lsDetalhes);
+
+                var source = new BindingSource(bindingList, null);
+
+                DataGridPecas.DataSource = source;
+
+                ConfiguraDataGridPecas();
+
+            }
+            catch (Exception ex) //fim do tratamento de exceções 
+            {
+                MessageBox.Show("Erro ao obter os dados!\n\n" + ex + ".", "Aviso",
+                MessageBoxButtons.OK, MessageBoxIcon.Error); //mostra exceção, se houver 
+            }
+
+            
+        }
+
+        private void tbBaixar_Click(object sender, EventArgs e)
+        {
+            ImprimirOS();
+        }
+
+        private void DataGridPecas_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+
+                detalhe.Item = Convert.ToInt32(((DataGridView)sender)[0, e.RowIndex].Value);
+                detalhe.Qtd = Convert.ToDouble(((DataGridView)sender)[1, e.RowIndex].Value);
+                detalhe.Descricao = ((DataGridView)sender)[2, e.RowIndex].Value.ToString();
+                detalhe.Valor = Convert.ToDouble(((DataGridView)sender)[3, e.RowIndex].Value);
+
+            }
+            catch (Exception exc)
+            {
+                detalhe.Zerar();
+            }
+
+            AtualizaDetalhe();
+
+        }
+
+        private void SetarVisoesProduto()
+        {
+
+            switch (visaoProduto)
+            {
+
+                case Visoes.Browser:
+                    DataGridPecas.Enabled = true;
+                    SetarBotoesProduto(true);
+                    SetarPropertiesProduto(false);
+                    DataGridPecas.Focus();
+                    break;
+                case Visoes.Edicao:
+                    DataGridPecas.Enabled = false;
+                    SetarBotoesProduto(false);
+                    SetarPropertiesProduto(true);
+                    txtQtd.Focus();
+                    break;
+                case Visoes.Nova:
+                    DataGridPecas.Enabled = false;
+                    SetarBotoesProduto(false);
+                    SetarPropertiesProduto(true);
+                    txtQtd.Focus();
+                    break;
+            }
+
+        }
+        private void SetarBotoesProduto( Boolean value )
+        {
+            if (visao == Visoes.Consulta || visao == Visoes.Exclusao)
+            {
+                btProdutoNovo.Visible = false;
+                btProdutoAlterar.Visible = false;
+                btProdutoExcluir.Visible = false;
+                btProdutoOK.Visible = false;
+                btProdutoCancelar.Visible = false;
+            } else
+            {
+                btProdutoNovo.Visible = value;
+                btProdutoAlterar.Visible = value;
+                btProdutoExcluir.Visible = value;
+                btProdutoOK.Visible = !value;
+                btProdutoCancelar.Visible = !value;
+            }
+        }
+
+        private void btProdutoNovo_Click(object sender, EventArgs e)
+        {
+            visaoProduto = Visoes.Nova;
+            detalhe.Zerar();
+            AtualizaDetalhe();
+            SetarVisoesProduto();
+        }
+
+        private void btProdutoAlterar_Click(object sender, EventArgs e)
+        {
+            visaoProduto = Visoes.Edicao;
+            SetarVisoesProduto();
+        }
+
+        private void btProdutoOK_Click(object sender, EventArgs e)
+        {
+
+            PopularDetalhe();
+
+            if (visaoProduto == Visoes.Nova)
+            {
+                if (lsDetalhes.Count == 0)
+                {
+                    detalhe.Item = 1;
+                } else
+                {
+                    detalhe.Item = lsDetalhes[lsDetalhes.Count - 1].Item + 1;
+                }
+
+                lsDetalhes.Add(new Detalhe(detalhe.Item,detalhe.Qtd,detalhe.Descricao,detalhe.Valor));
+
+
+                ReorganizarProduto();
+
+                preencheDataGridPecas();
+
+            }
+            else
+            {
+
+                int idx = lsDetalhes.FindIndex(d => d.Item == detalhe.Item);
+
+                if (idx >= 0)
+                {
+                    lsDetalhes[idx].Item = detalhe.Item;
+                    lsDetalhes[idx].Qtd = detalhe.Qtd;
+                    lsDetalhes[idx].Descricao = detalhe.Descricao;
+                    lsDetalhes[idx].Valor = detalhe.Valor;
+                }
+
+            }
+
+
+            ReorganizarProduto();
+
+            visaoProduto = Visoes.Browser;
+
+            SetarVisoesProduto();
+
+        }
+
+        private void btProdutoCancelar_Click(object sender, EventArgs e)
+        {
+            visaoProduto = Visoes.Browser;
+            SetarVisoesProduto();
+        }
+
+        private void btProdutoExcluir_Click(object sender, EventArgs e)
+        {
+            string msg = "Confirma A Exclusão ?";
+
+            DialogResult resultado = MessageBox.Show(msg, "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            switch (resultado)
+
+            {
+
+                case DialogResult.No:
+
+                    break;
+
+                case DialogResult.Yes:
+
+                    int idx = lsDetalhes.FindIndex(d => d.Item == detalhe.Item);
+
+                    lsDetalhes.RemoveAt(idx);
+
+                    ReorganizarProduto();
+
+                    preencheDataGridPecas();
+
+                    break;
+
+                default:
+
+                    break;
+
+            }
+
+            visaoProduto = Visoes.Browser;
+
+            SetarVisoesProduto();
+        }
+
+        private void ReorganizarProduto()
+        {
+            double valor = 0;
+            int item = 1;
+            lsDetalhes.ForEach(det => {
+                det.Item = item++;
+                valor += det.Valor;
+            });
+            cabOS.Pecas_Vlr = valor;
+            cabOS._Total_OS = cabOS.Mao_Obra_Vlr + cabOS.Pecas_Vlr;
+            AtualizaValores();
+        }
+
+
+        private void DetalhesTolsDetOS()
+        {
+            int id_empresa = cabOS.Id_Empresa;
+            int id = cabOS.Id;
+            int user_insert = cabOS.User_Insert;
+            int user_update = cabOS.User_Update;
+            if (lsDetOS.Count > 0)
+            {
+                user_insert = lsDetOS[0].User_Insert;
+                user_update = lsDetOS[0].User_Update;
+
+            }
+            lsDetOS.Clear();
+            lsDetalhes.ForEach(det => {
+                DetOS d = new DetOS(id_empresa, id, det.Item, det.Qtd, det.Descricao, det.Valor, user_insert, user_update);
+            });
+        }
+
     }
 }
