@@ -185,6 +185,10 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             try
             {
+                detalhe.ForEach(det => TotalPecas += det.Valor);
+                cabec.Pecas_Vlr = TotalPecas;
+                cabec._Total_OS = cabec.Mao_Obra_Vlr + cabec.Pecas_Vlr;
+
                 if (operacao == "I")
                 {
                     try
@@ -228,36 +232,8 @@ namespace Fluxo_De_Caixa.Dao.postgre
                 {
                     throw new Exception(ex.Message);
                 }
-                detalhe.ForEach(det => TotalPecas += det.Valor);
-                cabec.Pecas_Vlr = TotalPecas;
-                cabec._Total_OS = cabec.Mao_Obra_Vlr + cabec.Pecas_Vlr;
-                 
-                if (operacao == "I")
-                {
-                    try
-                    {
-                        cabec = Insert(cabec);
-                        if (cabec == null)
-                        {
-                            throw new Exception("Falha No Cadastro Da OS");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception(ex.Message);
-                    }
-                }
-                else
-                {
-                    try
-                    {
-                        Update(cabec);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception(ex.Message);
-                    }
-                }
+               
+          
             }
             catch (Exception ex)
             {

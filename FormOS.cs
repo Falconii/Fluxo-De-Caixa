@@ -91,12 +91,14 @@ namespace Fluxo_De_Caixa
 
                         cabOS = new CabOS();
 
-                        lsClientes.Clear();
+                        lsDetOS.Clear();
+                        lsDetalhes.Clear();
 
                         visao = Visoes.Nova;
 
                     } else
                     {
+                        lsDetalhes.Clear();
                         lsDetOS = daoDet.getAll(1, cabOS.Id.ToString());
                         lsDetOS.ForEach(det => { lsDetalhes.Add(new Detalhe(det.Item, det.Qtd, det.Descricao, det.Valor)); });
                     }
@@ -138,6 +140,14 @@ namespace Fluxo_De_Caixa
 
             cabOS = new CabOS();
 
+            lsDetOS.Clear();
+
+            lsDetalhes.Clear();
+
+            Car = new CarOS();
+
+            detalhe = new Detalhe();
+
             Atualiza();
 
             SetarVisoes();
@@ -175,7 +185,7 @@ namespace Fluxo_De_Caixa
 
                     daoCabOS dao = new daoCabOS();
 
-                    dao.Delete(cabOS);
+                    dao.DeleteFullOs(cabOS);
 
                     loadOS();
 
@@ -193,10 +203,11 @@ namespace Fluxo_De_Caixa
         }
         private void TbOk_Click(object sender, EventArgs e)
         {
-            CabOS retorno = new CabOS();
+            CabOS cabecalho = new CabOS();
 
             try
             {
+                              
 
                 if (visaoProduto != Visoes.Browser)
                 {
@@ -210,6 +221,17 @@ namespace Fluxo_De_Caixa
                 if (lblNovo.Visible)
                 {
                     PopularCarOS();
+
+                    string ErrosCar = ValidacaoCar();
+
+                    if (ErrosCar != "")
+                    {
+
+                        MessageBox.Show(ErrosCar, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        return;
+
+                    }
                 }
 
                 string Erros = Validacao();
@@ -268,12 +290,12 @@ namespace Fluxo_De_Caixa
 
                         lsDetOS.ForEach(det => { det.User_Insert = cabOS.User_Insert; });
 
-                        retorno  = dao.SaveFullOs(cabOS, lsDetOS, "I");
+                        cabecalho = dao.SaveFullOs(cabOS, lsDetOS, "I");
 
-                        if (retorno != null)
+                        if (cabecalho != null)
                         {
 
-                            MessageBox.Show($"O.S. Incluída No Código {retorno.Id}", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show($"O.S. Incluída No Código {cabecalho.Id}", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         }
                         else
@@ -287,6 +309,11 @@ namespace Fluxo_De_Caixa
                         visao = Visoes.Nova;
 
                         cabOS = new CabOS();
+
+                        lsDetOS.Clear();
+                        lsDetalhes.Clear();
+                        Car.Zerar();
+                        detalhe.Zerar();
 
                         Atualiza();
 
@@ -323,11 +350,15 @@ namespace Fluxo_De_Caixa
 
                         lsDetOS.ForEach(det => { det.User_Insert = cabOS.User_Insert; });
 
-                        CabOS retorno = dao.SaveFullOs(cabOS, lsDetOS, "A");
+                        cabecalho = dao.SaveFullOs(cabOS, lsDetOS, "A");
 
                         MessageBox.Show($"O.S. Alterada Com Sucesso!", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         visao = Visoes.Browser;
+
+                        Car.Zerar();
+
+                        detalhe.Zerar();
 
                         loadOS();
 
@@ -517,6 +548,7 @@ namespace Fluxo_De_Caixa
                     tbOk.Visible = false;
                     tbCancelar.Visible = false;
                     tbBaixar.Visible = false;
+                    tbPrinter.Visible = true;
                     lbPesquisar.Visible = true;
                     cbPesquisar.Visible = true;
                     edPesquisar.Visible = true;
@@ -531,6 +563,7 @@ namespace Fluxo_De_Caixa
                     tbOk.Visible = false;
                     tbCancelar.Visible = false;
                     tbBaixar.Visible = true;
+                    tbPrinter.Visible = true;
                     lbPesquisar.Visible = false;
                     cbPesquisar.Visible = false;
                     edPesquisar.Visible = false;
@@ -548,6 +581,7 @@ namespace Fluxo_De_Caixa
                     tbOk.Visible = true;
                     tbCancelar.Visible = true;
                     tbBaixar.Visible = false;
+                    tbPrinter.Visible = false;
                     lbPesquisar.Visible = false;
                     cbPesquisar.Visible = false;
                     edPesquisar.Visible = false;
@@ -565,6 +599,7 @@ namespace Fluxo_De_Caixa
                     tbOk.Visible = true;
                     tbCancelar.Visible = true;
                     tbBaixar.Visible = false;
+                    tbPrinter.Visible = false;
                     lbPesquisar.Visible = false;
                     cbPesquisar.Visible = false;
                     edPesquisar.Visible = false;
@@ -823,80 +858,7 @@ namespace Fluxo_De_Caixa
 
             ConfiguraDbDridView();
         }
-        private void ImprimirOS()
-        {
-            daoCabOS daoCab = new daoCabOS();
-            List<string> produtos = new List<string>();
-            produtos.Add("Amortecedor da suspensão");
-            produtos.Add("Anel de pistão");
-            produtos.Add("Bomba elétrica de combustível para motores do Ciclo Otto");
-            produtos.Add("Bronzina");
-            produtos.Add("Buzina ou equipamento similar");
-            produtos.Add("Lâmpada para veículos automotivos");
-            produtos.Add("Pino e anel de trava (retenção)");
-            produtos.Add("Pistão de liga leve de alumínio");
-            produtos.Add("Baterias");
-            produtos.Add("Terminal de direção");
-            produtos.Add("Barra de direção");
-            produtos.Add("Barra de ligação");
-            produtos.Add("Terminal axial para veículos rodoviários automotores (componente da direção)");
-            produtos.Add("Materiais de atrito para freios (lonas e pastilhas)");
-            produtos.Add("Rodas automotivas");
-            produtos.Add("Vidro de segurança laminado de para-brisas");
-            produtos.Add("Vidro de segurança temperado");
-            produtos.Add("Fluído de freio");
-            produtos.Add("Catalisador");
-            //Inclusao
-            CabOS cab = new CabOS();
-            cab.Id_Empresa = 1;
-            cab.Id = 0;
-            cab.Id_Cliente = 14;
-            cab.Id_Carro = "BEE4R22";
-            cab.Horas_Servico = "07:25";
-            cab.Km = 100000;
-            cab.Obs = "OSBSERVAO IMPORTANTE";
-            cab.Lucro = 100;
-            cab.Mao_Obra = "Sobre este item\n" +
-                            "Organiza a montagem do seu quebra-cabeça\n " +
-                            "Contém seis bandejas\n " +
-                            "Armazena até duas mil peças\n " +
-                            "Número de jogadores: 1 ou mais ";
-            cab.Mao_Obra_Vlr = 200;
-            cab.Pecas_Vlr = 300;
-            cab.User_Insert = 1;
-            cab.User_Update = 0;
-
-            List<DetOS> detalhes = new List<DetOS>();
-            for (int x = 0; x < 19; x++)
-            {
-                DetOS det = new DetOS();
-                det.Id_Empresa = 1;
-                det.Id_Os = cab.Id;
-                det.Item = x + 1;
-                det.Qtd = x * 2;
-                det.Descricao = produtos[x];
-                det.Valor = x * 2 + 1;
-                det.User_Insert = 1;
-                det.User_Update = 0;
-                detalhes.Add(det);
-
-            }
-            daoCab.SaveFullOs(cab, detalhes, "I");
-            /*
-               List<CabOS> os = new List<CabOS>();
-               Console.WriteLine("Inicio....");
-               os = daoCab.getAll(1, "");
-               if (os.Count > 0)
-               {
-                   daoCab.DeleteFullOs(os[0]);
-               }
-               Console.WriteLine("Fim.....");
-               */
-
-           // OsPDF osPDF = new OsPDF("", 7, 1);
-           // osPDF.ImprimirOS();
-
-        }
+     
         private void btSeekCar_Click(object sender, EventArgs e)
         {
             try
@@ -979,7 +941,7 @@ namespace Fluxo_De_Caixa
 
             if (!Validacoes.IsTamanho(Car.Modelo, 1, 20))
             {
-                Result += "Tamanho do Campo Marca Deve Ficar Entre 1 e 20 !\n";
+                Result += "Tamanho do Campo Modelo Deve Ficar Entre 1 e 20 !\n";
             }
 
             if (!Validacoes.IsTamanho(Car.Cor, 1, 20))
@@ -987,6 +949,18 @@ namespace Fluxo_De_Caixa
                 Result += "Tamanho do Campo Cor Deve Ficar Entre 1 e 20 !\n";
             }
 
+            return Result;
+
+        }
+
+        private string ValidacaoProduto()
+        {
+            string Result = "";
+
+            if (!Validacoes.IsTamanho(detalhe.Descricao, 1, 100))
+            {
+                Result += "Campo Descricao Tamanho Deve Ficar Entre 1 a 100 Caracteres!\n";
+            }
             return Result;
 
         }
@@ -1147,7 +1121,7 @@ namespace Fluxo_De_Caixa
 
         private void tbBaixar_Click(object sender, EventArgs e)
         {
-            ImprimirOS();
+           
         }
 
         private void DataGridPecas_RowEnter(object sender, DataGridViewCellEventArgs e)
@@ -1234,6 +1208,15 @@ namespace Fluxo_De_Caixa
         {
 
             PopularDetalhe();
+
+            string Erros = ValidacaoProduto();
+
+            if (Erros != "")
+            {
+                MessageBox.Show(Erros, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
 
             if (visaoProduto == Visoes.Nova)
             {
@@ -1349,8 +1332,47 @@ namespace Fluxo_De_Caixa
             lsDetOS.Clear();
             lsDetalhes.ForEach(det => {
                 DetOS d = new DetOS(id_empresa, id, det.Item, det.Qtd, det.Descricao, det.Valor, user_insert, user_update);
+                lsDetOS.Add(d);
             });
         }
 
+        private void btPrinter_Click(object sender, EventArgs e)
+        {
+            int os = 0;
+
+            if (visao == Visoes.Browser)
+            {
+                if (Id == 0)
+                {
+                    MessageBox.Show("Nenhuma O.S. Listada!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                } else
+                {
+                    os = Id;
+                }
+
+            } else
+            {
+                if (cabOS.Id == 0)
+                {
+                    MessageBox.Show("Nenhuma O.S. Na Tela!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                } else
+                {
+                    os = cabOS.Id;
+                }
+            }
+            var form = new FormImpressaoOS(os,os,1);
+
+            try
+            {
+                form.ShowDialog();
+
+            }
+            finally
+            {
+                form.Dispose();
+            }
+        }
     }
 }
