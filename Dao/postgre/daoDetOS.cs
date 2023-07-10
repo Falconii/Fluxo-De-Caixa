@@ -315,7 +315,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
                 switch (Ordenacao)
                 {
                     case 0:
-                        Where = $"WHERE DET.ID_EMPRESA = 1 AND _DET.ID_OS = {Filtro}";
+                        Where = $"WHERE DET.ID_EMPRESA = 1 AND DET.ID_OS = {Filtro}";
                         break;
                 }
 
@@ -360,7 +360,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
                 switch (Ordenacao)
                 {
                     case 0:
-                        Where = $"WHERE DET.ID_EMPRESA = 1 AND _DET.ID_OS = {Filtro}";
+                        Where = $"WHERE DET.ID_EMPRESA = 1 AND DET.ID_OS = {Filtro}";
                         break;
                 }
 

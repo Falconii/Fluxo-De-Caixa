@@ -99,7 +99,7 @@ namespace Fluxo_De_Caixa
                     } else
                     {
                         lsDetalhes.Clear();
-                        lsDetOS = daoDet.getAll(1, cabOS.Id.ToString());
+                        lsDetOS = daoDet.getAll(0, cabOS.Id.ToString());
                         lsDetOS.ForEach(det => { lsDetalhes.Add(new Detalhe(det.Item, det.Qtd, det.Descricao, det.Valor)); });
                     }
 
@@ -380,8 +380,40 @@ namespace Fluxo_De_Caixa
         private void CbPesquisar_Click(object sender, EventArgs e)
         {
 
+            string Erros = "";
 
+            if ((cbPesquisar.SelectedIndex == 3))
+            {
+                Erros = ValidaParData();
 
+                if (Erros.Length > 0)
+                {
+                    MessageBox.Show("Verifique A Data OK");
+
+                    return;
+                }
+            }
+
+            loadOS();
+
+        }
+        private String ValidaParData()
+        {
+            String cRetorno = "";
+
+            bool dataValida;
+
+            DateTime data;
+
+            dataValida = DateTime.TryParseExact(edPesquisar.Text, "dd/MM/yy", CultureInfo.InvariantCulture,
+                                                     DateTimeStyles.None, out data);
+
+            if (!dataValida)
+            {
+                cRetorno += "Data Pesquisa Inválida !! \n";
+            }
+
+            return cRetorno;
         }
         private void TbCancelar_Click(object sender, EventArgs e)
         {
@@ -454,6 +486,7 @@ namespace Fluxo_De_Caixa
             {
                 tpCbCliFor.Items.Add($"(C){cliente.Codigo.ToString("000000")}-{cliente.Razao}");
             });
+            cbPesquisar.SelectedIndex = 0;
         }
         private void SetarProperties(bool value)
         {
@@ -1374,5 +1407,7 @@ namespace Fluxo_De_Caixa
                 form.Dispose();
             }
         }
+
+    
     }
 }

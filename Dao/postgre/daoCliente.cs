@@ -20,7 +20,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
                                 "(ID_EMPRESA,RAZAO, CNPJ_CPF, FANTASI, ENDERECOF, NROF, BAIRROF, CIDADEF, UFF, CEPF, TEL1, EMAIL, CONTA, USER_INSERT, USER_UPDATE) " +
                                 " VALUES(" +
                                 $" {obj.IdEmpresa}, '{obj.Razao}','{obj.Cnpj_Cpf}','{obj.Fantasi}'," +
-                                $" {obj.Enderecof}, '{obj.Nrof}','{obj.Bairrof}','{obj.Cidadef}','{obj.Bairrof}','{obj.Bairrof}'," +
+                                $" '{obj.Enderecof}', '{obj.Nrof}','{obj.Bairrof}','{obj.Cidadef}','{obj.Bairrof}','{obj.Bairrof}'," +
                                 $"'{obj.Tel1}','{obj.Email}','{obj.Conta}',{obj.UserInsert},{obj.UserUpdate})  RETURNING CODIGO ";
 
             using (var objConexao = new NpgsqlConnection(DataBase.RunCommand.connectionString))
@@ -284,6 +284,9 @@ namespace Fluxo_De_Caixa.Dao.postgre
                     case 2:
                         Where = $"WHERE CLIENTES.FANTASI LIKE '%{Filtro.Trim()}%'";
                         break;
+                    case 3:
+                        Where = $"WHERE CLIENTES.CNPJ_CPF LIKE '%{Filtro.Trim()}%'";
+                        break;
                 }
 
 
@@ -303,7 +306,9 @@ namespace Fluxo_De_Caixa.Dao.postgre
                 case 2:
                     OrderBy = $"ORDER BY CLIENTES.FANTASI";
                     break;
-
+                case 3:
+                    OrderBy = $"ORDER BY CLIENTES.CNPJ_CPF";
+                    break;
             }
 
             strSelect += $" {Where} {OrderBy} ";
@@ -321,6 +326,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
             string strSelect = "SELECT  " +
                                 "   CLIENTES.CODIGO CODIGO " +
                                 " , CLIENTES.RAZAO  RAZAO  " +
+                                " , CLIENTES.CNPJ_CPF " +
                                 " , CLIENTES.FANTASI FANTASIA " +
                                 " , CLIENTES.TEL1 TEL1 " +
                                 " , CLIENTES.EMAIL  EMAIL " +
@@ -347,9 +353,12 @@ namespace Fluxo_De_Caixa.Dao.postgre
                     case 2:
                         Where = $"WHERE CLIENTES.FANTASI LIKE '%{Filtro.Trim()}%'";
                         break;
+                    case 3:
+                        Where = $"WHERE CLIENTES.CNPJ_CPF LIKE '%{Filtro.Trim()}%'";
+                        break;
                 }
 
-
+                
             }
 
             //Adiciona ORDER BY
@@ -365,6 +374,9 @@ namespace Fluxo_De_Caixa.Dao.postgre
                     break;
                 case 2:
                     OrderBy = $"ORDER BY CLIENTES.FANTASI";
+                    break;
+                case 3:
+                    OrderBy = $"ORDER BY CLIENTES.CNPJ_CPF";
                     break;
 
             }

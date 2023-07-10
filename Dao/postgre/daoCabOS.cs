@@ -436,7 +436,6 @@ namespace Fluxo_De_Caixa.Dao.postgre
             return obj;
         }
 
-
         public List<CabOS> getAll(int Ordenacao, string Filtro)
         {
 
@@ -549,6 +548,9 @@ namespace Fluxo_De_Caixa.Dao.postgre
                     case 2:
                         Where = $"WHERE CLI.CNPJ_CPF  = '{Filtro.Trim()}'";
                         break;
+                    case 3:
+                        Where = $"WHERE CAB.ENTRADA   = '{Filtro.Trim().DateToDb()}'";
+                        break;
                 }
 
 
@@ -559,7 +561,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
             switch (Ordenacao)
             {
                 case 0:
-                    OrderBy = $"ORDER BY CAB.ID";
+                    OrderBy = $"ORDER BY CAB.ID DESC";
                     break;
                 case 1:
                     OrderBy = $"ORDER BY CLI.RAZAO";
@@ -567,7 +569,9 @@ namespace Fluxo_De_Caixa.Dao.postgre
                 case 2:
                     OrderBy = $"ORDER BY CLI.CNPJ_CPF";
                     break;
-
+                case 3:
+                    OrderBy = $"ORDER BY CAB.ENTRADA DESC ";
+                    break;
             }
 
             strSelect += $" {Where} {OrderBy} ";
@@ -619,6 +623,9 @@ namespace Fluxo_De_Caixa.Dao.postgre
                     case 2:
                         Where = $"WHERE CLI.CNPJ_CPF  = '{Filtro.Trim()}'";
                         break;
+                    case 3:
+                        Where = $"WHERE CAB.ENTRADA   = '{Filtro.Trim().DateToDb()}'";
+                        break;
                 }
 
 
@@ -629,13 +636,16 @@ namespace Fluxo_De_Caixa.Dao.postgre
             switch (Ordenacao)
             {
                 case 0:
-                    OrderBy = $"ORDER BY CAB.ID";
+                    OrderBy = $"ORDER BY CAB.ID DESC";
                     break;
                 case 1:
                     OrderBy = $"ORDER BY CLI.RAZAO";
                     break;
                 case 2:
                     OrderBy = $"ORDER BY CLI.CNPJ_CPF";
+                    break;
+                case 3:
+                    OrderBy = $"ORDER BY CAB.ENTRADA DESC ";
                     break;
 
             }

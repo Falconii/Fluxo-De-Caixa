@@ -275,7 +275,7 @@
             // txtTel1
             // 
             this.txtTel1.Location = new System.Drawing.Point(13, 50);
-            this.txtTel1.Mask = "(999) #9999-9999";
+            this.txtTel1.Mask = "(99) #9999-9999";
             this.txtTel1.Name = "txtTel1";
             this.txtTel1.PromptChar = ' ';
             this.txtTel1.Size = new System.Drawing.Size(160, 20);
@@ -380,8 +380,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1022, 434);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.dbGridView);
             this.Controls.Add(this.tabControl);
+            this.Controls.Add(this.dbGridView);
             this.Name = "formFornecedores";
             this.Text = "Cadastro De Fornecedores";
             this.Activated += new System.EventHandler(this.FormFornecedores_Activated);

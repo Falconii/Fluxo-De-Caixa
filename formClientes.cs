@@ -64,6 +64,7 @@ namespace Fluxo_De_Caixa
         {
             txtCodigo.Enabled = false;
             txtRazao.Enabled = value;
+            txtCnpjCpf.Enabled = value;
             txtFantasi.Enabled = value;
             txtEndereco.Enabled = value;
             txtNro.Enabled = value;
@@ -376,18 +377,21 @@ namespace Fluxo_De_Caixa
             dbGridView.Columns[01].HeaderText = "RAZÃO SOCIAL";
             dbGridView.Columns[01].Width = 300;
             dbGridView.Columns[01].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dbGridView.Columns[02].HeaderText = "FANTASIA";
+            dbGridView.Columns[02].HeaderText = "CNPJ/CPF";
             dbGridView.Columns[02].Width = 300;
             dbGridView.Columns[02].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dbGridView.Columns[03].HeaderText = "TEL 01";
-            dbGridView.Columns[03].Width = 100;
+            dbGridView.Columns[03].HeaderText = "FANTASIA";
+            dbGridView.Columns[03].Width = 300;
             dbGridView.Columns[03].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dbGridView.Columns[04].HeaderText = "EMAIL";
-            dbGridView.Columns[04].Width = 350;
+            dbGridView.Columns[04].HeaderText = "TEL 01";
+            dbGridView.Columns[04].Width = 100;
             dbGridView.Columns[04].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dbGridView.Columns[05].HeaderText = "CONTA";
-            dbGridView.Columns[05].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dbGridView.Columns[05].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dbGridView.Columns[05].HeaderText = "EMAIL";
+            dbGridView.Columns[05].Width = 350;
+            dbGridView.Columns[05].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dbGridView.Columns[06].HeaderText = "CONTA";
+            dbGridView.Columns[06].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dbGridView.Columns[06].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
             dbGridView.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray;
             dbGridView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -444,6 +448,15 @@ namespace Fluxo_De_Caixa
         {
             string Result = "";
 
+            if (cliente.Cnpj_Cpf.Trim() != "")
+            {
+                if (!cliente.Cnpj_Cpf.IsCnpjCpf())
+                {
+
+                    Result += "CNPJ Ou CPF Inválidos !!\n";
+
+                }
+            }
 
             if (!Validacoes.IsTamanho(cliente.Razao, 1, 40))
             {
@@ -493,23 +506,6 @@ namespace Fluxo_De_Caixa
         {
             int index = 0;
 
-            /*
-            foreach (var obj in cbUFF.Items)
-            {
-
-                if (cliente.Uff == obj.ToString().Substring(0, 2))
-                {
-
-                    break;
-
-                }
-
-                index++;
-
-            }
-            
-            */
-
             index = cbUFF.FindString(cbUFF.Text);
 
             if (index > cbUFF.Items.Count - 1) index = 0;
@@ -518,6 +514,7 @@ namespace Fluxo_De_Caixa
             int id = cbConta.FindString(cbConta.Text);
             txtCodigo.Text = cliente.Codigo.IntNovo();
             txtRazao.Text = cliente.Razao.Trim();
+            txtCnpjCpf.Text = cliente.Cnpj_Cpf.FormatCnpjCPF();
             txtFantasi.Text = cliente.Fantasi.Trim();
             txtEndereco.Text = cliente.Enderecof.Trim();
             txtNro.Text = cliente.Nrof;
@@ -537,6 +534,7 @@ namespace Fluxo_De_Caixa
         {
             cliente.Codigo = txtCodigo.Text.IntParse();
             cliente.Razao = txtRazao.Text;
+            cliente.Cnpj_Cpf = txtCnpjCpf.Text.LimpaCnpjCpf();
             cliente.Fantasi = txtFantasi.Text;
             cliente.Enderecof = txtEndereco.Text;
             cliente.Cidadef = txtCidade.Text;
@@ -665,8 +663,61 @@ namespace Fluxo_De_Caixa
             WindowState = System.Windows.Forms.FormWindowState.Maximized;
         }
 
-        private void txtEmail_TextChanged(object sender, EventArgs e)
+        private void TxtCnpjCpf_Enter(object sender, EventArgs e)
         {
+
+            txtCnpjCpf.Mask = "";
+
+            txtCnpjCpf.Text = txtCnpjCpf.Text.LimpaCnpjCpf();
+
+        }
+
+        private void TxtCnpjCpf_Leave(object sender, EventArgs e)
+        {
+
+            if (txtCnpjCpf.Text.Trim() == "")
+            {
+                txtCnpjCpf.Mask = "";
+                return;
+            }
+
+            string texto = txtCnpjCpf.Text.Trim();
+
+            if (texto.Length == 11 || texto.Length == 14)
+            {
+                if (texto.Length == 11)
+                {
+
+                    if (!texto.IsCnpjCpf())
+                    {
+                        MessageBox.Show("CPF Inválido !!");
+                    }
+
+                    txtCnpjCpf.Mask = "999.999.999-99";
+
+                }
+                else
+                {
+                    if (!texto.IsCnpjCpf())
+                    {
+                        MessageBox.Show("CNPJ Inválido !!");
+                    }
+
+                    txtCnpjCpf.Mask = "99.999.999/9999-99";
+
+                }
+
+
+            }
+            else
+            {
+
+                txtCnpjCpf.Mask = "";
+
+            }
+
+            txtCnpjCpf.Text = txtCnpjCpf.Text.FormatCnpjCPF();
+
 
         }
     }

@@ -36,7 +36,7 @@ namespace Fluxo_De_Caixa.Util
             daoCabOS dao = new daoCabOS();
             cab = dao.Seek(1,nro);
             daoDetOS det = new daoDetOS();
-            detalhes = det.getAll(1, nro.ToString());
+            detalhes = det.getAll(0, nro.ToString());
             
         }
         public void ImprimirOS()

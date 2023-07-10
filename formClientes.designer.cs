@@ -66,6 +66,8 @@
             this.lblEmail = new System.Windows.Forms.Label();
             this.lblTel1 = new System.Windows.Forms.Label();
             this.gbIdentificacao = new System.Windows.Forms.GroupBox();
+            this.lbCnpjCpf = new System.Windows.Forms.Label();
+            this.txtCnpjCpf = new System.Windows.Forms.MaskedTextBox();
             this.lblFantasi = new System.Windows.Forms.Label();
             this.txtFantasi = new System.Windows.Forms.TextBox();
             this.txtRazao = new System.Windows.Forms.TextBox();
@@ -98,7 +100,7 @@
             this.tbCancelar});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1022, 39);
+            this.toolStrip1.Size = new System.Drawing.Size(1110, 39);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "TooBar";
             // 
@@ -130,7 +132,8 @@
             this.cbPesquisar.Items.AddRange(new object[] {
             "CÓDIGO",
             "RAZÃO SOCIAL",
-            "FANTASIA"});
+            "FANTASIA",
+            "CNPJ/CPF"});
             this.cbPesquisar.Name = "cbPesquisar";
             this.cbPesquisar.Size = new System.Drawing.Size(121, 39);
             this.cbPesquisar.SelectedIndexChanged += new System.EventHandler(this.CbPesquisar_SelectedIndexChanged);
@@ -225,7 +228,7 @@
             this.dbGridView.Location = new System.Drawing.Point(0, 42);
             this.dbGridView.Name = "dbGridView";
             this.dbGridView.ReadOnly = true;
-            this.dbGridView.Size = new System.Drawing.Size(1022, 534);
+            this.dbGridView.Size = new System.Drawing.Size(1110, 534);
             this.dbGridView.TabIndex = 3;
             this.dbGridView.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.DbGridView_RowEnter);
             this.dbGridView.DoubleClick += new System.EventHandler(this.DbGridView_DoubleClick);
@@ -239,7 +242,7 @@
             this.tabControl.Location = new System.Drawing.Point(0, 42);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(1022, 538);
+            this.tabControl.Size = new System.Drawing.Size(1110, 538);
             this.tabControl.TabIndex = 4;
             // 
             // tabPrincipal
@@ -250,7 +253,7 @@
             this.tabPrincipal.Location = new System.Drawing.Point(4, 22);
             this.tabPrincipal.Name = "tabPrincipal";
             this.tabPrincipal.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrincipal.Size = new System.Drawing.Size(1014, 512);
+            this.tabPrincipal.Size = new System.Drawing.Size(1102, 512);
             this.tabPrincipal.TabIndex = 1;
             this.tabPrincipal.Text = "Principal";
             this.tabPrincipal.UseVisualStyleBackColor = true;
@@ -271,7 +274,7 @@
             this.gbEndereco.Controls.Add(this.lblEndereco);
             this.gbEndereco.Location = new System.Drawing.Point(37, 152);
             this.gbEndereco.Name = "gbEndereco";
-            this.gbEndereco.Size = new System.Drawing.Size(965, 210);
+            this.gbEndereco.Size = new System.Drawing.Size(1057, 210);
             this.gbEndereco.TabIndex = 2;
             this.gbEndereco.TabStop = false;
             this.gbEndereco.Text = "Endereço";
@@ -390,7 +393,7 @@
             this.gbSenha.Controls.Add(this.lblTel1);
             this.gbSenha.Location = new System.Drawing.Point(37, 389);
             this.gbSenha.Name = "gbSenha";
-            this.gbSenha.Size = new System.Drawing.Size(965, 100);
+            this.gbSenha.Size = new System.Drawing.Size(1059, 100);
             this.gbSenha.TabIndex = 3;
             this.gbSenha.TabStop = false;
             this.gbSenha.Text = "E-Mail";
@@ -415,7 +418,7 @@
             // txtTel1
             // 
             this.txtTel1.Location = new System.Drawing.Point(13, 50);
-            this.txtTel1.Mask = "(999) #9999-9999";
+            this.txtTel1.Mask = "(99) #9999-9999";
             this.txtTel1.Name = "txtTel1";
             this.txtTel1.PromptChar = ' ';
             this.txtTel1.Size = new System.Drawing.Size(160, 20);
@@ -429,7 +432,6 @@
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(352, 20);
             this.txtEmail.TabIndex = 5;
-            this.txtEmail.TextChanged += new System.EventHandler(this.txtEmail_TextChanged);
             // 
             // lblEmail
             // 
@@ -451,6 +453,8 @@
             // 
             // gbIdentificacao
             // 
+            this.gbIdentificacao.Controls.Add(this.lbCnpjCpf);
+            this.gbIdentificacao.Controls.Add(this.txtCnpjCpf);
             this.gbIdentificacao.Controls.Add(this.lblFantasi);
             this.gbIdentificacao.Controls.Add(this.txtFantasi);
             this.gbIdentificacao.Controls.Add(this.txtRazao);
@@ -459,15 +463,34 @@
             this.gbIdentificacao.Controls.Add(this.lblCodigo);
             this.gbIdentificacao.Location = new System.Drawing.Point(37, 30);
             this.gbIdentificacao.Name = "gbIdentificacao";
-            this.gbIdentificacao.Size = new System.Drawing.Size(965, 100);
+            this.gbIdentificacao.Size = new System.Drawing.Size(1057, 100);
             this.gbIdentificacao.TabIndex = 1;
             this.gbIdentificacao.TabStop = false;
             this.gbIdentificacao.Text = "Identificação";
             // 
+            // lbCnpjCpf
+            // 
+            this.lbCnpjCpf.AutoSize = true;
+            this.lbCnpjCpf.Location = new System.Drawing.Point(129, 30);
+            this.lbCnpjCpf.Name = "lbCnpjCpf";
+            this.lbCnpjCpf.Size = new System.Drawing.Size(53, 13);
+            this.lbCnpjCpf.TabIndex = 16;
+            this.lbCnpjCpf.Text = "Cnpj/CFP";
+            // 
+            // txtCnpjCpf
+            // 
+            this.txtCnpjCpf.Location = new System.Drawing.Point(132, 47);
+            this.txtCnpjCpf.Name = "txtCnpjCpf";
+            this.txtCnpjCpf.Size = new System.Drawing.Size(143, 20);
+            this.txtCnpjCpf.TabIndex = 1;
+            this.txtCnpjCpf.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.txtCnpjCpf.Enter += new System.EventHandler(this.TxtCnpjCpf_Enter);
+            this.txtCnpjCpf.Leave += new System.EventHandler(this.TxtCnpjCpf_Leave);
+            // 
             // lblFantasi
             // 
             this.lblFantasi.AutoSize = true;
-            this.lblFantasi.Location = new System.Drawing.Point(592, 31);
+            this.lblFantasi.Location = new System.Drawing.Point(753, 30);
             this.lblFantasi.Name = "lblFantasi";
             this.lblFantasi.Size = new System.Drawing.Size(41, 13);
             this.lblFantasi.TabIndex = 14;
@@ -476,15 +499,15 @@
             // txtFantasi
             // 
             this.txtFantasi.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtFantasi.Location = new System.Drawing.Point(595, 48);
+            this.txtFantasi.Location = new System.Drawing.Point(756, 47);
             this.txtFantasi.Name = "txtFantasi";
-            this.txtFantasi.Size = new System.Drawing.Size(364, 20);
+            this.txtFantasi.Size = new System.Drawing.Size(283, 20);
             this.txtFantasi.TabIndex = 3;
             // 
             // txtRazao
             // 
             this.txtRazao.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtRazao.Location = new System.Drawing.Point(134, 47);
+            this.txtRazao.Location = new System.Drawing.Point(302, 47);
             this.txtRazao.Name = "txtRazao";
             this.txtRazao.Size = new System.Drawing.Size(429, 20);
             this.txtRazao.TabIndex = 2;
@@ -492,7 +515,7 @@
             // lblRazao
             // 
             this.lblRazao.AutoSize = true;
-            this.lblRazao.Location = new System.Drawing.Point(131, 31);
+            this.lblRazao.Location = new System.Drawing.Point(299, 31);
             this.lblRazao.Name = "lblRazao";
             this.lblRazao.Size = new System.Drawing.Size(70, 13);
             this.lblRazao.TabIndex = 12;
@@ -519,10 +542,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1022, 580);
+            this.ClientSize = new System.Drawing.Size(1110, 580);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.dbGridView);
             this.Controls.Add(this.tabControl);
+            this.Controls.Add(this.dbGridView);
             this.Name = "formClientes";
             this.Text = "Cadastro De Clientes";
             this.Activated += new System.EventHandler(this.FormUsuarios_Activated);
@@ -589,5 +612,7 @@
         private System.Windows.Forms.TextBox txtEndereco;
         private System.Windows.Forms.Label lblEndereco;
         private System.Windows.Forms.MaskedTextBox txtCep;
+        private System.Windows.Forms.Label lbCnpjCpf;
+        private System.Windows.Forms.MaskedTextBox txtCnpjCpf;
     }
 }

@@ -46,6 +46,7 @@ namespace Fluxo_De_Caixa
             this.tbOk = new System.Windows.Forms.ToolStripButton();
             this.tbCancelar = new System.Windows.Forms.ToolStripButton();
             this.tbBaixar = new System.Windows.Forms.ToolStripButton();
+            this.tbPrinter = new System.Windows.Forms.ToolStripButton();
             this.dbGridView = new System.Windows.Forms.DataGridView();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPrincipal = new System.Windows.Forms.TabPage();
@@ -113,7 +114,6 @@ namespace Fluxo_De_Caixa
             this.lblVlrAgregado = new System.Windows.Forms.Label();
             this.txtLucro = new System.Windows.Forms.TextBox();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.tbPrinter = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dbGridView)).BeginInit();
             this.tabControl.SuspendLayout();
@@ -173,25 +173,24 @@ namespace Fluxo_De_Caixa
             // lbPesquisar
             // 
             this.lbPesquisar.Name = "lbPesquisar";
-            this.lbPesquisar.Size = new System.Drawing.Size(53, 38);
+            this.lbPesquisar.Size = new System.Drawing.Size(53, 36);
             this.lbPesquisar.Text = "Pesquisa";
             // 
             // cbPesquisar
             // 
             this.cbPesquisar.Items.AddRange(new object[] {
             "DOCUMENTO",
-            "EMISSÃO",
-            "VENCIMENTO",
-            "MÊS ATUAL (V)",
-            "MES ATUAL (E)"});
+            "CLIENTE RAZAO",
+            "CLIENTE CNPJ/CPF",
+            "ENTRADA"});
             this.cbPesquisar.Name = "cbPesquisar";
-            this.cbPesquisar.Size = new System.Drawing.Size(121, 41);
+            this.cbPesquisar.Size = new System.Drawing.Size(121, 39);
             // 
             // edPesquisar
             // 
             this.edPesquisar.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.edPesquisar.Name = "edPesquisar";
-            this.edPesquisar.Size = new System.Drawing.Size(250, 41);
+            this.edPesquisar.Size = new System.Drawing.Size(250, 39);
             // 
             // btBuscar
             // 
@@ -199,8 +198,9 @@ namespace Fluxo_De_Caixa
             this.btBuscar.Image = ((System.Drawing.Image)(resources.GetObject("btBuscar.Image")));
             this.btBuscar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btBuscar.Name = "btBuscar";
-            this.btBuscar.Size = new System.Drawing.Size(23, 38);
+            this.btBuscar.Size = new System.Drawing.Size(23, 36);
             this.btBuscar.Text = "Click Aqui Para Pesquisar";
+            this.btBuscar.Click += new System.EventHandler(this.CbPesquisar_Click);
             // 
             // toolStripSeparator2
             // 
@@ -211,7 +211,7 @@ namespace Fluxo_De_Caixa
             // tpCbCliFor
             // 
             this.tpCbCliFor.Name = "tpCbCliFor";
-            this.tpCbCliFor.Size = new System.Drawing.Size(300, 41);
+            this.tpCbCliFor.Size = new System.Drawing.Size(300, 39);
             // 
             // tbIncluir
             // 
@@ -220,7 +220,7 @@ namespace Fluxo_De_Caixa
             this.tbIncluir.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tbIncluir.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbIncluir.Name = "tbIncluir";
-            this.tbIncluir.Size = new System.Drawing.Size(34, 38);
+            this.tbIncluir.Size = new System.Drawing.Size(34, 36);
             this.tbIncluir.ToolTipText = "Clicl Aqui Para Incluir Um Usuario  Novo";
             this.tbIncluir.Click += new System.EventHandler(this.TbIncluir_Click);
             // 
@@ -231,7 +231,7 @@ namespace Fluxo_De_Caixa
             this.tbEditar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tbEditar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbEditar.Name = "tbEditar";
-            this.tbEditar.Size = new System.Drawing.Size(34, 38);
+            this.tbEditar.Size = new System.Drawing.Size(34, 36);
             this.tbEditar.ToolTipText = "Click Aqui Para Editar O Usuário";
             this.tbEditar.Click += new System.EventHandler(this.TbEditar_Click);
             // 
@@ -242,7 +242,7 @@ namespace Fluxo_De_Caixa
             this.tbDelete.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tbDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbDelete.Name = "tbDelete";
-            this.tbDelete.Size = new System.Drawing.Size(34, 38);
+            this.tbDelete.Size = new System.Drawing.Size(34, 36);
             this.tbDelete.ToolTipText = "Click Aqui Para Excluir O Usuário";
             this.tbDelete.Click += new System.EventHandler(this.TbDelete_Click);
             // 
@@ -253,7 +253,7 @@ namespace Fluxo_De_Caixa
             this.tbOk.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tbOk.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbOk.Name = "tbOk";
-            this.tbOk.Size = new System.Drawing.Size(34, 38);
+            this.tbOk.Size = new System.Drawing.Size(34, 36);
             this.tbOk.ToolTipText = "Click Aqui Para Confirmar";
             this.tbOk.Click += new System.EventHandler(this.TbOk_Click);
             // 
@@ -264,7 +264,7 @@ namespace Fluxo_De_Caixa
             this.tbCancelar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tbCancelar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbCancelar.Name = "tbCancelar";
-            this.tbCancelar.Size = new System.Drawing.Size(36, 38);
+            this.tbCancelar.Size = new System.Drawing.Size(36, 36);
             this.tbCancelar.ToolTipText = "Click Aqui Para Cancelar";
             this.tbCancelar.Click += new System.EventHandler(this.TbCancelar_Click);
             // 
@@ -275,9 +275,20 @@ namespace Fluxo_De_Caixa
             this.tbBaixar.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tbBaixar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbBaixar.Name = "tbBaixar";
-            this.tbBaixar.Size = new System.Drawing.Size(34, 38);
+            this.tbBaixar.Size = new System.Drawing.Size(34, 36);
             this.tbBaixar.ToolTipText = "Manutenção Das Baixas";
             this.tbBaixar.Click += new System.EventHandler(this.tbBaixar_Click);
+            // 
+            // tbPrinter
+            // 
+            this.tbPrinter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbPrinter.Image = ((System.Drawing.Image)(resources.GetObject("tbPrinter.Image")));
+            this.tbPrinter.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tbPrinter.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbPrinter.Name = "tbPrinter";
+            this.tbPrinter.Size = new System.Drawing.Size(34, 36);
+            this.tbPrinter.Text = "Impressão De O.S.";
+            this.tbPrinter.Click += new System.EventHandler(this.btPrinter_Click);
             // 
             // dbGridView
             // 
@@ -970,17 +981,6 @@ namespace Fluxo_De_Caixa
             this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // tbPrinter
-            // 
-            this.tbPrinter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbPrinter.Image = ((System.Drawing.Image)(resources.GetObject("tbPrinter.Image")));
-            this.tbPrinter.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tbPrinter.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbPrinter.Name = "tbPrinter";
-            this.tbPrinter.Size = new System.Drawing.Size(34, 36);
-            this.tbPrinter.Text = "Impressão De O.S.";
-            this.tbPrinter.Click += new System.EventHandler(this.btPrinter_Click);
             // 
             // FormOS
             // 
