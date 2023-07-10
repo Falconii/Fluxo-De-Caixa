@@ -1154,7 +1154,23 @@ namespace Fluxo_De_Caixa
 
         private void tbBaixar_Click(object sender, EventArgs e)
         {
-           
+            if (cabOS.Saida != null)
+            {
+                MessageBox.Show("O.S. Já Foi Encerrada!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
+            var form = new FormEncerramento(cabOS.Id);
+
+            try
+            {
+                form.ShowDialog();
+
+            }
+            finally
+            {
+                form.Dispose();
+            }
         }
 
         private void DataGridPecas_RowEnter(object sender, DataGridViewCellEventArgs e)
@@ -1369,9 +1385,11 @@ namespace Fluxo_De_Caixa
             });
         }
 
-        private void btPrinter_Click(object sender, EventArgs e)
+    
+
+        private void tbPrinter_Click(object sender, EventArgs e)
         {
-            int os = 0;
+              int os = 0;
 
             if (visao == Visoes.Browser)
             {
@@ -1407,7 +1425,5 @@ namespace Fluxo_De_Caixa
                 form.Dispose();
             }
         }
-
-    
     }
 }

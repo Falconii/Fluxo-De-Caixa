@@ -288,7 +288,7 @@ namespace Fluxo_De_Caixa
             this.tbPrinter.Name = "tbPrinter";
             this.tbPrinter.Size = new System.Drawing.Size(34, 36);
             this.tbPrinter.Text = "Impressão De O.S.";
-            this.tbPrinter.Click += new System.EventHandler(this.btPrinter_Click);
+            this.tbPrinter.Click += new System.EventHandler(this.tbPrinter_Click);
             // 
             // dbGridView
             // 

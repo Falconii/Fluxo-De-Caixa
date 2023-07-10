@@ -125,6 +125,12 @@
     <Compile Include="Extensoes\IntExtension.cs" />
     <Compile Include="Extensoes\LongExtension.cs" />
     <Compile Include="Extensoes\StringExtension.cs" />
+    <Compile Include="FormEncerramento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormEncerramento.Designer.cs">
+      <DependentUpon>FormEncerramento.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormImpressaoOS.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -253,6 +259,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormCar.resx">
       <DependentUpon>FormCar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormEncerramento.resx">
+      <DependentUpon>FormEncerramento.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormImpressaoOS.resx">
       <DependentUpon>FormImpressaoOS.cs</DependentUpon>

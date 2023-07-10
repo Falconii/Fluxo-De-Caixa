@@ -91,7 +91,9 @@ namespace Fluxo_De_Caixa.Dao.postgre
                         $"MAO_OBRA_VLR      =  {obj.Mao_Obra_Vlr.DoubleParseDb()}, " +
                         $"PECAS_VLR         =  {obj.Pecas_Vlr.DoubleParseDb()}, " +
                         $"USER_INSERT       =  {obj.User_Insert}, " +
-                        $"USER_UPDATE       =  {obj.User_Update} ";
+                        $"USER_UPDATE       =  {obj.User_Update} " +
+                        $"WHERE ID_EMPRESA = {obj.Id_Empresa} AND ID = {obj.Id} ";
+
 
             Console.WriteLine(StringUpdate);
 
