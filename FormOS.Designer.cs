@@ -39,7 +39,6 @@ namespace Fluxo_De_Caixa
             this.edPesquisar = new System.Windows.Forms.ToolStripTextBox();
             this.btBuscar = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.tpCbCliFor = new System.Windows.Forms.ToolStripComboBox();
             this.tbIncluir = new System.Windows.Forms.ToolStripButton();
             this.tbEditar = new System.Windows.Forms.ToolStripButton();
             this.tbDelete = new System.Windows.Forms.ToolStripButton();
@@ -114,6 +113,7 @@ namespace Fluxo_De_Caixa
             this.lblVlrAgregado = new System.Windows.Forms.Label();
             this.txtLucro = new System.Windows.Forms.TextBox();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.tbClientes = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dbGridView)).BeginInit();
             this.tabControl.SuspendLayout();
@@ -139,14 +139,14 @@ namespace Fluxo_De_Caixa
             this.edPesquisar,
             this.btBuscar,
             this.toolStripSeparator2,
-            this.tpCbCliFor,
             this.tbIncluir,
             this.tbEditar,
             this.tbDelete,
             this.tbOk,
             this.tbCancelar,
             this.tbBaixar,
-            this.tbPrinter});
+            this.tbPrinter,
+            this.tbClientes});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1251, 39);
@@ -185,6 +185,7 @@ namespace Fluxo_De_Caixa
             "ENTRADA"});
             this.cbPesquisar.Name = "cbPesquisar";
             this.cbPesquisar.Size = new System.Drawing.Size(121, 39);
+            this.cbPesquisar.SelectedIndexChanged += new System.EventHandler(this.cbPesquisar_SelectedIndexChanged_1);
             // 
             // edPesquisar
             // 
@@ -207,11 +208,6 @@ namespace Fluxo_De_Caixa
             this.toolStripSeparator2.AutoSize = false;
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(50, 39);
-            // 
-            // tpCbCliFor
-            // 
-            this.tpCbCliFor.Name = "tpCbCliFor";
-            this.tpCbCliFor.Size = new System.Drawing.Size(300, 39);
             // 
             // tbIncluir
             // 
@@ -276,7 +272,7 @@ namespace Fluxo_De_Caixa
             this.tbBaixar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tbBaixar.Name = "tbBaixar";
             this.tbBaixar.Size = new System.Drawing.Size(34, 36);
-            this.tbBaixar.ToolTipText = "Manutenção Das Baixas";
+            this.tbBaixar.ToolTipText = "Encerramento Da  O.S.";
             this.tbBaixar.Click += new System.EventHandler(this.tbBaixar_Click);
             // 
             // tbPrinter
@@ -982,6 +978,17 @@ namespace Fluxo_De_Caixa
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // tbClientes
+            // 
+            this.tbClientes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbClientes.Image = ((System.Drawing.Image)(resources.GetObject("tbClientes.Image")));
+            this.tbClientes.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tbClientes.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbClientes.Name = "tbClientes";
+            this.tbClientes.Size = new System.Drawing.Size(34, 36);
+            this.tbClientes.ToolTipText = "Atualiza Clientes";
+            this.tbClientes.Click += new System.EventHandler(this.tbClientes_Click);
+            // 
             // FormOS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1032,7 +1039,6 @@ namespace Fluxo_De_Caixa
         private System.Windows.Forms.ToolStripTextBox edPesquisar;
         private System.Windows.Forms.ToolStripButton btBuscar;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripComboBox tpCbCliFor;
         private System.Windows.Forms.ToolStripButton tbIncluir;
         private System.Windows.Forms.ToolStripButton tbEditar;
         private System.Windows.Forms.ToolStripButton tbDelete;
@@ -1107,5 +1113,6 @@ namespace Fluxo_De_Caixa
         private System.Windows.Forms.Label btProdutoOK;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ToolStripButton tbPrinter;
+        private System.Windows.Forms.ToolStripButton tbClientes;
     }
 }

@@ -76,6 +76,8 @@ namespace Fluxo_De_Caixa
             txtEmail.Enabled   = value;
             cbConta.Enabled   = value;
 
+            if (value) txtCnpjCpf.Focus();
+
             txtRazao.CharacterCasing = CharacterCasing.Upper;
             txtFantasi.CharacterCasing = CharacterCasing.Upper;
             txtRazao.MaxLength   = 40;
@@ -194,9 +196,24 @@ namespace Fluxo_De_Caixa
 
                     daoCliente dao = new daoCliente();
 
-                    try
+                    daoCabOS daoCab = new daoCabOS();
+
+
+                    try {
+
+                        int tot = daoCab.ContadorByCliente(cliente.IdEmpresa, cliente.Codigo);
+
+                        if (tot == 0)
                     {
-                        dao.Delete(cliente);
+                            dao.Delete(cliente);
+
+                        }
+                    else
+                    {
+                        MessageBox.Show("Não Posso Excluir O Cliente. Pois existem O.S. Para Ele!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+
+                   
 
                         loadCliente();
                     }

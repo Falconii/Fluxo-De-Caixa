@@ -167,9 +167,20 @@ namespace Fluxo_De_Caixa
 
                 case DialogResult.Yes:
 
+                    daoCabOS daoCab = new daoCabOS();
+
                     daoCarOS dao = new daoCarOS();
 
-                    dao.Delete(carOS);
+                    int tot = daoCab.ContadorByPlaca(carOS.Id_Empresa,carOS.Placa);
+
+                    if (tot == 0)
+                    {
+                        dao.Delete(carOS);
+
+                    } else
+                    {
+                        MessageBox.Show("Não Posso Excluir O Automovel. Pois existem O.S. Para Ele!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
 
                     loadCarOS();
 

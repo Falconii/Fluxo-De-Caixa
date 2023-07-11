@@ -490,7 +490,7 @@
             this.Controls.Add(this.tabControl);
             this.Name = "formBaixas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Cadastro De Documentos";
+            this.Text = "Baixa De Documentos";
             this.Activated += new System.EventHandler(this.FormUsuarios_Activated);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormUsuarios_FormClosed);
             this.Load += new System.EventHandler(this.FormUsuarios_Load);

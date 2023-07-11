@@ -1,4 +1,5 @@
-﻿using Fluxo_De_Caixa.Models;
+﻿using Fluxo_De_Caixa.Extensoes;
+using Fluxo_De_Caixa.Models;
 using Fluxo_De_Caixa.Util;
 using Npgsql;
 using System;
@@ -19,7 +20,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
             String StringInsert = $" INSERT INTO FORNECEDORES " +
                                 "(ID_EMPRESA,RAZAO, FANTASI, TEL1, EMAIL, CONTA, USER_INSERT, USER_UPDATE) " +
                                 " VALUES(" +
-                                $" {obj.IdEmpresa}, '{obj.Razao}','{obj.Fantasi}','{obj.Tel1}','{obj.Email}','{obj.Conta}',{obj.UserInsert},{obj.UserUpdate})  RETURNING CODIGO ";
+                                $" {obj.IdEmpresa}, '{obj.Razao.Trim().NoAspasSimples()}','{obj.Fantasi.Trim().NoAspasSimples()}','{obj.Tel1}','{obj.Email.Trim().NoAspasSimples()}','{obj.Conta}',{obj.UserInsert},{obj.UserUpdate})  RETURNING CODIGO ";
 
             using (var objConexao = new NpgsqlConnection(DataBase.RunCommand.connectionString))
             {
@@ -64,10 +65,10 @@ namespace Fluxo_De_Caixa.Dao.postgre
         {
 
             String StringUpdate = $" UPDATE  FORNECEDORES SET " +
-                 $"RAZAO    = '{obj.Razao}', " +
-                 $"FANTASI  = '{obj.Fantasi}', "+
+                 $"RAZAO    = '{obj.Razao.Trim().NoAspasSimples()}', " +
+                 $"FANTASI  = '{obj.Fantasi.Trim().NoAspasSimples()}', "+
                  $"TEL1     = '{obj.Tel1}', " +
-                 $"EMAIL    = '{obj.Email}', " +
+                 $"EMAIL    = '{obj.Email.Trim().NoAspasSimples()}', " +
                  $"CONTA       = '{obj.Conta}' , " +
                  $"USER_UPDATE = {obj.UserUpdate} " +
                  $"WHERE ID_EMPRESA = {obj.IdEmpresa} and CODIGO = {obj.Codigo} ";

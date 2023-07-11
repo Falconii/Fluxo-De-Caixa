@@ -152,6 +152,9 @@ namespace Fluxo_De_Caixa
 
         private void btEncerrar_Click(object sender, EventArgs e)
         {
+
+            bool processar = true;
+
             string erros = "";
 
             daoCabOS daoCab = new daoCabOS();
@@ -167,49 +170,86 @@ namespace Fluxo_De_Caixa
                 return;
             }
 
-            cab.Saida = DataSaida;
 
-            doc = new Documento();
-
-            doc.IdEmpresa = 1;
-            doc.Id = 0;
-            doc.Tipo = "R";
-            doc.Doc = cab.Id.ToString("000000");
-            doc.Serie = "001";
-            doc.Parcela = "1";
-            doc.Clifor = cab.Id_Cliente;
-            doc.Razao = "";
-            doc.Emissao = DataSaida;
-            doc.Vencimento = DataVencimento;
-            doc.Valor = VlrTitulo;
-            doc.Abatimento = VlrAbatimento;
-            doc.Juros = VlrJuros;
-            doc.VlrPago = 0;
-            doc.Saldo = VlrTitulo;
-            doc.Obs = "";
-            doc.UserInsert = cab.User_Update;;
-            doc.UserUpdate = 0;
-
-            
-
-            try
+            if (VlrTitulo == 0)
             {
 
-                daoCab.Update(cab);
+                string msg = "O.S. CORTESIA. Confirma ?";
 
-                if (daoDoc.Insert(doc) == null)
+                DialogResult resultado = MessageBox.Show(msg, "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                switch (resultado)
+
                 {
-                    MessageBox.Show("Problemas Na Inclusão Do Domento.\nFavor Incluir Manualmente!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                } else
-                {
-                    MessageBox.Show("Encerramento Da O.S. Feito Com Sucesso!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    case DialogResult.No:
+
+
+                        processar = false;
+
+                        break;
+
+                    case DialogResult.Yes:
+
+                        break;
+
+                    default:
+
+                        break;
+
                 }
 
-            } catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+            if (processar)
+            {
+                cab.Saida = DataSaida;
+
+                doc = new Documento();
+
+                doc.IdEmpresa = 1;
+                doc.Id = 0;
+                doc.Tipo = "R";
+                doc.Doc = cab.Id.ToString("000000");
+                doc.Serie = "OS";
+                doc.Parcela = "1";
+                doc.Clifor = cab.Id_Cliente;
+                doc.Razao = "";
+                doc.Emissao = DataSaida;
+                doc.Vencimento = DataVencimento;
+                doc.Valor = VlrTitulo;
+                doc.Abatimento = VlrAbatimento;
+                doc.Juros = VlrJuros;
+                doc.VlrPago = 0;
+                doc.Saldo = VlrTitulo;
+                doc.Obs = "";
+                doc.UserInsert = cab.User_Update; ;
+                doc.UserUpdate = 0;
+
+
+
+                try
+                {
+
+                    daoCab.Update(cab);
+
+                    if (daoDoc.Insert(doc) == null)
+                    {
+                        MessageBox.Show("Problemas Na Inclusão Do Domento.\nFavor Incluir Manualmente!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Encerramento Da O.S. Feito Com Sucesso!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+            Close();
         }
 
         private void IsDoubleEntry(object sender, KeyPressEventArgs e)

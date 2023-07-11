@@ -49,6 +49,7 @@ namespace Fluxo_De_Caixa
 
                 case Visoes.Nova:
                     txtCodigo.Enabled = true;
+                    if (value) txtCodigo.Focus();
                     break;
                 case Visoes.Edicao:
                     txtCodigo.Enabled = false;
@@ -60,6 +61,7 @@ namespace Fluxo_De_Caixa
             cbTipo.Enabled = value;
             txtDescricao.Enabled = value;
             txtDescricao.CharacterCasing = CharacterCasing.Upper;
+            
         }
 
         private void loadConta()

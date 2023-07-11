@@ -16,7 +16,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             String StringInsert = $" INSERT INTO OS_DET " +
                                  "(ID_EMPRESA,ID_OS,ITEM,QTD,DESCRICAO,VALOR,USER_INSERT,USER_UPDATE ) " +
-                                $" VALUES({obj.Id_Empresa},{obj.Id_Os},{obj.Item},{obj.Qtd.DoubleParseDb()},'{obj.Descricao}',{obj.Valor.DoubleParseDb()},{obj.User_Insert},{obj.User_Update})  RETURNING ITEM ";
+                                $" VALUES({obj.Id_Empresa},{obj.Id_Os},{obj.Item},{obj.Qtd.DoubleParseDb()},'{obj.Descricao.Trim().NoAspasSimples()}',{obj.Valor.DoubleParseDb()},{obj.User_Insert},{obj.User_Update})  RETURNING ITEM ";
 
             using (var objConexao = new NpgsqlConnection(DataBase.RunCommand.connectionString))
             {
@@ -86,9 +86,9 @@ namespace Fluxo_De_Caixa.Dao.postgre
         public void Update(DetOS obj)
         {
 
-            String StringUpdate =   $" UPDATE  OSCAB SET " +
+            String StringUpdate =   $" UPDATE  OS_DET SET " +
                                     $"QTD          =  {obj.Qtd.DoubleParseDb()}, " +
-                                    $"DESCRICAO    =  '{obj.Descricao}', " +
+                                    $"DESCRICAO    =  '{obj.Descricao.Trim().NoAspasSimples()}', " +
                                     $"VALOR        =  {obj.Valor.DoubleParseDb()}, " +
                                     $"USER_INSERT  =  {obj.User_Insert}, " +
                                     $"USER_UPDATE  =  {obj.User_Update} " +

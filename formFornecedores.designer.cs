@@ -251,13 +251,14 @@
             this.gbSenha.Location = new System.Drawing.Point(37, 154);
             this.gbSenha.Name = "gbSenha";
             this.gbSenha.Size = new System.Drawing.Size(965, 100);
-            this.gbSenha.TabIndex = 23;
+            this.gbSenha.TabIndex = 1;
             this.gbSenha.TabStop = false;
             this.gbSenha.Text = "E-Mail";
             // 
             // cbConta
             // 
             this.cbConta.FormattingEnabled = true;
+            this.cbConta.ItemHeight = 13;
             this.cbConta.Location = new System.Drawing.Point(595, 48);
             this.cbConta.Name = "cbConta";
             this.cbConta.Size = new System.Drawing.Size(364, 21);
@@ -279,7 +280,7 @@
             this.txtTel1.Name = "txtTel1";
             this.txtTel1.PromptChar = ' ';
             this.txtTel1.Size = new System.Drawing.Size(160, 20);
-            this.txtTel1.TabIndex = 4;
+            this.txtTel1.TabIndex = 0;
             this.txtTel1.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // txtEmail
@@ -288,7 +289,7 @@
             this.txtEmail.Location = new System.Drawing.Point(211, 50);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(352, 20);
-            this.txtEmail.TabIndex = 5;
+            this.txtEmail.TabIndex = 2;
             // 
             // lblEmail
             // 

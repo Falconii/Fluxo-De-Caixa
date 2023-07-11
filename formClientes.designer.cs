@@ -286,7 +286,7 @@
             this.txtCep.Name = "txtCep";
             this.txtCep.PromptChar = ' ';
             this.txtCep.Size = new System.Drawing.Size(124, 20);
-            this.txtCep.TabIndex = 21;
+            this.txtCep.TabIndex = 6;
             this.txtCep.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // lblEstado
@@ -355,7 +355,7 @@
             this.txtNro.Location = new System.Drawing.Point(598, 48);
             this.txtNro.Name = "txtNro";
             this.txtNro.Size = new System.Drawing.Size(120, 20);
-            this.txtNro.TabIndex = 2;
+            this.txtNro.TabIndex = 1;
             // 
             // lblNro
             // 
@@ -372,7 +372,6 @@
             this.txtEndereco.Name = "txtEndereco";
             this.txtEndereco.Size = new System.Drawing.Size(565, 20);
             this.txtEndereco.TabIndex = 0;
-            this.txtEndereco.TabStop = false;
             // 
             // lblEndereco
             // 
@@ -401,10 +400,11 @@
             // cbConta
             // 
             this.cbConta.FormattingEnabled = true;
+            this.cbConta.ItemHeight = 13;
             this.cbConta.Location = new System.Drawing.Point(595, 50);
             this.cbConta.Name = "cbConta";
             this.cbConta.Size = new System.Drawing.Size(364, 21);
-            this.cbConta.TabIndex = 6;
+            this.cbConta.TabIndex = 2;
             // 
             // lbConta
             // 
@@ -422,7 +422,7 @@
             this.txtTel1.Name = "txtTel1";
             this.txtTel1.PromptChar = ' ';
             this.txtTel1.Size = new System.Drawing.Size(160, 20);
-            this.txtTel1.TabIndex = 4;
+            this.txtTel1.TabIndex = 0;
             this.txtTel1.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // txtEmail
@@ -431,7 +431,7 @@
             this.txtEmail.Location = new System.Drawing.Point(211, 50);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(352, 20);
-            this.txtEmail.TabIndex = 5;
+            this.txtEmail.TabIndex = 1;
             // 
             // lblEmail
             // 

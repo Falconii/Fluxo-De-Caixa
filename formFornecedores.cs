@@ -47,7 +47,7 @@ namespace Fluxo_De_Caixa
             txtTel1.Enabled    = value;
             txtEmail.Enabled   = value;
             cbConta.Enabled   = value;
-
+            if (value) txtRazao.Focus();
             txtRazao.CharacterCasing = CharacterCasing.Upper;
             txtFantasi.CharacterCasing = CharacterCasing.Upper;
             txtRazao.MaxLength   = 40;

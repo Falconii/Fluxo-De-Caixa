@@ -39,6 +39,7 @@ namespace Fluxo_De_Caixa
 
         List<Detalhe> lsDetalhes = new List<Detalhe>();
 
+        Boolean newCar = false;
 
         public ToolStripMenuItem menu { get; internal set; }
 
@@ -79,6 +80,7 @@ namespace Fluxo_De_Caixa
                 case Visoes.Browser:
 
                     visao = Visoes.Consulta;
+
                     visaoProduto = Visoes.Browser;
 
                     daoCabOS dao = new daoCabOS();
@@ -150,6 +152,8 @@ namespace Fluxo_De_Caixa
 
             Atualiza();
 
+            AtualizaDetalhe();
+
             SetarVisoes();
 
             SetarVisoesProduto();
@@ -218,7 +222,8 @@ namespace Fluxo_De_Caixa
 
                 PopularOS();
 
-                if (lblNovo.Visible)
+
+                if (newCar)
                 {
                     PopularCarOS();
 
@@ -263,19 +268,22 @@ namespace Fluxo_De_Caixa
 
                     case Visoes.Nova:
 
-                        if (lblNovo.Visible)
+                        if (newCar)
                         {
                             try
                             {
                                 daoCarOS daoCar = new daoCarOS();
 
-                                CarOS result = daoCar.Insert(this.Car);
-
-                                if (result == null)
+                                if (daoCar.Seek(this.Car.Id_Empresa, this.Car.Placa) == null)
                                 {
-                                    throw new Exception("Falha Na Inclusão Do Veículo!");
-                                }
 
+                                    CarOS result = daoCar.Insert(this.Car);
+
+                                    if (result == null)
+                                    {
+                                        throw new Exception("Falha Na Inclusão Do Veículo!");
+                                    }
+                                }
                             }
                             catch (Exception ex)
                             {
@@ -323,7 +331,7 @@ namespace Fluxo_De_Caixa
 
                     case Visoes.Edicao:
 
-                        if (lblNovo.Visible)
+                        if (newCar)
                         {
                             try
                             {
@@ -481,11 +489,7 @@ namespace Fluxo_De_Caixa
         }
         private void SetartParametros()
         {
-            tpCbCliFor.Items.Clear();
-            lsClientes.ForEach(cliente =>
-            {
-                tpCbCliFor.Items.Add($"(C){cliente.Codigo.ToString("000000")}-{cliente.Razao}");
-            });
+           
             cbPesquisar.SelectedIndex = 0;
         }
         private void SetarProperties(bool value)
@@ -547,6 +551,7 @@ namespace Fluxo_De_Caixa
                     break;
                 case Visoes.Consulta:
                     tabControl.Visible = true;
+                    tabControl.SelectedIndex = 0;
                     dbGridView.ReadOnly = true;
                     dbGridView.Visible = false;
                     tabControl.SelectedIndex = 0;
@@ -554,12 +559,14 @@ namespace Fluxo_De_Caixa
                     break;
                 case Visoes.Edicao:
                     tabControl.Visible = true;
+                    tabControl.SelectedIndex = 0;
                     dbGridView.ReadOnly = true;
                     dbGridView.Visible = false;
                     SetarBotoes();
                     break;
                 case Visoes.Nova:
                     tabControl.Visible = true;
+                    tabControl.SelectedIndex = 0;
                     dbGridView.ReadOnly = true;
                     dbGridView.Visible = false;
                     SetarBotoes();
@@ -573,7 +580,6 @@ namespace Fluxo_De_Caixa
             switch (visao)
             {
                 case Visoes.Browser:
-                    tpCbCliFor.Visible = true;
                     tbBrowser.Visible = true;
                     tbIncluir.Visible = false;
                     tbEditar.Visible = false;
@@ -581,6 +587,7 @@ namespace Fluxo_De_Caixa
                     tbOk.Visible = false;
                     tbCancelar.Visible = false;
                     tbBaixar.Visible = false;
+                    tbClientes.Visible = true;
                     tbPrinter.Visible = true;
                     lbPesquisar.Visible = true;
                     cbPesquisar.Visible = true;
@@ -588,7 +595,6 @@ namespace Fluxo_De_Caixa
                     btBuscar.Visible = true;
                     break;
                 case Visoes.Consulta:
-                    tpCbCliFor.Visible = false;
                     tbBrowser.Visible = true;
                     tbIncluir.Visible = true;
                     tbEditar.Visible = true;
@@ -596,17 +602,18 @@ namespace Fluxo_De_Caixa
                     tbOk.Visible = false;
                     tbCancelar.Visible = false;
                     tbBaixar.Visible = true;
+                    tbClientes.Visible = true;
                     tbPrinter.Visible = true;
                     lbPesquisar.Visible = false;
                     cbPesquisar.Visible = false;
                     edPesquisar.Visible = false;
                     btBuscar.Visible = false;
                     lblNovo.Visible = false;
+                    newCar = false;
                     SetarProperties(false);
                     break;
 
                 case Visoes.Edicao:
-                    tpCbCliFor.Visible = false;
                     tbBrowser.Visible = false;
                     tbIncluir.Visible = false;
                     tbEditar.Visible = false;
@@ -614,17 +621,18 @@ namespace Fluxo_De_Caixa
                     tbOk.Visible = true;
                     tbCancelar.Visible = true;
                     tbBaixar.Visible = false;
+                    tbClientes.Visible = true;
                     tbPrinter.Visible = false;
                     lbPesquisar.Visible = false;
                     cbPesquisar.Visible = false;
                     edPesquisar.Visible = false;
                     btBuscar.Visible = false;
                     lblNovo.Visible = false;
+                    newCar = false;
                     SetarProperties(true);
                     txtEntrada.Focus();
                     break;
                 case Visoes.Nova:
-                    tpCbCliFor.Visible = false;
                     tbBrowser.Visible = false;
                     tbIncluir.Visible = false;
                     tbEditar.Visible = false;
@@ -632,12 +640,14 @@ namespace Fluxo_De_Caixa
                     tbOk.Visible = true;
                     tbCancelar.Visible = true;
                     tbBaixar.Visible = false;
+                    tbClientes.Visible = true;
                     tbPrinter.Visible = false;
                     lbPesquisar.Visible = false;
                     cbPesquisar.Visible = false;
                     edPesquisar.Visible = false;
                     btBuscar.Visible = false;
                     lblNovo.Visible = false;
+                    newCar = false;
                     SetarProperties(true);
                     txtEntrada.Focus();
                     break;
@@ -753,8 +763,8 @@ namespace Fluxo_De_Caixa
             int index = lsMarcas.FindIndex(m => m.Id == cabOS.Car_Id_Marca);
             txtPlaca.Text = cabOS.Car_Placa.Trim();
             txtMarca.SelectedIndex = index;
-            txtModelo.Text = cabOS.Car_Modelo;
-            txtCor.Text = cabOS.Car_Cor;
+            txtModelo.Text = cabOS.Car_Modelo.Trim();
+            txtCor.Text = cabOS.Car_Cor.Trim();
             txtAno.Text = cabOS.Car_Ano;
 
         }
@@ -766,7 +776,7 @@ namespace Fluxo_De_Caixa
         {
             txtItem.Text = detalhe.Item.ToString();
             txtQtd.Text = string.Format("{0:0.00}", detalhe.Qtd);
-            txtDescricao.Text = detalhe.Descricao;
+            txtDescricao.Text = detalhe.Descricao.Trim();
             txtValor.Text = string.Format("{0:0.00}", detalhe.Valor);
         }
         private void DbGridView_RowEnter(object sender, DataGridViewCellEventArgs e)
@@ -908,10 +918,10 @@ namespace Fluxo_De_Caixa
                 {
                     MessageBox.Show("Novo Carrro Será Cadastrado Com A O.S.", "Aviso",
               MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    lblNovo.Visible = true;
                     Car = new CarOS();
                     Car.Placa = txtPlaca.Text.Replace("-", "");
                     lblNovo.Visible = true;
+                    newCar = true;
                     txtMarca.Enabled = true;
                     txtModelo.Enabled = true;
                     txtCor.Enabled = true;
@@ -920,6 +930,7 @@ namespace Fluxo_De_Caixa
                 else
                 {
                     lblNovo.Visible = false;
+                    newCar = false;
                     SetarPropertiesCar();
                 }
                 cabOS.Id_Carro = Car.Placa;
@@ -1001,7 +1012,7 @@ namespace Fluxo_De_Caixa
         {
             string Result = "";
 
-            if (lblNovo.Visible)
+            if (newCar)
             {
                 Result += "Veiculo Será Incluido No Cadastro\n";
             }
@@ -1171,6 +1182,17 @@ namespace Fluxo_De_Caixa
             {
                 form.Dispose();
             }
+
+            daoCabOS dao = new daoCabOS();
+            daoDetOS daoDet = new daoDetOS();
+
+            cabOS = dao.Seek(1, cabOS.Id);
+            lsDetalhes.Clear();
+            lsDetOS = daoDet.getAll(0, cabOS.Id.ToString());
+            lsDetOS.ForEach(det => { lsDetalhes.Add(new Detalhe(det.Item, det.Qtd, det.Descricao, det.Valor)); });
+            
+            Atualiza();
+
         }
 
         private void DataGridPecas_RowEnter(object sender, DataGridViewCellEventArgs e)
@@ -1424,6 +1446,25 @@ namespace Fluxo_De_Caixa
             {
                 form.Dispose();
             }
+        }
+
+        private void cbPesquisar_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            Ordenacao = cbPesquisar.SelectedIndex;
+
+            edPesquisar.Text = "";
+
+            edPesquisar.CharacterCasing = CharacterCasing.Upper;
+                      
+            edPesquisar.Focus();
+        }
+
+        private void tbClientes_Click(object sender, EventArgs e)
+        {
+            loadClientes();
+
+            MessageBox.Show("Tabela De Clientes Atualizada!", "Aviso",
+      MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

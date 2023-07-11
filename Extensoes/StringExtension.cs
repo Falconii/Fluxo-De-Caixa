@@ -339,7 +339,6 @@ namespace Fluxo_De_Caixa.Extensoes
 
             return response;
         }
-
     
         public static string WithMaxLength(this string value, int maxLength)
         {
@@ -461,7 +460,23 @@ namespace Fluxo_De_Caixa.Extensoes
 
         }
 
-       
+        public static string NoAspasSimples(this string value)
+        {
+
+            string retorno = "";
+
+            if (value.Trim() == "")
+            {
+                return retorno;
+            }
+
+            retorno = value.Trim().Replace("'", "''");
+
+            return retorno;
+
+        }
+
+
     }
 
 }

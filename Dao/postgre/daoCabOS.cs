@@ -26,7 +26,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             String StringInsert = $" INSERT INTO OS_CAB " +
                                   "(ID_EMPRESA, ENTRADA, SAIDA, ID_CLIENTE, ID_CARRO, HORAS_SERVICO, KM, OBS, LUCRO,  MAO_OBRA, MAO_OBRA_VLR, PECAS_VLR, USER_INSERT, USER_UPDATE) " +
-                                 $" VALUES({obj.Id_Empresa},'{obj.Entrada.ToString("yyyy-MM-dd")}',{dt_saida},{obj.Id_Cliente},'{obj.Id_Carro}','{obj.Horas_Servico}',{obj.Km},'{obj.Obs}',{obj.Lucro.DoubleParseDb()},'{obj.Mao_Obra}',{obj.Mao_Obra_Vlr.DoubleParseDb()},{obj.Pecas_Vlr.DoubleParseDb()},{obj.User_Insert},{obj.User_Update})  RETURNING ID ";
+                                 $" VALUES({obj.Id_Empresa},'{obj.Entrada.ToString("yyyy-MM-dd")}',{dt_saida},{obj.Id_Cliente},'{obj.Id_Carro}','{obj.Horas_Servico}',{obj.Km},'{obj.Obs.NoAspasSimples()}',{obj.Lucro.DoubleParseDb()},'{obj.Mao_Obra}',{obj.Mao_Obra_Vlr.DoubleParseDb()},{obj.Pecas_Vlr.DoubleParseDb()},{obj.User_Insert},{obj.User_Update})  RETURNING ID ";
 
             using (var objConexao = new NpgsqlConnection(DataBase.RunCommand.connectionString))
             {
@@ -85,14 +85,13 @@ namespace Fluxo_De_Caixa.Dao.postgre
                         $"ID_CARRO          =  '{obj.Id_Carro}', " +
                         $"HORAS_SERVICO     =  '{obj.Horas_Servico}', " +
                         $"KM                =  {obj.Km}, " +
-                        $"LUCRO               =  {obj.Lucro.DoubleParseDb()}, " +
-                        $"OBS             =  '{obj.Obs}', " +
-                        $"MAO_OBRA          =  '{obj.Mao_Obra}', " +
-                        $"MAO_OBRA_VLR      =  {obj.Mao_Obra_Vlr.DoubleParseDb()}, " +
+                        $"LUCRO             =  {obj.Lucro.DoubleParseDb()}, " +
+                        $"OBS               =  '{obj.Obs.Trim().NoAspasSimples()}', " +
+                        $"MAO_OBRA          =  '{obj.Mao_Obra.Trim().NoAspasSimples()}', " +                        $"MAO_OBRA_VLR      =  {obj.Mao_Obra_Vlr.DoubleParseDb()}, " +
                         $"PECAS_VLR         =  {obj.Pecas_Vlr.DoubleParseDb()}, " +
                         $"USER_INSERT       =  {obj.User_Insert}, " +
                         $"USER_UPDATE       =  {obj.User_Update} " +
-                        $"WHERE ID_EMPRESA = {obj.Id_Empresa} AND ID = {obj.Id} ";
+                        $"WHERE ID_EMPRESA  = {obj.Id_Empresa} AND ID = {obj.Id} ";
 
 
             Console.WriteLine(StringUpdate);
@@ -329,6 +328,98 @@ namespace Fluxo_De_Caixa.Dao.postgre
             return obj;
         }
 
+        public int ContadorByPlaca(int id_empresa, string placa)
+        {
+            int retorno = 0;
+
+            string strStringConexao = DataBase.RunCommand.connectionString;
+
+            string strSelect = "SELECT   count(*) as TOTAL		" +
+                                "FROM OS_CAB CAB ";
+                                
+
+            //Adiciona WHERE 
+            strSelect += $"WHERE CAB.ID_EMPRESA = {id_empresa} and CAB.ID_CARRO = '{placa}'";
+
+            using (var objConexao = new NpgsqlConnection(strStringConexao))
+            {
+                using (var objCommand = new NpgsqlCommand(strSelect, objConexao))
+                {
+                    try
+                    {
+                        objConexao.Open();
+
+                        var objDataReader = objCommand.ExecuteReader();
+
+                        if (objDataReader.HasRows)
+                        {
+
+                            objDataReader.Read();
+
+                            retorno = Convert.ToInt32(objDataReader["TOTAL"]);
+
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+                    finally
+                    {
+                        objConexao.Close();
+                    }
+                }
+            }
+
+            return retorno;
+        }
+
+        public int ContadorByCliente(int id_empresa, int id_cliente)
+        {
+            int retorno = 0;
+
+            string strStringConexao = DataBase.RunCommand.connectionString;
+
+            string strSelect = "SELECT   count(*) as TOTAL		" +
+                                "FROM OS_CAB CAB ";
+
+            //Adiciona WHERE 
+            strSelect += $"WHERE CAB.ID_EMPRESA = {id_empresa} and CAB.ID_CLIENTE = '{id_cliente}'";
+
+            using (var objConexao = new NpgsqlConnection(strStringConexao))
+            {
+                using (var objCommand = new NpgsqlCommand(strSelect, objConexao))
+                {
+                    try
+                    {
+                        objConexao.Open();
+
+                        var objDataReader = objCommand.ExecuteReader();
+
+                        if (objDataReader.HasRows)
+                        {
+
+                            objDataReader.Read();
+
+                            retorno = Convert.ToInt32(objDataReader["TOTAL"]);
+
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+                    finally
+                    {
+                        objConexao.Close();
+                    }
+                }
+            }
+
+            return retorno;
+        }
         private CabOS PopulaCabOS(NpgsqlDataReader objDataReader)
         {
 
@@ -491,7 +582,6 @@ namespace Fluxo_De_Caixa.Dao.postgre
             return lista;
         }
 
-
         public string SqlGrid(int Ordenacao, string Filtro)
         {
             string Where = "";
@@ -551,7 +641,8 @@ namespace Fluxo_De_Caixa.Dao.postgre
                         Where = $"WHERE CLI.CNPJ_CPF  = '{Filtro.Trim()}'";
                         break;
                     case 3:
-                        Where = $"WHERE CAB.ENTRADA   = '{Filtro.Trim().DateToDb()}'";
+                        DateTime Pesquisa = Convert.ToDateTime(Filtro.Trim());
+                        Where = $"WHERE CAB.ENTRADA   = '{Pesquisa.ToString("yyy-MM-dd")}'";
                         break;
                 }
 
@@ -626,7 +717,8 @@ namespace Fluxo_De_Caixa.Dao.postgre
                         Where = $"WHERE CLI.CNPJ_CPF  = '{Filtro.Trim()}'";
                         break;
                     case 3:
-                        Where = $"WHERE CAB.ENTRADA   = '{Filtro.Trim().DateToDb()}'";
+                        DateTime Pesquisa = Convert.ToDateTime(Filtro.Trim());
+                        Where = $"WHERE CAB.ENTRADA   = '{Pesquisa.ToString("yyy-MM-dd")}'";
                         break;
                 }
 

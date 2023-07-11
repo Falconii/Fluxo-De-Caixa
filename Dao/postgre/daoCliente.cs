@@ -1,4 +1,5 @@
-﻿using Fluxo_De_Caixa.Models;
+﻿using Fluxo_De_Caixa.Extensoes;
+using Fluxo_De_Caixa.Models;
 using Fluxo_De_Caixa.Util;
 using Npgsql;
 using System;
@@ -19,9 +20,9 @@ namespace Fluxo_De_Caixa.Dao.postgre
             String StringInsert = $" INSERT INTO CLIENTES " +
                                 "(ID_EMPRESA,RAZAO, CNPJ_CPF, FANTASI, ENDERECOF, NROF, BAIRROF, CIDADEF, UFF, CEPF, TEL1, EMAIL, CONTA, USER_INSERT, USER_UPDATE) " +
                                 " VALUES(" +
-                                $" {obj.IdEmpresa}, '{obj.Razao}','{obj.Cnpj_Cpf}','{obj.Fantasi}'," +
-                                $" '{obj.Enderecof}', '{obj.Nrof}','{obj.Bairrof}','{obj.Cidadef}','{obj.Bairrof}','{obj.Bairrof}'," +
-                                $"'{obj.Tel1}','{obj.Email}','{obj.Conta}',{obj.UserInsert},{obj.UserUpdate})  RETURNING CODIGO ";
+                                $" {obj.IdEmpresa}, '{obj.Razao.Trim().NoAspasSimples()}','{obj.Cnpj_Cpf}','{obj.Fantasi.Trim().NoAspasSimples()}'," +
+                                $" '{obj.Enderecof.Trim().NoAspasSimples()}', '{obj.Nrof}','{obj.Bairrof.Trim().NoAspasSimples()}','{obj.Cidadef.Trim().NoAspasSimples()}','{obj.Uff}','{obj.Cepf}'," +
+                                $"'{obj.Tel1}','{obj.Email.Trim().NoAspasSimples()}','{obj.Conta}',{obj.UserInsert},{obj.UserUpdate})  RETURNING CODIGO ";
 
             using (var objConexao = new NpgsqlConnection(DataBase.RunCommand.connectionString))
             {
@@ -66,17 +67,17 @@ namespace Fluxo_De_Caixa.Dao.postgre
         {
 
             String StringUpdate = $" UPDATE  CLIENTES SET " +
-                 $"RAZAO    = '{obj.Razao}', " +
+                 $"RAZAO    = '{obj.Razao.Trim().NoAspasSimples()}', " +
                  $"CNPJ_CPF = '{obj.Cnpj_Cpf}', " +
-                 $"FANTASI  = '{obj.Fantasi}', " +
-                 $"ENDERECOF = '{obj.Enderecof}', " +
+                 $"FANTASI  = '{obj.Fantasi.Trim().NoAspasSimples()}', " +
+                 $"ENDERECOF = '{obj.Enderecof.Trim().NoAspasSimples()}', " +
                  $"NROF = '{obj.Nrof}'," +
-                 $"BAIRROF = '{obj.Bairrof}'," +
-                 $"CIDADEF = '{obj.Cidadef}', " +
+                 $"BAIRROF = '{obj.Bairrof.Trim().NoAspasSimples()}'," +
+                 $"CIDADEF = '{obj.Cidadef.Trim().NoAspasSimples()}', " +
                  $"UFF = '{obj.Uff}'," +
                  $"CEPF = '{obj.Cepf}', " +
                  $"TEL1     = '{obj.Tel1}', " +
-                 $"EMAIL    = '{obj.Email}', " +
+                 $"EMAIL    = '{obj.Email.Trim().NoAspasSimples()}', " +
                  $"CONTA       = '{obj.Conta}' ," +
                  $"USER_UPDATE = {obj.UserUpdate} " +
                  $"WHERE ID_EMPRESA = {obj.IdEmpresa} and CODIGO = {obj.Codigo} ";
@@ -166,6 +167,7 @@ namespace Fluxo_De_Caixa.Dao.postgre
             return obj;
         }
 
+       
         private Cliente PopulaCliente(NpgsqlDataReader objDataReader)
         {
 
