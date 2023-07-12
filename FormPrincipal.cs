@@ -59,6 +59,7 @@ namespace Fluxo_De_Caixa
         private FormRecPag recPag;
         private FormCar formCar;
         private FormOS formOS;
+        private FormVlrAgregado VlrAgregado;
 
         public FormPrincipal(Usuario user)
         {
@@ -249,6 +250,19 @@ namespace Fluxo_De_Caixa
             formOS.menu = (ToolStripMenuItem)sender;
 
             formOS.Show();
+        }
+
+        private void valorAgregadoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            VlrAgregado = new FormVlrAgregado();
+
+            ((System.Windows.Forms.ToolStripMenuItem)sender).Enabled = false;
+
+            VlrAgregado.MdiParent = this;
+
+            VlrAgregado.menu = (ToolStripMenuItem)sender;
+
+            VlrAgregado.Show();
         }
     }
 }

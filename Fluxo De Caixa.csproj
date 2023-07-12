@@ -221,10 +221,17 @@
     <Compile Include="formUsuarios.designer.cs">
       <DependentUpon>formUsuarios.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormVlrAgregado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormVlrAgregado.Designer.cs">
+      <DependentUpon>FormVlrAgregado.cs</DependentUpon>
+    </Compile>
     <Compile Include="MDISingleton.cs" />
     <Compile Include="Models\CarOS..cs" />
     <Compile Include="Models\Cond .cs" />
     <Compile Include="Models\Detalhe.cs" />
+    <Compile Include="Models\Lucro.cs" />
     <Compile Include="Models\Marca.cs" />
     <Compile Include="Models\DetOS.cs" />
     <Compile Include="Models\CabOS.cs" />
@@ -298,6 +305,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="formUsuarios.resx">
       <DependentUpon>formUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormVlrAgregado.resx">
+      <DependentUpon>FormVlrAgregado.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

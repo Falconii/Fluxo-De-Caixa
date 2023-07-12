@@ -529,6 +529,27 @@ namespace Fluxo_De_Caixa.Dao.postgre
             return obj;
         }
 
+        private Lucro PopulaLucro(NpgsqlDataReader objDataReader)
+        {
+
+            var obj = new Lucro();
+
+            obj.Data = objDataReader["Data"].ToString();
+            obj.Doc = objDataReader["Doc"].ToString();
+            obj.Codigo = objDataReader["Codigo"].ToString();
+            obj.Razao = objDataReader["Razao"].ToString();
+            if (objDataReader["Tipo"].ToString() == "P")
+            {
+                obj.Entrada = objDataReader["VALOR"].ToString();
+                obj.Agregado = objDataReader["LUCRO"].ToString();
+            } else
+            {
+                obj.Saida = objDataReader["VALOR"].ToString();
+            }
+
+            return obj;
+        }
+
         public List<CabOS> getAll(int Ordenacao, string Filtro)
         {
 
@@ -748,6 +769,68 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             return strSelect;
 
+        }
+
+        public List<Lucro> getLucro(string ano, string mes)
+        {
+            List<Lucro> lsLucro = new List<Lucro>();
+
+            string strStringConexao = DataBase.RunCommand.connectionString;
+
+
+            string strSelect =  " SELECT * FROM ( " +
+                                " SELECT   'R' AS TIPO, CAB.SAIDA AS DATA , CAB.ID::text AS DOC, CAB.ID_CLIENTE AS CODIGO, CLI.RAZAO, (CAB.MAO_OBRA_VLR+CAB.PECAS_VLR) AS VALOR, CAB.LUCRO AS LUCRO  " +
+                                " FROM     OS_CAB CAB " +
+                                " INNER JOIN CLIENTES CLI ON CLI.ID_EMPRESA = CAB.ID_EMPRESA AND CLI.CODIGO = CAB.ID_CLIENTE  " +
+                                " WHERE    TO_CHAR(saida,'MM-yyyy') = '07-2023' UNION ALL " +
+                                " SELECT   'P' AS TIPO, DOC.VENCIMENTO AS DATA , DOC.DOC AS DOC, DOC.CLIFOR AS CODIGO, FORNE.RAZAO, DOC.VALOR , 0 AS LUCRO " +
+                                " FROM     DOCUMENTOS DOC " +
+                                " INNER JOIN FORNECEDORES FORNE ON FORNE.ID_EMPRESA = DOC.ID_EMPRESA AND FORNE.CODIGO = DOC.CLIFOR  " +
+                                " WHERE    DOC.TIPO = 'P' AND TO_CHAR(VENCIMENTO,'MM-yyyy') = '07-2023' ) AS TABELA " +
+                                " ORDER BY TABELA.TIPO DESC,TABELA.DATA,TABELA.DOC ";
+
+
+            Console.WriteLine(strSelect);
+
+            using (var objConexao = new NpgsqlConnection(strStringConexao))
+            {
+                using (var objCommand = new NpgsqlCommand(strSelect, objConexao))
+                {
+                    try
+                    {
+                        objConexao.Open();
+
+                        var objDataReader = objCommand.ExecuteReader();
+
+                        if (objDataReader.HasRows)
+                        {
+
+                            while (objDataReader.Read())
+                            {
+
+                                Lucro obj = new Lucro();
+
+                                obj = PopulaLucro(objDataReader);
+
+                                lsLucro.Add(obj);
+
+                            }
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+                    finally
+                    {
+                        objConexao.Close();
+                    }
+                }
+            }
+
+
+            return lsLucro;
         }
 
     }
