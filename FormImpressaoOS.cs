@@ -20,6 +20,7 @@ namespace Fluxo_De_Caixa
             txtInicial.Text = this.Inicial.ToString();
             txtFinal.Text = this.Final.ToString();
             txtVias.Text = this.Vias.ToString();
+            txtArquivo.Text = $"OS_{txtInicial.Text.Trim()} A {txtFinal.Text}";
         }
 
         private void btCancelar_Click(object sender, EventArgs e)
@@ -43,17 +44,25 @@ namespace Fluxo_De_Caixa
             {
                 retorno += "Nro De Vias Final Inválido!\n";
             }
+
+            retorno += CriarPasta();
+
+            if (txtArquivo.Text == "")
+            {
+                retorno += "Nome Do Arquivo Inválido!\n";
+            }
             return retorno;
         }
 
         private void FormImpressaoOS_Load(object sender, EventArgs e)
         {
-
+           
         }
 
         private void btImprimir_Click(object sender, EventArgs e)
         {
             string Erros = Validacao();
+
             if (Erros != "")
             {
                 MessageBox.Show(Erros, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -98,10 +107,29 @@ namespace Fluxo_De_Caixa
         {
 
 
-            OsPDF osPDF = new OsPDF("", Inicial, Final , Vias);
+            OsPDF osPDF = new OsPDF($"{txtPasta.Text.Trim()}\\{txtArquivo.Text.Trim()}.PDF", Inicial, Final, Vias);
 
             osPDF.ImprimirOS();
 
+        }
+
+        private string  CriarPasta()
+        {
+            string retorno = "";
+
+            string Pasta = $"{txtPasta.Text}";
+
+            try
+            {
+                System.IO.Directory.CreateDirectory(Pasta);
+            }
+
+            catch (System.IO.IOException e)
+            {
+                retorno = e.Message;
+            }
+
+            return retorno;
         }
     }
 }

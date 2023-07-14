@@ -43,6 +43,10 @@ namespace Fluxo_De_Caixa.Util
         {
             bool Imprimiu = false;
 
+            string path = System.AppDomain.CurrentDomain.BaseDirectory.ToString();
+
+            string Logo = $"{path}\\LOGO.PNG";
+
             using (var doc = new PdfSharp.Pdf.PdfDocument())
             {
 
@@ -80,8 +84,6 @@ namespace Fluxo_De_Caixa.Util
 
                         var FontEan13 = new PdfSharp.Drawing.XFont("EAN-13", 10, PdfSharp.Drawing.XFontStyle.Regular);
 
-
-                        string Logo = "C:\\LOGOS\\LOGO.PNG";
 
                         int NroItem = 0;
 
@@ -390,9 +392,9 @@ namespace Fluxo_De_Caixa.Util
 
                 if (Imprimiu)
                 {
-                    doc.Save("C:\\LIXO\\TESTE.PDF");
+                    doc.Save(FileName);
 
-                    System.Diagnostics.Process.Start("C:\\LIXO\\TESTE.PDF");
+                    System.Diagnostics.Process.Start(FileName);
 
                 } else
                 {

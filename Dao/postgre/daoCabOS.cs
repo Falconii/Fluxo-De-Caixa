@@ -534,19 +534,21 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             var obj = new Lucro();
 
-            obj.Data = objDataReader["Data"].ToString();
+            obj.Data = Convert.ToDateTime(objDataReader["Data"]).ToString("dd/MM/yy");
             obj.Doc = objDataReader["Doc"].ToString();
             obj.Codigo = objDataReader["Codigo"].ToString();
             obj.Razao = objDataReader["Razao"].ToString();
-            if (objDataReader["Tipo"].ToString() == "P")
+            if (objDataReader["Tipo"].ToString() == "R")
             {
                 obj.Entrada = objDataReader["VALOR"].ToString();
                 obj.Agregado = objDataReader["LUCRO"].ToString();
+                obj.Saida = "";
             } else
             {
+                obj.Entrada = "";
+                obj.Agregado = "";
                 obj.Saida = objDataReader["VALOR"].ToString();
             }
-
             return obj;
         }
 
@@ -775,6 +777,8 @@ namespace Fluxo_De_Caixa.Dao.postgre
         {
             List<Lucro> lsLucro = new List<Lucro>();
 
+            string chave = $"{mes}-{ano}";
+
             string strStringConexao = DataBase.RunCommand.connectionString;
 
 
@@ -782,11 +786,11 @@ namespace Fluxo_De_Caixa.Dao.postgre
                                 " SELECT   'R' AS TIPO, CAB.SAIDA AS DATA , CAB.ID::text AS DOC, CAB.ID_CLIENTE AS CODIGO, CLI.RAZAO, (CAB.MAO_OBRA_VLR+CAB.PECAS_VLR) AS VALOR, CAB.LUCRO AS LUCRO  " +
                                 " FROM     OS_CAB CAB " +
                                 " INNER JOIN CLIENTES CLI ON CLI.ID_EMPRESA = CAB.ID_EMPRESA AND CLI.CODIGO = CAB.ID_CLIENTE  " +
-                                " WHERE    TO_CHAR(saida,'MM-yyyy') = '07-2023' UNION ALL " +
+                               $" WHERE    TO_CHAR(saida,'MM-yyyy') = '{chave}' UNION ALL " +
                                 " SELECT   'P' AS TIPO, DOC.VENCIMENTO AS DATA , DOC.DOC AS DOC, DOC.CLIFOR AS CODIGO, FORNE.RAZAO, DOC.VALOR , 0 AS LUCRO " +
                                 " FROM     DOCUMENTOS DOC " +
                                 " INNER JOIN FORNECEDORES FORNE ON FORNE.ID_EMPRESA = DOC.ID_EMPRESA AND FORNE.CODIGO = DOC.CLIFOR  " +
-                                " WHERE    DOC.TIPO = 'P' AND TO_CHAR(VENCIMENTO,'MM-yyyy') = '07-2023' ) AS TABELA " +
+                               $" WHERE    DOC.TIPO = 'P' AND TO_CHAR(VENCIMENTO,'MM-yyyy') = '{chave}' ) AS TABELA " +
                                 " ORDER BY TABELA.TIPO DESC,TABELA.DATA,TABELA.DOC ";
 
 
@@ -794,6 +798,9 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
             using (var objConexao = new NpgsqlConnection(strStringConexao))
             {
+                double entrada = 0;
+                double lucro = 0;
+                double saida = 0;
                 using (var objCommand = new NpgsqlCommand(strSelect, objConexao))
                 {
                     try
@@ -812,11 +819,29 @@ namespace Fluxo_De_Caixa.Dao.postgre
 
                                 obj = PopulaLucro(objDataReader);
 
+                                try
+                                {
+                                    if (objDataReader["Tipo"].ToString() == "R")
+                                    {
+                                        entrada += Convert.ToDouble(objDataReader["VALOR"]);
+                                        lucro   += Convert.ToDouble(objDataReader["LUCRO"]);
+                                    }
+                                    else
+                                    {
+                                        saida   += Convert.ToDouble(objDataReader["VALOR"]);
+                                    }
+                                } catch(Exception ex)
+                                {
+                                    MessageBox.Show("Erro No Cáculo Do Totais", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+
                                 lsLucro.Add(obj);
 
                             }
                         }
 
+                        Lucro totais = new Lucro("","","","TOTAIS", string.Format("{0:0.00}",entrada), string.Format("{0:0.00}", lucro), string.Format("{0:0.00}", saida));
+                        lsLucro.Add(totais);
                     }
                     catch (Exception ex)
                     {

@@ -8,7 +8,6 @@ namespace Fluxo_De_Caixa.Models
 {
     public class Lucro
     {
-        public string Tipo { get; set; }
         public string Data { get; set; }
         public string Doc { get; set; }
         public string Codigo { get; set; }

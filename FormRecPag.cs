@@ -205,5 +205,63 @@ namespace Fluxo_De_Caixa
         {
             Close();
         }
+
+        private void tbExcel_Click(object sender, EventArgs e)
+        {
+            if ((dbGridView.Rows.Count == 1) && (dbGridView.Rows[0].Cells[0].Value.ToString().Trim() == ""))
+            {
+                MessageBox.Show("Nenhum Erro Registrado!", "ERRO");
+
+                return;
+            }
+
+            tbExcel.Enabled = false;
+            this.Cursor = Cursors.WaitCursor;
+            try
+            {
+                Microsoft.Office.Interop.Excel.Application xcelApp = new Microsoft.Office.Interop.Excel.Application();
+                xcelApp.Application.Workbooks.Add(Type.Missing);
+                for (int i = 1; i < ((dbGridView.Columns.Count + 1) <= 500 ? dbGridView.Columns.Count + 1 : 500); i++)
+                {
+                    xcelApp.Cells[1, i] = dbGridView.Columns[i - 1].HeaderText;
+                }
+                for (int i = 0; i < dbGridView.Rows.Count; i++)
+                {
+                    for (int j = 0; j < dbGridView.Columns.Count; j++)
+                    {
+                        if (dbGridView.Rows[i].Cells[j].Value == null) continue;
+
+                        if (dbGridView.Rows[i].Cells[j].Value.GetType().Name == "String")
+                        {
+                            xcelApp.Cells[i + 2, j + 1] = dbGridView.Rows[i].Cells[j].Value.ToString();
+                        }
+                        else if (dbGridView.Rows[i].Cells[j].Value.GetType().Name == "Double")
+                        {
+                            double valor = dbGridView.Rows[i].Cells[j].Value.ToString().DoubleParse();
+
+                            xcelApp.Cells[i + 2, j + 1] = valor;
+                        }
+                        else if (dbGridView.Rows[i].Cells[j].Value.GetType().Name == "int32")
+                        {
+                            int valor = dbGridView.Rows[i].Cells[j].Value.ToString().IntParse();
+
+                            xcelApp.Cells[i + 2, j + 1] = valor;
+                        }
+                        else
+                        {
+                            xcelApp.Cells[i + 2, j + 1] = dbGridView.Rows[i].Cells[j].Value.ToString();
+                        }
+                    }
+                }
+                xcelApp.Columns.AutoFit();
+                xcelApp.Visible = true;
+                tbExcel.Enabled = true;
+            }
+            finally
+            {
+                tbExcel.Enabled = true;
+                this.Cursor = Cursors.Arrow;
+            }
+        }
     }
 }

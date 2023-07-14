@@ -37,6 +37,7 @@ namespace Fluxo_De_Caixa
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tbCancelar = new System.Windows.Forms.ToolStripButton();
             this.dbGridView = new System.Windows.Forms.DataGridView();
+            this.tbExcel = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dbGridView)).BeginInit();
             this.SuspendLayout();
@@ -47,6 +48,7 @@ namespace Fluxo_De_Caixa
             this.lbPesquisar,
             this.cbMes,
             this.btBuscar,
+            this.tbExcel,
             this.toolStripSeparator2,
             this.tbCancelar});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
@@ -54,6 +56,7 @@ namespace Fluxo_De_Caixa
             this.toolStrip1.Size = new System.Drawing.Size(800, 39);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "TooBar";
+            this.toolStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStrip1_ItemClicked);
             // 
             // lbPesquisar
             // 
@@ -108,6 +111,16 @@ namespace Fluxo_De_Caixa
             this.dbGridView.Size = new System.Drawing.Size(800, 407);
             this.dbGridView.TabIndex = 4;
             // 
+            // tbExcel
+            // 
+            this.tbExcel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbExcel.Image = ((System.Drawing.Image)(resources.GetObject("tbExcel.Image")));
+            this.tbExcel.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tbExcel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbExcel.Name = "tbExcel";
+            this.tbExcel.Size = new System.Drawing.Size(34, 36);
+            this.tbExcel.Click += new System.EventHandler(this.tbExcel_Click);
+            // 
             // FormFluxo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -137,5 +150,6 @@ namespace Fluxo_De_Caixa
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton tbCancelar;
         private System.Windows.Forms.DataGridView dbGridView;
+        private System.Windows.Forms.ToolStripButton tbExcel;
     }
 }

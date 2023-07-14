@@ -46,6 +46,7 @@ namespace Fluxo_De_Caixa
             this.dtFinal = new System.Windows.Forms.DateTimePicker();
             this.dtInicial = new System.Windows.Forms.DateTimePicker();
             this.cbTipo = new System.Windows.Forms.ComboBox();
+            this.tbExcel = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dbGridView)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.gbParametros.SuspendLayout();
@@ -70,6 +71,7 @@ namespace Fluxo_De_Caixa
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btBuscar,
+            this.tbExcel,
             this.toolStripSeparator2,
             this.tbCancelar});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
@@ -221,6 +223,16 @@ namespace Fluxo_De_Caixa
             this.cbTipo.TabIndex = 0;
             this.cbTipo.SelectedIndexChanged += new System.EventHandler(this.cbTipo_SelectedIndexChanged);
             // 
+            // tbExcel
+            // 
+            this.tbExcel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbExcel.Image = ((System.Drawing.Image)(resources.GetObject("tbExcel.Image")));
+            this.tbExcel.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tbExcel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbExcel.Name = "tbExcel";
+            this.tbExcel.Size = new System.Drawing.Size(34, 36);
+            this.tbExcel.Click += new System.EventHandler(this.tbExcel_Click);
+            // 
             // FormRecPag
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -262,5 +274,6 @@ namespace Fluxo_De_Caixa
         private System.Windows.Forms.Label lblCliFor;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblInicial;
+        private System.Windows.Forms.ToolStripButton tbExcel;
     }
 }

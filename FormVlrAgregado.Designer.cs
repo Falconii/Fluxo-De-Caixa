@@ -35,6 +35,7 @@ namespace Fluxo_De_Caixa
             this.cbMes = new System.Windows.Forms.ToolStripComboBox();
             this.btBuscar = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tbExcel = new System.Windows.Forms.ToolStripButton();
             this.tbCancelar = new System.Windows.Forms.ToolStripButton();
             this.dbGridView = new System.Windows.Forms.DataGridView();
             this.toolStrip1.SuspendLayout();
@@ -48,6 +49,7 @@ namespace Fluxo_De_Caixa
             this.cbMes,
             this.btBuscar,
             this.toolStripSeparator2,
+            this.tbExcel,
             this.tbCancelar});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
@@ -82,6 +84,16 @@ namespace Fluxo_De_Caixa
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(50, 39);
             // 
+            // tbExcel
+            // 
+            this.tbExcel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbExcel.Image = ((System.Drawing.Image)(resources.GetObject("tbExcel.Image")));
+            this.tbExcel.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tbExcel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbExcel.Name = "tbExcel";
+            this.tbExcel.Size = new System.Drawing.Size(34, 36);
+            this.tbExcel.Click += new System.EventHandler(this.tbExcel_Click);
+            // 
             // tbCancelar
             // 
             this.tbCancelar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -91,6 +103,7 @@ namespace Fluxo_De_Caixa
             this.tbCancelar.Name = "tbCancelar";
             this.tbCancelar.Size = new System.Drawing.Size(36, 36);
             this.tbCancelar.ToolTipText = "Click Aqui Para Cancelar";
+            this.tbCancelar.Click += new System.EventHandler(this.tbCancelar_Click);
             // 
             // dbGridView
             // 
@@ -136,5 +149,6 @@ namespace Fluxo_De_Caixa
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton tbCancelar;
         private System.Windows.Forms.DataGridView dbGridView;
+        private System.Windows.Forms.ToolStripButton tbExcel;
     }
 }
